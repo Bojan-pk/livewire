@@ -5,16 +5,20 @@ namespace App\Livewire;
 use App\Models\Comment;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class Comments extends Component
 {
     
     use WithPagination;
+    use WithFileUploads;
+    public $photo;
    /*  public $comments; */
     public $title='';
 
     public $newComment;
+    
 
 
     public function updated($field)

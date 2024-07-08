@@ -2,8 +2,14 @@
     <div class=" w-6/12">
 
         <h1>Comments</h1>
-
+        @if ($photo)
+        Photo Preview:
+        <img src="{{ $photo->temporaryUrl() }}">
+        @endif
         <form wire:submit.prevent="addComment">
+            <input type="file" wire:model="photo">
+            @error('photo') <span class="error">{{ $message }}</span> @enderror
+
             @error('newComment') <span class=" text-red-500 text-xs">{{ $message }}</span> @enderror
             <div>
                 @if (session()->has('message'))
