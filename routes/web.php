@@ -15,7 +15,10 @@ use App\Models\User;
 |
 */
 
-Route::view('/', 'welcome');
+//Route::view('/', 'welcome');
+/* Route::view('/', 'livewire.home'); */
+
+Route::get('/',\App\Livewire\Home::class);
 
 /* Route::get('/', function(){
     $comments=Comment::all();
@@ -25,12 +28,12 @@ Route::view('/', 'welcome');
     return view('welcome',compact('comments'));
 });
  */
-Route::view('dashboard', 'dashboard')
+/* Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
+ */
 require __DIR__.'/auth.php';
