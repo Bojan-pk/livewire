@@ -19,6 +19,7 @@ use App\Models\User;
 /* Route::view('/', 'livewire.home'); */
 
 Route::get('/',\App\Livewire\Home::class);
+Route::get('/login',\App\Livewire\Login::class);
 
 /* Route::get('/', function(){
     $comments=Comment::all();
@@ -36,4 +37,4 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
  */
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';

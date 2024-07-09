@@ -10,7 +10,7 @@
 
  @livewireStyles
 </head>
-<body class=" flex justify-center">
+<body class=" flex ">
     <div class="w-10/12 my-2 flex">
         <div class="w-5/12 rounded border p-2">
              @livewire('tickets')
