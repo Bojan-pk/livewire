@@ -1,4 +1,5 @@
 <div class="flex">
 
-LOGIN
+<input class="bg-gray-300 focus:bg-blue-400  hover:bg-red-500"/>
+
 </div>
