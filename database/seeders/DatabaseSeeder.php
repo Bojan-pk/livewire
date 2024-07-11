@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
     {
          \App\Models\User::factory(2)->create();
          \App\Models\SupportTicket::factory(2)->create();
-        // \App\Models\User::factory()->create([
+         $this->call(ConditionSeeder::class);
+         $this->call(EducationSeeder::class);
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
