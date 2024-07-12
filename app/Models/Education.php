@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Education extends Model
 {
     use HasFactory;
-
+    
     public function catalogs()
     {
         return $this->belongsToMany(Catalog::class, 'catalog_education');
     }
+
 }
