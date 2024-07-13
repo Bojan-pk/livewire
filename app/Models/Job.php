@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+    ];
+
+    public function catalogs()
+    {
+        return $this->belongsToMany(Catalog::class, 'catalog_job');
+    }
 }

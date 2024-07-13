@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('catalog_education', function (Blueprint $table) {
             $table->id();
-           
-          
+            $table->unsignedBigInteger('catalog_id'); // ili prilagodjeno ime polja
+            $table->unsignedBigInteger('education_id'); // ili prilagodjeno ime polja
             $table->timestamps();
+
+            // Dodavanje stranih ključeva
+            $table->foreign('catalog_id')->references('id')->on('catalogs')->onDelete('cascade');
+            $table->foreign('education_id')->references('id')->on('educations')->onDelete('cascade');
         });
     }
 

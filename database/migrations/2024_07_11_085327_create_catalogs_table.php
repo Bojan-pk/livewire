@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('catalogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fm_id');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Experience extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
     
     public function catalogs()
     {

@@ -9,6 +9,10 @@ class Fm extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function catalogs()
     {
         return $this->belongsToMany(Catalog::class, 'catalog_fm');
