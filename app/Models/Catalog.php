@@ -9,9 +9,17 @@ class Catalog extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'fm_id', 'code', 
+        'fm_id', 'code', 'regulation_id'
     ];
 
+   public function fm()  {
+    return $this->belongsTo(Fm::class);
+   }
+
+   public function regulation()  {
+    return $this->belongsTo(Regulation::class);
+   }
+   
     public function educations()
     {
         return $this->belongsToMany(Education::class, 'catalog_education');

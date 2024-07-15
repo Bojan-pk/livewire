@@ -8,6 +8,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Fm;
 use App\Models\Job;
+use App\Models\Regulation;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -32,8 +33,8 @@ class CatalogForm extends Form
     #[Rule('required')]
     public $jobs;
 
-    #[Rule('required')]
     public $regulation;
+    public $new_regulation;
 
     public function store()
     {
@@ -78,9 +79,16 @@ class CatalogForm extends Form
              $jobIds[] = $job ->id;
          }
 
+         //regulation
+         if ($this->new_regulation) {
+            $this->regulation = $this->new_regulation;
+        }
+        $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
+
 
         $catalog = Catalog::create([
             'fm_id' => $fm->id,
+            'regulation_id' => $regulation->id,
             
         ]);
          // Povezivanje  sa katalogom

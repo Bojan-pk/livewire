@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
          \App\Models\SupportTicket::factory(2)->create();
          $this->call(ConditionSeeder::class);
          $this->call(EducationSeeder::class);
+         $this->call(RegulationSeeder::class);
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\CatalogForm;
+use App\Models\Regulation;
 //use App\Models\Fm;
 use Livewire\Component;
 
@@ -10,6 +11,12 @@ class Catalog extends Component
 
 {
     public CatalogForm $form;
+    public $regulations=[];
+
+    public function mount()
+    {
+        $this->regulations = Regulation::pluck('name')->toArray(); 
+    }
 
     public function submitForm() {
         
@@ -18,13 +25,9 @@ class Catalog extends Component
         if($this->form->fmValidate()) return;
 
         $this->form->store();
-
-    
         session()->flash('success','Подаци су успешно унети');
-        //$this->form->sendMail();
         $this->form->reset('fm','usualy_fm');
-        //dd($this->form);
-
+        
     }
 
     public function render()
