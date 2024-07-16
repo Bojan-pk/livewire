@@ -21,7 +21,8 @@ use App\Models\User;
 Route::get('/',\App\Livewire\Home::class);
 Route::get('/login',\App\Livewire\Login::class);
 Route::get('/search',\App\Livewire\Searach::class);
-Route::get('/catalog',\App\Livewire\Catalog::class);
+//Route::get('/catalog',\App\Livewire\Catalog::class);
+Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class);
 
 /* Route::get('/', function(){
     $comments=Comment::all();
