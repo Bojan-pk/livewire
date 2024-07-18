@@ -7,17 +7,18 @@ use Livewire\Component;
 
 class Navigation extends Component
 {
-    public $activeTab = 'home'; // Početni tab može biti 'home'
+    public $activeTab = ''; // Početni tab može biti 'home'
 
-    public function mount()
+     public function mount()
     {
-        $this->setActiveTabFromUrl();
-    }
+       //dd(request()->route()->getName());
+        $this->setActiveTab(request()->route()->getName());
+    } 
 
-    public function setActiveTabFromUrl()
+    public function setActiveTab($activeTab)
     {
-        $this->activeTab = request()->route()->getName();
-       // dd($this->activeTab);
+        $this->activeTab = $activeTab;
+       //dd($this->activeTab);
     }
 
     public function render()
