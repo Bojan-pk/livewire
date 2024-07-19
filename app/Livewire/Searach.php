@@ -8,15 +8,32 @@ use Livewire\Component;
 class Searach extends Component
 {
     public $searchTerm='';
+   
     public $users;
     public function render()
     {
+        $results = [];
+
         if (empty($this->searchTerm)) {
+           
+            
             $this->users=null;
         } else {
-            $this->users=User::where('name','like',"%$this->searchTerm%")->get();
+            $keywords = explode(' ', $this->searchTerm);
+            $query = User::query();
+            // Pretraži svaku ključnu reč u polju name
+            foreach ($keywords as $keyword) {
+                $query->where('name', 'LIKE', '%' . $keyword . '%');
+            }
+
+            $results = $query->get();
         }
-           
-        return view('livewire.searach');
-    }
+
+        return view('livewire.searach',
+        [
+            'results' => $results,
+        ]);
+        
+        }
+              
 }

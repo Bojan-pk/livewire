@@ -8,8 +8,8 @@
             wire:model.live="searchTerm" />
     </label>
     <ul class="max-w-3/12  text-gray-500 mx-1  list-inside dark:text-gray-400 mt-3">
-        @if ($users && $users->count() > 0)
-            @foreach ($users as $user)
+        @if ($results && $results->count() > 0)
+            @foreach ($results as $user)
                 <li class="border rounded-sm"> {{ $user->name }}</li>
             @endforeach
         @else
