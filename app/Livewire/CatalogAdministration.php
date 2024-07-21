@@ -7,7 +7,7 @@ use Livewire\Component;
 class CatalogAdministration extends Component
 {
 
-    public $currentTab = 'create'; // 'create' or 'update'
+    public $currentTab = 'update'; // 'create' or 'update'
 
     public function switchTab($tab)
     {
