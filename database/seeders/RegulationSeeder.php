@@ -14,16 +14,19 @@ class RegulationSeeder extends Seeder
     public function run(): void
     {
         DB::table('regulations')->insert([
-            'name' => 'Каталог ФМ ПВЛ, СВЛ...',
+            'name' => 'Katalog FM, PVL, SVL ....',
         ]);
         DB::table('regulations')->insert([
-            'name' => 'Каталог ФМ ЦЛ, СВЛ...',
+            'name' => 'Katalog FM, CL, SVL ....',
         ]);
         DB::table('regulations')->insert([
-            'name' => 'Правилник о елементима ФМ ПВЛ, СВЛ...',
+            'name' => 'Pravilnik o elementima FM PVL, SVL ...',
         ]);
         DB::table('regulations')->insert([
-            'name' => 'Правилник о елементима ФМ ЦЛ, СВЛ...',
+            'name' => 'Pravilnik o elementima FM CL, SVL ...',
+        ]);
+        DB::table('regulations')->insert([
+            'name' => 'Pravilnik o VES i ES, SVL ...',
         ]);
         
     }

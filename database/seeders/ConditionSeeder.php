@@ -14,23 +14,23 @@ class ConditionSeeder extends Seeder
     public function run(): void
     {
         DB::table('conditions')->insert([
-            'name' => 'поседовање ECDL сертификата',
+            'name' => 'ECDL sertifikat',
             'code' => 'PU01',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'поседовање STANAG сертификата',
+            'name' => ' STANAG sertifikat',
             'code' => 'PU02',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'поседовање безбедоносног сертификата',
+            'name' => 'bezbednosni sertifikat',
             'code' => 'PU03',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'правосудни испит',
+            'name' => 'pravosudni ispit',
             'code' => 'PU04',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'поседовање возачке дозволе',
+            'name' => 'Vozacka dozvola',
             'code' => 'PU05',
         ]);
     }

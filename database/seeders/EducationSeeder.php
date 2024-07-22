@@ -14,23 +14,23 @@ class EducationSeeder extends Seeder
     public function run(): void
     {
         DB::table('educations')->insert([
-            'name' => 'ГШУ',
+            'name' => 'GŠU',
             'code' => 'E01',
         ]);
         DB::table('educations')->insert([
-            'name' => 'КШУ',
+            'name' => 'KŠU',
             'code' => 'E02',
         ]);
         DB::table('educations')->insert([
-            'name' => 'Докторат',
+            'name' => 'Doktorat',
             'code' => 'E03',
         ]);
         DB::table('educations')->insert([
-            'name' => 'Средња школа',
+            'name' => 'Srednja škola',
             'code' => 'E04',
         ]);
         DB::table('educations')->insert([
-            'name' => 'Факултет',
+            'name' => 'Fakultet',
             'code' => 'E05',
         ]);
     }
