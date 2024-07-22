@@ -2,38 +2,50 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
+use App\Models\Fm;
 use Livewire\Component;
 
-class Searach extends Component
+class SearchFm extends Component
 {
+
     public $searchTerm='';
-   
-    public $users;
+    
+    protected $listeners=[
+        'fmSelected'=>'fmSelected'
+    ];
+
+    public function fmSelected($fmId){
+        $this->searchTerm="";
+    }
+
     public function render()
     {
+        
         $results = [];
 
         if (empty($this->searchTerm)) {
            
-            
-            $this->users=null;
+           $results="";
         } else {
+            //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
-            $query = User::query();
+            $query = Fm::query();
             // Pretraži svaku ključnu reč u polju name
             foreach ($keywords as $keyword) {
                 $query->where('name', 'LIKE', '%' . $keyword . '%');
             }
 
+            
             $results = $query->get();
+          
+            
         }
 
-        return view('livewire.searach',
+
+        
+        return view('livewire.search-fm',
         [
             'results' => $results,
         ]);
-        
-        }
-              
+    }
 }

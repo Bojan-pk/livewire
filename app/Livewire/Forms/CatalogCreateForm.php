@@ -46,8 +46,8 @@ class CatalogCreateForm extends Form
         $usualy_fms=$this->makeCleanArray($this->usualy_fms);
         $fmIds = [];
         foreach ($usualy_fms as $fmName) {
-            $fm = Fm::firstOrCreate(['name' => $fmName]);
-            $fmIds[] = $fm ->id;
+            $fmId = Fm::firstOrCreate(['name' => $fmName]);
+            $fmIds[] = $fmId ->id;
         }
         //education
         $educations=$this->makeCleanArray($this->educations);
@@ -113,8 +113,8 @@ class CatalogCreateForm extends Form
     {
         $array = explode(';', $string);
 
-        $array = array_map(function($fm) {
-            return preg_replace('/^[^a-zA-Z]+/', '', $fm);
+        $array = array_map(function($q) {
+            return preg_replace('/^[^\p{L}]+/u', '', $q);
         }, $array);
 
 
