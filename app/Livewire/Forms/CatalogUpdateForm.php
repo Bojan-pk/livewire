@@ -35,12 +35,11 @@ class CatalogUpdateForm extends Form
     public $jobs = [''];
 
     public $catalogId = null;
-
-    //treba definisati da mor jedan dokument bude unesen
-    #[Validate('required', message: "Унесите документ")]
+                   
+    #[Validate('required_without:new_regulation', message: "Изаберите или унесите нови документ")]
     public $regulation = null;
 
-    #[Validate('exclude_with:regulation', message: "Унесите документ")]
+    #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
     public $new_regulation;
 
     public function customValidate()
