@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
          $this->call(ConditionSeeder::class);
          $this->call(EducationSeeder::class);
          $this->call(RegulationSeeder::class);
+         $this->call(ExperienceSeeder::class);
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);

@@ -20,31 +20,33 @@ class CatalogUpdateForm extends Form
     public $fm;
 
     /* #[Validate('array|min:1', message: "Барем једно ФМ морате унети.")] */
-    public $usualy_fms=[''];
+    public $usualy_fms = [''];
 
     /* #[Validate('array|min:1', message: "Барем једно образовање/усавршавање морате унети.")] */
-    public $educations=[''];
+    public $educations = [''];
 
-   /*  #[Validate('required')] */
-    public $conditions=[''];
+    /*  #[Validate('required')] */
+    public $conditions = [''];
 
-   /*  #[Validate('required')] */
-    public $experiences=[''];
+    /*  #[Validate('required')] */
+    public $experiences = [''];
 
     #[Validate('required')]
-    public $jobs=[''];
+    public $jobs = [''];
+
+    public $catalogId = null;
 
     //treba definisati da mor jedan dokument bude unesen
-    #[Validate('required',message: "Унесите документ")]
-    public $regulation=null;
+    #[Validate('required', message: "Унесите документ")]
+    public $regulation = null;
 
     #[Validate('exclude_with:regulation', message: "Унесите документ")]
     public $new_regulation;
-    
+
     public function customValidate()
     {
-        $error=false;
-        
+        $error = false;
+
         /* if ($this->fm && Fm::where('name', $this->fm)->exists()) {
             $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
             $error =true;
@@ -52,12 +54,12 @@ class CatalogUpdateForm extends Form
 
         if (!$this->hasNonEmptyValue($this->usualy_fms)) {
             $this->addError('usualy_fms', 'Барем једно ФМ морате унети.');
-            $error =true;
+            $error = true;
         }
 
         if (!$this->hasNonEmptyValue($this->jobs)) {
             $this->addError('jobs', 'Барем један посао морате унети.');
-            $error =true;
+            $error = true;
         }
 
         return $error;
@@ -66,53 +68,53 @@ class CatalogUpdateForm extends Form
     public function store()
     {
         $fm = Fm::firstOrCreate(['name' => $this->fm]);
-        $fmId=$fm->id;
+        $fmId = $fm->id;
         //  usualy_fms 
         //dd($this->usualy_fms);
 
-        $usualy_fms=$this->makeCleanArray($this->usualy_fms);
+        $usualy_fms = $this->makeCleanArray($this->usualy_fms);
         //dd($usualy_fms);
-       
+
         //$fmIds = [];
         foreach ($usualy_fms as $fmName) {
             $fm = Fm::firstOrCreate(['name' => $fmName]);
-            $fmIds[] = $fm ->id;
+            $fmIds[] = $fm->id;
         }
         //education
-        $educations=$this->makeCleanArray($this->educations);
-       // $educationIds = [];
+        $educations = $this->makeCleanArray($this->educations);
+        // $educationIds = [];
         foreach ($educations as $educationName) {
             $education = Education::firstOrCreate(['name' => $educationName]);
-            $educationIds[] = $education ->id;
+            $educationIds[] = $education->id;
         }
-       
 
-         //condition
-         $conditions=$this->makeCleanArray($this->conditions);
+
+        //condition
+        $conditions = $this->makeCleanArray($this->conditions);
         // $conditionIds = [];
-         foreach ($conditions as $conditionName) {
-             $condition = Condition::firstOrCreate(['name' => $conditionName]);
-             $conditionIds[] = $condition ->id;
-         }
+        foreach ($conditions as $conditionName) {
+            $condition = Condition::firstOrCreate(['name' => $conditionName]);
+            $conditionIds[] = $condition->id;
+        }
 
-         //experiences
-         $experiences=$this->makeCleanArray($this->experiences);
-         //$experienceIds = [];
-         foreach ($experiences as $experienceName) {
-             $experience = Experience::firstOrCreate(['name' => $experienceName]);
-             $experienceIds[] = $experience ->id;
-         }
+        //experiences
+        $experiences = $this->makeCleanArray($this->experiences);
+        //$experienceIds = [];
+        foreach ($experiences as $experienceName) {
+            $experience = Experience::firstOrCreate(['name' => $experienceName]);
+            $experienceIds[] = $experience->id;
+        }
 
-         //jobs
-         $jobs=$this->makeCleanArray($this->jobs);
+        //jobs
+        $jobs = $this->makeCleanArray($this->jobs);
         // $jobIds = [];
-         foreach ($jobs as $jobName) {
-             $job = Job::firstOrCreate(['name' => $jobName]);
-             $jobIds[] = $job ->id;
-         }
+        foreach ($jobs as $jobName) {
+            $job = Job::firstOrCreate(['name' => $jobName]);
+            $jobIds[] = $job->id;
+        }
 
-         //regulation
-         if ($this->new_regulation) {
+        //regulation
+        if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
         }
         $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
@@ -121,17 +123,17 @@ class CatalogUpdateForm extends Form
         $catalog = Catalog::firstOrCreate(
             ['fm_id' => $fmId],
             ['regulation_id' => $regulation->id]
-            
+
         );
-         // Povezivanje  sa katalogom
+        // Povezivanje  sa katalogom
         $catalog->fms()->sync($fmIds);
-        $catalog->educations()->sync( $educationIds);
-        $catalog->conditions()->sync( $conditionIds);
-        $catalog->jobs()->sync( $jobIds);
-        $catalog->experiences()->sync( $experienceIds);
+        $catalog->educations()->sync($educationIds);
+        $catalog->conditions()->sync($conditionIds);
+        $catalog->jobs()->sync($jobIds);
+        $catalog->experiences()->sync($experienceIds);
     }
 
-  
+
 
     public function hasNonEmptyValue($array)
     {
@@ -143,18 +145,18 @@ class CatalogUpdateForm extends Form
         return false;
     }
 
-    protected function makeCleanArray( $array)
+    protected function makeCleanArray($array)
     {
         // Koristite array_map da izvršite preg_replace na svakom elementu niza
-    $array = array_map(function($q) {
-        return preg_replace('/^[^\p{L}]+/u', '', $q);
-    }, $array);
+        $array = array_map(function ($q) {
+            return $q = preg_replace('/^[^\p{L}\p{N}]+/u', '', $q);
+        }, $array);
 
-    // Koristite array_filter da uklonite prazne stringove iz niza
-    $array = array_filter($array, function($value) {
-        return !empty($value);
-    });
+        // Koristite array_filter da uklonite prazne stringove iz niza
+        $array = array_filter($array, function ($value) {
+            return !empty($value);
+        });
 
-    return array_values($array); // Resetujte indekse niza
+        return array_values($array); // Resetujte indekse niza
     }
 }

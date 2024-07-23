@@ -12,7 +12,7 @@ class CatalogUpdate extends Component
 {
     public CatalogUpdateForm $form;
     public $regulations=[];
-    public $catalog;
+    //public $catalog;
 
     protected $listeners=[
         'fmSelected'=>'fmSelected'
@@ -22,6 +22,7 @@ class CatalogUpdate extends Component
        
         if($catalog=Catalog::where('fm_id',$fmId)->first())
     {
+        $this->form->catalogId=$catalog->id;
         $this->form->fm=$catalog->fm->name;
         $this->form->usualy_fms=$catalog->fms->pluck('name')->toArray();
         $this->form->educations=$catalog->educations->pluck('name')->toArray();  
@@ -123,6 +124,27 @@ class CatalogUpdate extends Component
         session()->flash('success','Подаци су успешно унети');
         $this->form->reset();
         
+    }
+
+    public function removeCatalog($id=null)
+    {
+        
+        if ($id) {
+            $catalog=Catalog::find($id);
+            session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+            $catalog->delete();
+            $this->form->reset();
+        } 
+        else $this->cleanCatalog();
+
+        
+    }
+
+    public function cleanCatalog()
+    {
+        $this->form->reset();
+
+        session()->flash('success','Обрисана је форма за унос');
     }
 
 

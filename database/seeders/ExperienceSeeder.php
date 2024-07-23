@@ -14,11 +14,11 @@ class ExperienceSeeder extends Seeder
     public function run(): void
     {
         DB::table('experiences')->insert([
-            'name' => 'najmanje 2 godine radnog iskustva',
+            'name' => 'Najmanje 2 godine radnog iskustva',
             'code' => 'I01',
         ]);
         DB::table('experiences')->insert([
-            'name' => 'najmanje 3 godine u zvanju ...',
+            'name' => 'Najmanje 3 godine u zvanju ...',
             'code' => 'I02',
         ]);
         DB::table('experiences')->insert([

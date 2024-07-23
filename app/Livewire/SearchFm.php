@@ -36,7 +36,7 @@ class SearchFm extends Component
             }
 
             
-            $results = $query->get();
+            $results = $query->orderBy('name')->take(10)->get();
           
             
         }

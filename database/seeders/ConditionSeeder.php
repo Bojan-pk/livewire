@@ -22,11 +22,11 @@ class ConditionSeeder extends Seeder
             'code' => 'PU02',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'bezbednosni sertifikat',
+            'name' => 'Bezbednosni sertifikat',
             'code' => 'PU03',
         ]);
         DB::table('conditions')->insert([
-            'name' => 'pravosudni ispit',
+            'name' => 'Pravosudni ispit',
             'code' => 'PU04',
         ]);
         DB::table('conditions')->insert([
