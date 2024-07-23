@@ -18,7 +18,7 @@ class Navigation extends Component
     public function setActiveTab($activeTab)
     {
         $this->activeTab = $activeTab;
-       //dd($this->activeTab);
+       
     }
 
     public function render()
