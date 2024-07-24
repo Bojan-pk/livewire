@@ -2,36 +2,48 @@
 
 namespace App\Livewire;
 
-use App\Livewire\Forms\CatalogForm;
-use App\Models\Regulation;
-//use App\Models\Fm;
+
+use App\Models\Fm;
 use Livewire\Component;
 
 class Catalog extends Component
 
 {
-    public CatalogForm $form;
-    public $regulations=[];
-
-    public function mount()
-    {
-        $this->regulations = Regulation::pluck('name')->toArray(); 
-    }
-
-    public function submitForm() {
-        
-        $this->validate();
-        
-        if($this->form->fmValidate()) return;
-
-        $this->form->store();
-        session()->flash('success','Подаци су успешно унети');
-        $this->form->reset('fm','usualy_fm');
-        
+   
+    public $searchTerm='';
+    
+    public function fmSelected($fmId){
+        $this->searchTerm="";
     }
 
     public function render()
     {
-        return view('livewire.catalog');
+
+        $results = [];
+
+        if (empty($this->searchTerm)) {
+           
+           $results="";
+        } else {
+            //dd('radi');
+            $keywords = explode(' ', $this->searchTerm);
+            $query = Fm::query();
+            // Pretraži svaku ključnu reč u polju name
+            foreach ($keywords as $keyword) {
+                $query->where('name', 'LIKE', '%' . $keyword . '%');
+            }
+
+            
+            $results = $query->orderBy('name')->take(10)->get();
+          
+            
+        }
+
+        return view('livewire.catalog',
+        [
+            'results' => $results,
+        ]);
+    
+    
     }
 }

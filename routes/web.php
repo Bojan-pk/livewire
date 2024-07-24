@@ -22,22 +22,22 @@ Route::get('/',\App\Livewire\Home::class);
 Route::get('/login',\App\Livewire\Login::class);
 Route::get('/search',\App\Livewire\Search::class);
 Route::get('/catalog',\App\Livewire\Catalog::class)->name('catalog');
-Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)->name('catalog-administration');
+Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)->name('catalog-administration')->middleware(['auth', 'verified']);
 
-/* Route::get('/', function(){
+Route::get('/welcome', function(){
     $comments=Comment::all();
 
 
-   // dd($comments);
+ 
     return view('welcome',compact('comments'));
 });
- */
-/* Route::view('dashboard', 'dashboard')
+
+ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
- */
-//require __DIR__.'/auth.php';
+
+require __DIR__.'/auth.php';
