@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
          \App\Models\User::factory(10)->create();
-        // \App\Models\SupportTicket::factory(2)->create();
+        \App\Models\SupportTicket::factory(2)->create();
          $this->call(ConditionSeeder::class);
          $this->call(EducationSeeder::class);
          $this->call(RegulationSeeder::class);

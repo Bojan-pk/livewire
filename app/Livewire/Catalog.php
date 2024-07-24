@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-
+use App\Models\Catalog as ModelsCatalog;
 use App\Models\Fm;
 use Livewire\Component;
 
@@ -11,9 +11,15 @@ class Catalog extends Component
 {
    
     public $searchTerm='';
+    public $activeFm;
+    public $catalog;
+
     
     public function fmSelected($fmId){
-        $this->searchTerm="";
+       // $this->searchTerm="";
+        $this->activeFm=$fmId;
+        $this->catalog=ModelsCatalog::where('fm_id',$fmId)->first();
+
     }
 
     public function render()
@@ -42,6 +48,8 @@ class Catalog extends Component
         return view('livewire.catalog',
         [
             'results' => $results,
+           
+
         ]);
     
     
