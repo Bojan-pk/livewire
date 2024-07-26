@@ -13,14 +13,53 @@ class Catalog extends Component
     public $searchTerm='';
     public $activeFm;
     public $catalog;
+    public $jobsIds=[];
+    public $usualyFmIds=[];
+    public $educationIds=[];
 
+    public $activeColapse='jobs';
+
+   
     
     public function fmSelected($fmId){
-       // $this->searchTerm="";
         $this->activeFm=$fmId;
         $this->catalog=ModelsCatalog::where('fm_id',$fmId)->first();
+       
+    } 
+
+    public function saveJobs($id)
+    {
+        if (in_array($id, $this->jobsIds)) {
+            $this->jobsIds = array_diff($this->jobsIds, [$id]);
+            //session()->put('saved_items', $this->savedItems);
+        } else $this->jobsIds[]=$id;
+        
+        $this->activeColapse='jobs';
+    }
+
+    public function saveUsualyFms($id)
+    {
+        if (in_array($id, $this->usualyFmIds)) {
+            $this->usualyFmIds = array_diff($this->usualyFmIds, [$id]);
+            //session()->put('saved_items', $this->savedItems);
+        } else $this->usualyFmIds[]=$id;
+
+        $this->activeColapse='usualyFms';
 
     }
+
+    public function saveEducation($id)
+    {
+        if (in_array($id, $this->educationIds)) {
+            $this->educationIds = array_diff($this->educationIds, [$id]);
+            //session()->put('saved_items', $this->savedItems);
+        } else $this->educationIds[]=$id;
+
+        $this->activeColapse='education';
+
+    }
+
+  
 
     public function render()
     {
