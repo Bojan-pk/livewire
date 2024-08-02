@@ -20,7 +20,10 @@ class Catalog extends Component
     public $educationIds=[];
     public $activeColapse='jobs';
 
+   
+    
     public function fmSelected($fmId){
+
         $this->activeFm=$fmId;
         $this->catalog=ModelsCatalog::where('fm_id',$fmId)->first();
        
@@ -33,6 +36,9 @@ class Catalog extends Component
             //session()->put('saved_items', $this->savedItems);
         } else $this->jobsIds[]=$id;
         
+         // Emituj događaj sa informacijama o selektovanoj stavci
+        $this->dispatch('saveJobs', $id);
+
         $this->activeColapse='jobs';
     }
 
