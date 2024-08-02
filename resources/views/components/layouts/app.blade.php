@@ -14,22 +14,16 @@
 </head>
 
 <body class="flex-wrap justify-center">
-   
-@livewire('navigation')
 
-
-
-   <!--  <div class=" flex w-full justify-left px-4 bg-purple-900 text-white">
-        <a class="mx-3 py-4" wire:navigate href="/">Home</a>
-        <a class="mx-3 py-4" wire:navigate href="/login">Login</a>
-    </div> -->
-
-
+    @livewire('navigation')
 
     <div class="my-10 flex justify-center">
-        {{ $slot }}
+        {{ $slot }} 
+       
     </div>
-
+    <div  class="my-10 flex justify-center">
+       @livewire('cart')
+       </div>
 </body>
 
 </html>

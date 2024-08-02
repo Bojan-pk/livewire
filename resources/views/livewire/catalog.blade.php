@@ -36,7 +36,7 @@
                     @foreach ($catalog->jobs as $item)
                     <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                         <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                         <input id="default-checkbox" :wire:key="{{$item->id}}" wire:click="saveJobs({{$item->id}})" type="checkbox" {{in_array($item->id,$jobsIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                         <input id="default-checkbox" wire:key="{{$item->id}}" wire:click="saveJobs({{$item->id}})" type="checkbox" {{in_array($item->id,$jobsIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                     </div>
                     @endforeach
                     @endif
@@ -59,7 +59,7 @@
                     @foreach ($catalog->fms as $item)
                     <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                         <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                         <input id="default-checkbox" :wire:key="{{$item->id}}" wire:click="saveUsualyFms({{$item->id}})" type="checkbox" {{in_array($item->id,$usualyFmIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                         <input id="default-checkbox" wire:key="{{$item->id}}" wire:click="saveUsualyFms({{$item->id}})" type="checkbox" {{in_array($item->id,$usualyFmIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                     </div>
                     @endforeach
                     @endif
@@ -83,7 +83,7 @@
                     @foreach ($catalog->educations as $item)
                     <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                         <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                         <input id="default-checkbox" :wire:key="{{$item->id}}" wire:click="saveEducation({{$item->id}})" type="checkbox" {{in_array($item->id,$educationIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                         <input id="default-checkbox" wire:key="{{$item->id}}" wire:click="saveEducation({{$item->id}})" type="checkbox" {{in_array($item->id,$educationIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                     </div>
                     @endforeach
                     @endif
