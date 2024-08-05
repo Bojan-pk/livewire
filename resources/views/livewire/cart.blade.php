@@ -23,19 +23,19 @@
             </thead>
             <tbody>
             
-                @if($fms)
+                @if($directions)
                
-                @foreach ($fms as $index=>$fm)
-                <tr class="bg-white border-b{{$selectedFm==$index?' bg-green-400 text-white':''}}" wire:click="fmSelected({{$index}})">
+                @foreach ($directions as $fm=>$direction)
+                <tr class="bg-white border-b {{$selectedFm==$fm?'bg-red-500 text-white':''}}" wire:click="fmSelected('{{$fm}}')">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{$fm}}{{$selectedFm}}
+                        {{$fm}}
                     </th>
                     <td class="px-6 py-4">
-                        @if ($jobsIds)
-                        @foreach ($jobsIds as $jobId)
-                        {{ $jobId }}
+                        @if ($direction['jobs'])
+                        @foreach ($direction['jobs'] as $jobId)
                         {{ App\Models\Job::find($jobId)->name }}
-                        <span class=" text-red-700">x</span>
+                        
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveJobs', [{{$jobId}}])">x</a>
 
                         @endforeach
                         @endif
@@ -47,7 +47,7 @@
                         $2999
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <a href="#" wire:click="delFm({{$index}})" class="font-medium text-red-600 dark:text-red-500 hover:underline">X</a>
+                        <a href="#" wire:click="delFm('{{$fm}}')" class="font-medium text-red-600 dark:text-red-500 hover:underline">X</a>
                     </td>
                 </tr>
                 @endforeach

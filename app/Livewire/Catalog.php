@@ -20,7 +20,7 @@ class Catalog extends Component
     public $educationIds=[];
     public $activeColapse='jobs';
 
-   
+    protected $listeners = ['fmCartSelected','saveJobs'];
     
     public function fmSelected($fmId){
 
@@ -29,15 +29,35 @@ class Catalog extends Component
        
     } 
 
+    public function fmCartSelected($index){
+
+        //dd($index);
+
+        $directions=session()->get('directions', []);
+        
+        if(@$directions[$index]['jobs']) {
+            $this->jobsIds=$directions[$index]['jobs'];
+        } else $this->jobsIds=[];
+       
+    } 
+
+    public function updatedJobsIds()
+    {
+        dd('radi');
+        // Ova metoda se poziva svaki put kada se $jobsIds ažurira
+        $this->emit('jobsIdsUpdated', $this->jobsIds);
+    }
+
     public function saveJobs($id)
     {
+        //dd($id);
         if (in_array($id, $this->jobsIds)) {
             $this->jobsIds = array_diff($this->jobsIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
         } else $this->jobsIds[]=$id;
         
          // Emituj događaj sa informacijama o selektovanoj stavci
-        $this->dispatch('saveJobs', $id);
+       // $this->dispatch('saveJobs', $id);
 
         $this->activeColapse='jobs';
     }

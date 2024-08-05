@@ -18,7 +18,7 @@
             <div id="accordion-collapse" data-accordion="collapse">
                 <h2 id="tipicni_poslovi">
                     <button type="button" class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-green-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1">
-                        <span>Типични послови {{count($jobsIds)}}</span>
+                        <span>Типични послови {{@count($jobsIds)}}</span>
                         @foreach ($jobsIds as $value)
                         {{$value}}
                         @endforeach
@@ -35,8 +35,8 @@
                     @if ($catalog)
                     @foreach ($catalog->jobs as $item)
                     <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
-                        <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                         <input id="default-checkbox" wire:key="{{$item->id}}" wire:click="saveJobs({{$item->id}})" type="checkbox" {{in_array($item->id,$jobsIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                        <p class="mb-2 text-gray-500">{{ $item->name }}{{$item->id}}</p>
+                         <input id="default-checkbox" wire:key="{{$item->id}}"  wire:click="$dispatch('saveJobs', [{{$item->id}}])" type="checkbox" {{in_array($item->id,$jobsIds)?'checked':''}} class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
                     </div>
                     @endforeach
                     @endif
