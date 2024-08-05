@@ -8,7 +8,8 @@ class Cart extends Component
 {
 
     public $jobsIds=[];
-   // public $jobs=[];
+    public $fms=[];
+    public $selectedFm;
 
     protected $listeners = ['saveJobs'];
 
@@ -17,6 +18,20 @@ class Cart extends Component
     {
         // Učitaj stanje korpe iz sesije
         $this->jobsIds = session()->get('savedJobsIds', []);
+        $this->fms[]='Radno mesto 1';
+    }
+
+    public function addFm(){
+
+        $this->fms[]='Радно место '. count($this->fms)+1;
+    }
+
+    public function delFm($id){
+        //dd($id);
+        unset($this->fms[$id]);
+        $this->fms = array_values(  $this->fms); // reindex array;
+        //dodaje prazno polje
+        if( $this->fms==null) $this->addFm();
     }
 
     public function saveJobs($id)
@@ -32,6 +47,12 @@ class Cart extends Component
         // $this->emit('saveJobs', $this->jobsIds[]);
 
         //$this->activeColapse='jobs';
+    }
+
+    public function fmSelected($index) 
+    {
+       // dd($index);
+        $this->selectedFm=$index;
     }
 
     public function render()
