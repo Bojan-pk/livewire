@@ -8,6 +8,7 @@ class Cart extends Component
 {
 
     public $jobsIds=[];
+   // public $jobs=[];
 
     protected $listeners = ['saveJobs'];
 
