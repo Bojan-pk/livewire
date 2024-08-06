@@ -45,7 +45,7 @@
                         @foreach ($direction['conditions'] as $conditionId)
                         {{ App\Models\Condition::find($conditionId)->name }}
 
-                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveconditions', [{{$conditionId}}])">x</a>
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveConditions', [{{$conditionId}}])">x</a>
 
                         @endforeach
                         @endif

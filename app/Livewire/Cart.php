@@ -62,7 +62,6 @@ class Cart extends Component
     }
 
     
-
     public function saveJobs($index) //mozda da umesto save bude add
     {
 

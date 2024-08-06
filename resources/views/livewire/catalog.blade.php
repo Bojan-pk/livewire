@@ -121,7 +121,7 @@
                         </svg>
                     </button>
                 </h2>
-                <div id="accordion-collapse-body-4" class="hidden" aria-labelledby="accordion-collapse-heading-4">
+                <div id="accordion-collapse-body-4" class="{{ $activeColapse == 'condition' ? 'block' : 'hidden' }}" aria-labelledby="accordion-collapse-heading-4">
                     @if ($catalog)
                         @foreach ($catalog->conditions as $item)
                         <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
