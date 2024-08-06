@@ -9,35 +9,30 @@ class Cart extends Component
 
     public $jobsIds = [];
     public $educationIds = [];
+    public $conditionIds = [];
     public $fms = [];
     public $selectedFm;
 
     //uputstvo o UOIR
     public $directions = [];
 
-    protected $listeners = ['saveJobs'];
+    protected $listeners = ['saveJobs', 'saveEducations','saveConditions'];
 
 
     public function mount()
     {
+        //session()->flush('directions');
         // Učitaj stanje korpe iz sesije
-        //$this->jobsIds = session()->get('savedJobsIds', []);
-        //$this->fms[]='Radno mesto 1';
-
         if ($this->directions = session()->get('directions', [])) {
         } else {
             $this->addFm();
         }
-
-        /* $keys = array_keys($this->directions);
-
-        $this->fmSelected(end($keys)); */
     }
 
     public function updated($property)
     {
         dd('sasa');
-        if (!$this->selectedFm || !array_key_exists($this->selectedFm,$this->directions)) {
+        if (!$this->selectedFm || !array_key_exists($this->selectedFm, $this->directions)) {
             $keys = array_keys($this->directions);
 
             $this->fmSelected(end($keys));
@@ -51,7 +46,9 @@ class Cart extends Component
 
         $this->directions['Радно место ' . count($this->fms) + 1] = [
             'jobs' => [],
-            'educations' => []
+            'educations' => [],
+            'conditions' => [],
+
         ];
 
         // Čuvanje u sesiji
@@ -59,38 +56,46 @@ class Cart extends Component
     }
 
     public function delFm($index)
-    {
-        //dd($id);
-        // unset($this->fms[$id]);
-        unset($this->directions[$index]); // briše posao u okviru FM
-        // $this->directions = array_values(  $this->directions); // reindex array;
-        //dodaje prazno polje
+    {   
+        unset($this->directions[$index]); // briše posao u okviru FM  
         if ($this->fms == null) $this->addFm();
     }
 
-    /* public function saveJobs($id)//mozda da umesto save bude add
-    {
-        if (in_array($id, $this->jobsIds)) {
-            $this->jobsIds = array_diff($this->jobsIds, [$id]);
-            
-        } else $this->jobsIds[]=$id;
-        session()->put('savedJobsIds', $this->jobsIds);
-    } */
+    
 
     public function saveJobs($index) //mozda da umesto save bude add
     {
 
         if (in_array($index, $this->directions[$this->selectedFm]['jobs'])) //proverava da li posao već postoji
-        {
-            //dump($this->selectedFm);
-            //$this->jobsIds = array_diff($this->jobsIds, [$id]);
-            //unset($this->directions[$this->selectedFm]['jobs'][$index]);// briše posao u okviru FM
+        {  
             $this->directions[$this->selectedFm]['jobs'] = array_diff($this->directions[$this->selectedFm]['jobs'], [$index]);
-        } else $this->directions[$this->selectedFm]['jobs'][] = $index;
+        }   else $this->directions[$this->selectedFm]['jobs'][] = $index;
 
-        //session()->put('savedJobsIds', $this->jobsIds);
         session()->put('directions', $this->directions);
     }
+
+    public function saveEducations($index) 
+    {
+
+        if (in_array($index, $this->directions[$this->selectedFm]['educations'])) //proverava da li edukacija već postoji
+        {            
+            $this->directions[$this->selectedFm]['educations'] = array_diff($this->directions[$this->selectedFm]['educations'], [$index]);
+        } else $this->directions[$this->selectedFm]['educations'][] = $index;
+
+        session()->put('directions', $this->directions);
+    }
+
+    public function saveConditions($index) 
+    {
+
+        if (@in_array($index, $this->directions[$this->selectedFm]['conditions'])) //proverava da li edukacija već postoji
+        {            
+            $this->directions[$this->selectedFm]['conditions'] = array_diff($this->directions[$this->selectedFm]['conditions'], [$index]);
+        } else $this->directions[$this->selectedFm]['conditions'][] = $index;
+
+        session()->put('directions', $this->directions);
+    }
+
 
     public function fmSelected($index)
     {
@@ -102,7 +107,7 @@ class Cart extends Component
     public function render()
     {
         //obezbeđuje da u cart uvek bude selektovano poslednje fm, ukoliko pre toga nije selektovano neko drugo
-        if (!$this->selectedFm || !array_key_exists($this->selectedFm,$this->directions)) {
+        if (!$this->selectedFm || !array_key_exists($this->selectedFm, $this->directions)) {
             $keys = array_keys($this->directions);
 
             $this->fmSelected(end($keys));

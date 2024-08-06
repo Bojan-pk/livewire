@@ -26,10 +26,8 @@
                         class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-green-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 hover:bg-green-50 dark:hover:bg-gray-800 gap-3"
                         data-accordion-target="#accordion-collapse-body-1" aria-expanded="true"
                         aria-controls="accordion-collapse-body-1">
-                        <span>Типични послови {{ @count($jobsIds) }}</span>
-                        @foreach ($jobsIds as $value)
-                            {{ $value }}
-                        @endforeach
+                        <span>Типични послови </span>
+                       
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -66,45 +64,14 @@
                         @endforeach
                     @endif
                 </div>
-                <h2 id="accordion-collapse-heading-2">
-                    <button type="button"
-                        class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-green-500  border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800  hover:bg-green-50 gap-3"
-                        data-accordion-target="#accordion-collapse-body-2" aria-expanded="false"
-                        aria-controls="accordion-collapse-body-2">
-                        <span>Најчешће систематизовани називи формацијских места {{ count($usualyFmIds) }}</span>
-                        @foreach ($usualyFmIds as $value)
-                            {{ $value }}
-                        @endforeach
-                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5 5 1 1 5" />
-                        </svg>
-                    </button>
-                </h2>
-                <div id="accordion-collapse-body-2" class="{{ $activeColapse == 'usualyFms' ? 'block' : 'hidden' }}"
-                    aria-labelledby="accordion-collapse-heading-2">
-                    @if ($catalog)
-                        @foreach ($catalog->fms as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
-                                <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                                <input id="default-checkbox" wire:key="{{ $item->id }}"
-                                    wire:click="saveUsualyFms({{ $item->id }})" type="checkbox"
-                                    {{ in_array($item->id, $usualyFmIds) ? 'checked' : '' }}
-                                    class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+                
                 <h2 id="accordion-collapse-heading-3">
                     <button type="button"
                         class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-green-500  border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800  dark:text-gray-400 hover:bg-green-50 gap-3"
                         data-accordion-target="#accordion-collapse-body-3" aria-expanded="false"
                         aria-controls="accordion-collapse-body-3">
-                        <span>Образовање/усавршавање {{ count($educationIds) }}</span>
-                        @foreach ($educationIds as $value)
-                            {{ $value }}
-                        @endforeach
+                        <span>Образовање/усавршавање </span>
+                      
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -118,10 +85,24 @@
                         @foreach ($catalog->educations as $item)
                             <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                                 <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                                <input id="default-checkbox" wire:key="{{ $item->id }}"
-                                    wire:click="saveEducation({{ $item->id }})" type="checkbox"
-                                    {{ in_array($item->id, $educationIds) ? 'checked' : '' }}
-                                    class=" p-1 ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                @if (in_array($item->id, $educationIds))
+                                    <a href="#" wire:click="$dispatch('saveEducations', [{{$item->id}}])" >
+                                        <span
+                                            class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                            Izabrano
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#" wire:click="$dispatch('saveEducations', [{{$item->id}}])">
+                                        <span
+                                            class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                            Izaberi
+                                        </span>
+                                    </a>
+                                @endif  
+
                             </div>
                         @endforeach
                     @endif
@@ -143,11 +124,26 @@
                 <div id="accordion-collapse-body-4" class="hidden" aria-labelledby="accordion-collapse-heading-4">
                     @if ($catalog)
                         @foreach ($catalog->conditions as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex justify-left">
+                        <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                                 <p class="mb-2 text-gray-500">{{ $item->name }}</p>
-                                <div>
+                                @if (in_array($item->id, $conditionIds))
+                                    <a href="#" wire:click="$dispatch('saveConditions', [{{$item->id}}])" >
+                                        <span
+                                            class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                            Izabrano
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#" wire:click="$dispatch('saveConditions', [{{$item->id}}])">
+                                        <span
+                                            class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                            Izaberi
+                                        </span>
+                                    </a>
+                                @endif  
 
-                                </div>
                             </div>
                         @endforeach
                     @endif
@@ -177,6 +173,35 @@
                         @endforeach
                     @endif
                 </div>
+
+                <h2 id="accordion-collapse-heading-2">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-green-500  border border-b-0 border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800  hover:bg-green-50 gap-3"
+                        data-accordion-target="#accordion-collapse-body-2" aria-expanded="false"
+                        aria-controls="accordion-collapse-body-2">
+                        <span>Најчешће систематизовани називи формацијских места </span>
+                      
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-2" class="{{ $activeColapse == 'usualyFms' ? 'block' : 'hidden' }}"
+                    aria-labelledby="accordion-collapse-heading-2">
+                    @if ($catalog)
+                        @foreach ($catalog->fms as $item)
+                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                                <p class="mb-2 text-gray-500">{{ $item->name }}</p>
+                               
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+
+
+
             </div>
         </div>
         <div class="w-5/12 mx-2 rounded border p-2">
@@ -185,7 +210,7 @@
             @if ($results)
                 @foreach ($results as $result)
                     <p wire:click="fmSelected({{ $result->id }})"
-                        class="mb-2 p-1.5 text-gray-700 border font-medium border-gray-300 rounded bg-gray-50 cursor-pointer {{ $activeFm == $result->id ? ' bg-green-200' : '' }}">
+                        class="mb-1 p-1.0 text-gray-700 border font-medium border-gray-300 rounded bg-gray-50 cursor-pointer {{ $activeFm == $result->id ? ' bg-green-200' : '' }}">
                         {{ $result->name }}
                     </p>
                 @endforeach

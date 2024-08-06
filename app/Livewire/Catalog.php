@@ -18,9 +18,15 @@ class Catalog extends Component
     public $jobsIds=[];
     public $usualyFmIds=[];
     public $educationIds=[];
+    public $conditionIds=[];
     public $activeColapse='jobs';
 
-    protected $listeners = ['fmCartSelected','saveJobs'];
+    protected $listeners = [
+        'fmCartSelected',
+        'saveJobs',
+        'saveEducations',
+        'saveConditions'
+    ];
     
     public function fmSelected($fmId){
 
@@ -38,6 +44,14 @@ class Catalog extends Component
         if(@$directions[$index]['jobs']) {
             $this->jobsIds=$directions[$index]['jobs'];
         } else $this->jobsIds=[];
+
+        if(@$directions[$index]['educations']) {
+            $this->jobsIds=$directions[$index]['educations'];
+        } else $this->educationIds=[];
+        
+        if(@$directions[$index]['conditions']) {
+            $this->jobsIds=$directions[$index]['conditions'];
+        } else $this->conditionIds=[];
        
     } 
 
@@ -73,14 +87,27 @@ class Catalog extends Component
 
     }
 
-    public function saveEducation($id)
+    public function saveEducations($id)
     {
+        //dd('stiglo');
         if (in_array($id, $this->educationIds)) {
             $this->educationIds = array_diff($this->educationIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
         } else $this->educationIds[]=$id;
 
         $this->activeColapse='education';
+
+    }
+
+    public function saveConditions($id)
+    {
+        //dd('stiglo');
+        if (in_array($id, $this->conditionIds)) {
+            $this->conditionIds = array_diff($this->conditionIds, [$id]);
+            //session()->put('saved_items', $this->savedItems);
+        } else $this->conditionIds[]=$id;
+
+        $this->activeColapse='condition';
 
     }
 
