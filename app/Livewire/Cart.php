@@ -18,7 +18,6 @@ class Cart extends Component
 
     protected $listeners = ['saveJobs', 'saveEducations','saveConditions'];
 
-
     public function mount()
     {
         //session()->flush('directions');
@@ -28,6 +27,28 @@ class Cart extends Component
             $this->addFm();
         }
     }
+
+
+    public function updateFmName($index, $newName)
+    {
+       // dd($index, $newName);
+        
+        $keys = array_keys($this->directions);
+
+        
+        $oldKey = $keys[$index];
+        //dd($oldKey);
+        $temporary=$this->directions[$oldKey];
+        unset($this->directions[$oldKey]);
+        $this->directions[$newName] = $temporary;
+        //$this->directions[$newName]['name'] = $newName;
+        //$this->directions[]= array_diff($this->directions, [$oldKey]);
+
+        
+        session()->put('directions', $this->directions);
+
+    }
+
 
     public function updated($property)
     {

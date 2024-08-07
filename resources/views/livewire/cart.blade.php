@@ -27,8 +27,8 @@
 
                 @foreach ($directions as $fm=>$direction)
                 <tr class="border-b {{$selectedFm==$fm?' text-white bg-green-500':'bg-white '}}" wire:click="fmSelected('{{$fm}}')">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{$fm}}
+                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                         <input type="text"  wire:change="updateFmName({{ $loop->index }}, $event.target.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" value="{{$fm}}" placeholder="{{$fm}}" required />
                     </th>
                     <td class="px-6 py-4">
                         @if ($direction['jobs'])

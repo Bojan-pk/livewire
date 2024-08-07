@@ -11,15 +11,15 @@ use Livewire\Component;
 class Catalog extends Component
 
 {
-   
-    public $searchTerm='';
+
+    public $searchTerm = '';
     public $activeFm;
     public $catalog;
-    public $jobsIds=[];
-    public $usualyFmIds=[];
-    public $educationIds=[];
-    public $conditionIds=[];
-    public $activeColapse='jobs';
+    public $jobsIds = [];
+    public $usualyFmIds = [];
+    public $educationIds = [];
+    public $conditionIds = [];
+    public $activeColapse = 'jobs';
 
     protected $listeners = [
         'fmCartSelected',
@@ -27,33 +27,37 @@ class Catalog extends Component
         'saveEducations',
         'saveConditions'
     ];
-    
-    public function fmSelected($fmId){
 
-        $this->activeFm=$fmId;
-        $this->catalog=ModelsCatalog::where('fm_id',$fmId)->first();
-       
-    } 
+    public function mount()
+    {
+        $this->catalog = ModelsCatalog::first();
+    }
 
-    public function fmCartSelected($index){
+    public function fmSelected($fmId)
+    {
+        $this->activeFm = $fmId;
+        $this->catalog = ModelsCatalog::where('fm_id', $fmId)->first();
+    }
+
+    public function fmCartSelected($index)
+    {
 
         //dd($index);
 
-        $directions=session()->get('directions', []);
-        
-        if(@$directions[$index]['jobs']) {
-            $this->jobsIds=$directions[$index]['jobs'];
-        } else $this->jobsIds=[];
+        $directions = session()->get('directions', []);
 
-        if(@$directions[$index]['educations']) {
-            $this->jobsIds=$directions[$index]['educations'];
-        } else $this->educationIds=[];
-        
-        if(@$directions[$index]['conditions']) {
-            $this->jobsIds=$directions[$index]['conditions'];
-        } else $this->conditionIds=[];
-       
-    } 
+        if (@$directions[$index]['jobs']) {
+            $this->jobsIds = $directions[$index]['jobs'];
+        } else $this->jobsIds = [];
+
+        if (@$directions[$index]['educations']) {
+            $this->jobsIds = $directions[$index]['educations'];
+        } else $this->educationIds = [];
+
+        if (@$directions[$index]['conditions']) {
+            $this->jobsIds = $directions[$index]['conditions'];
+        } else $this->conditionIds = [];
+    }
 
     public function updatedJobsIds()
     {
@@ -68,12 +72,12 @@ class Catalog extends Component
         if (in_array($id, $this->jobsIds)) {
             $this->jobsIds = array_diff($this->jobsIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
-        } else $this->jobsIds[]=$id;
-        
-         // Emituj događaj sa informacijama o selektovanoj stavci
-       // $this->dispatch('saveJobs', $id);
+        } else $this->jobsIds[] = $id;
 
-        $this->activeColapse='jobs';
+        // Emituj događaj sa informacijama o selektovanoj stavci
+        // $this->dispatch('saveJobs', $id);
+
+        $this->activeColapse = 'jobs';
     }
 
     public function saveUsualyFms($id)
@@ -81,10 +85,9 @@ class Catalog extends Component
         if (in_array($id, $this->usualyFmIds)) {
             $this->usualyFmIds = array_diff($this->usualyFmIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
-        } else $this->usualyFmIds[]=$id;
+        } else $this->usualyFmIds[] = $id;
 
-        $this->activeColapse='usualyFms';
-
+        $this->activeColapse = 'usualyFms';
     }
 
     public function saveEducations($id)
@@ -93,10 +96,9 @@ class Catalog extends Component
         if (in_array($id, $this->educationIds)) {
             $this->educationIds = array_diff($this->educationIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
-        } else $this->educationIds[]=$id;
+        } else $this->educationIds[] = $id;
 
-        $this->activeColapse='education';
-
+        $this->activeColapse = 'education';
     }
 
     public function saveConditions($id)
@@ -105,10 +107,9 @@ class Catalog extends Component
         if (in_array($id, $this->conditionIds)) {
             $this->conditionIds = array_diff($this->conditionIds, [$id]);
             //session()->put('saved_items', $this->savedItems);
-        } else $this->conditionIds[]=$id;
+        } else $this->conditionIds[] = $id;
 
-        $this->activeColapse='condition';
-
+        $this->activeColapse = 'condition';
     }
 
     public function render()
@@ -117,8 +118,8 @@ class Catalog extends Component
         $results = [];
 
         if (empty($this->searchTerm)) {
-           
-           $results="";
+
+            $results = "";
         } else {
             //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
@@ -131,12 +132,12 @@ class Catalog extends Component
             $results = $query->orderBy('name')->take(10)->get();
         }
 
-        return view('livewire.catalog',
-        [
-            'results' => $results,
-           
-        ]);
-    
-    
+        return view(
+            'livewire.catalog',
+            [
+                'results' => $results,
+
+            ]
+        );
     }
 }
