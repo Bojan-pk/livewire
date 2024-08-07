@@ -10,8 +10,9 @@ class Cart extends Component
     public $jobsIds = [];
     public $educationIds = [];
     public $conditionIds = [];
-    public $fms = [];
-    public $selectedFm;
+    //public $fms = [];
+    public  $selectedFm;
+    public $newJobName = [];
 
     //uputstvo o UOIR
     public $directions = [];
@@ -21,51 +22,31 @@ class Cart extends Component
     public function mount()
     {
         //session()->flush('directions');
-        // Učitaj stanje korpe iz sesije
-        if ($this->directions = session()->get('directions', [])) {
-        } else {
-            $this->addFm();
-        }
+        // Učitaj podatke iz sesije ako postoje
+        $this->directions = session()->get('directions', [
+            [
+                'newJobName' => 'Радно место 1',
+                'jobs' => [],
+                'educations' => [],
+                'conditions' => [],
+            ]
+        ]); 
+        $this->selectedFm=0;
     }
 
-
-    public function updateFmName($index, $newName)
+    public function updatedDirections($value, $name)
     {
-       // dd($index, $newName);
         
-        $keys = array_keys($this->directions);
-
-        
-        $oldKey = $keys[$index];
-        //dd($oldKey);
-        $temporary=$this->directions[$oldKey];
-        unset($this->directions[$oldKey]);
-        $this->directions[$newName] = $temporary;
-        //$this->directions[$newName]['name'] = $newName;
-        //$this->directions[]= array_diff($this->directions, [$oldKey]);
-
-        
+        [$index, $field] = explode('.', $name);
+        $this->directions[$index][$field] = $value;
         session()->put('directions', $this->directions);
-
-    }
-
-
-    public function updated($property)
-    {
-        dd('sasa');
-        if (!$this->selectedFm || !array_key_exists($this->selectedFm, $this->directions)) {
-            $keys = array_keys($this->directions);
-
-            $this->fmSelected(end($keys));
-        }
     }
 
     public function addFm()
     {
 
-        $this->fms[] = 'Радно место ' . count($this->fms) + 1;
-
-        $this->directions['Радно место ' . count($this->fms) + 1] = [
+        $this->directions[] = [
+            'newJobName'=>'Радно место '.count($this->directions)+1,
             'jobs' => [],
             'educations' => [],
             'conditions' => [],
@@ -79,10 +60,12 @@ class Cart extends Component
     public function delFm($index)
     {   
         unset($this->directions[$index]); // briše posao u okviru FM  
-        if ($this->fms == null) $this->addFm();
+        session()->put('directions', $this->directions);
     }
 
-    
+   
+
+
     public function saveJobs($index) //mozda da umesto save bude add
     {
 
@@ -119,7 +102,7 @@ class Cart extends Component
 
     public function fmSelected($index)
     {
-        //dd($index);
+        //dump($index);
         $this->selectedFm = $index;
         $this->dispatch('fmCartSelected', $index);
     }
@@ -127,11 +110,12 @@ class Cart extends Component
     public function render()
     {
         //obezbeđuje da u cart uvek bude selektovano poslednje fm, ukoliko pre toga nije selektovano neko drugo
-        if (!$this->selectedFm || !array_key_exists($this->selectedFm, $this->directions)) {
+       if ($this->selectedFm===null || !array_key_exists($this->selectedFm, $this->directions)) {
+            //dump('uuu');
             $keys = array_keys($this->directions);
 
             $this->fmSelected(end($keys));
-        }
+        } 
         return view('livewire.cart');
     }
 }
