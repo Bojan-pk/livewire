@@ -19,13 +19,15 @@ class Catalog extends Component
     public $usualyFmIds = [];
     public $educationIds = [];
     public $conditionIds = [];
+    public $experienceIds = [];
     public $activeColapse = 'jobs';
 
     protected $listeners = [
         'fmCartSelected',
         'saveJobs',
         'saveEducations',
-        'saveConditions'
+        'saveConditions',
+        'saveExperiences'
     ];
 
     public function mount()
@@ -41,61 +43,30 @@ class Catalog extends Component
 
     public function fmCartSelected($index)
     {
-
-        //dd($index);
-
         $directions = session()->get('directions', []);
 
-        if (@$directions[$index]['jobs']) {
-            $this->jobsIds = $directions[$index]['jobs'];
-        } else $this->jobsIds = [];
-
-        if (@$directions[$index]['educations']) {
-            $this->jobsIds = $directions[$index]['educations'];
-        } else $this->educationIds = [];
-
-        if (@$directions[$index]['conditions']) {
-            $this->jobsIds = $directions[$index]['conditions'];
-        } else $this->conditionIds = [];
+        $this->jobsIds = isset($directions[$index]['jobs']) ? $directions[$index]['jobs'] : [];
+        $this->educationIds = isset($directions[$index]['educations']) ? $directions[$index]['educations'] : [];
+        $this->conditionIds = isset($directions[$index]['conditions']) ? $directions[$index]['conditions'] : [];
+        $this->experienceIds = isset($directions[$index]['experiences']) ? $directions[$index]['experiences'] : [];
     }
 
-    public function updatedJobsIds()
-    {
-        dd('radi');
-        // Ova metoda se poziva svaki put kada se $jobsIds ažurira
-        $this->emit('jobsIdsUpdated', $this->jobsIds);
-    }
 
-    public function saveJobs($id)
+    /* public function saveJobs($id)
     {
         //dd($id);
         if (in_array($id, $this->jobsIds)) {
             $this->jobsIds = array_diff($this->jobsIds, [$id]);
-            //session()->put('saved_items', $this->savedItems);
         } else $this->jobsIds[] = $id;
-
-        // Emituj događaj sa informacijama o selektovanoj stavci
-        // $this->dispatch('saveJobs', $id);
 
         $this->activeColapse = 'jobs';
     }
 
-    public function saveUsualyFms($id)
-    {
-        if (in_array($id, $this->usualyFmIds)) {
-            $this->usualyFmIds = array_diff($this->usualyFmIds, [$id]);
-            //session()->put('saved_items', $this->savedItems);
-        } else $this->usualyFmIds[] = $id;
-
-        $this->activeColapse = 'usualyFms';
-    }
 
     public function saveEducations($id)
     {
-        //dd('stiglo');
         if (in_array($id, $this->educationIds)) {
             $this->educationIds = array_diff($this->educationIds, [$id]);
-            //session()->put('saved_items', $this->savedItems);
         } else $this->educationIds[] = $id;
 
         $this->activeColapse = 'education';
@@ -103,14 +74,50 @@ class Catalog extends Component
 
     public function saveConditions($id)
     {
-        //dd('stiglo');
         if (in_array($id, $this->conditionIds)) {
             $this->conditionIds = array_diff($this->conditionIds, [$id]);
-            //session()->put('saved_items', $this->savedItems);
         } else $this->conditionIds[] = $id;
-
         $this->activeColapse = 'condition';
     }
+
+    public function saveExperiences($id)
+    {
+        if (in_array($id, $this->experienceIds)) {
+            $this->experienceIds = array_diff($this->experienceIds, [$id]);
+        } else $this->experienceIds[] = $id;
+        $this->activeColapse = 'experience';
+    } */
+
+    public function saveItem($id, &$array, $collapse)
+    {
+        if (in_array($id, $array)) {
+            $array = array_diff($array, [$id]);
+        } else {
+            $array[] = $id;
+        }
+        $this->activeColapse = $collapse;
+    }
+
+    public function saveJobs($id)
+    {
+        $this->saveItem($id, $this->jobsIds, 'jobs');
+    }
+
+    public function saveEducations($id)
+    {
+        $this->saveItem($id, $this->educationIds, 'education');
+    }
+
+    public function saveConditions($id)
+    {
+        $this->saveItem($id, $this->conditionIds, 'condition');
+    }
+
+    public function saveExperiences($id)
+    {
+        $this->saveItem($id, $this->experienceIds, 'experience');
+    }
+
 
     public function render()
     {

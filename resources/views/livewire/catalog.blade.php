@@ -27,7 +27,7 @@
                         data-accordion-target="#accordion-collapse-body-1" aria-expanded="true"
                         aria-controls="accordion-collapse-body-1">
                         <span>Типични послови </span>
-                       
+
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -40,10 +40,10 @@
                     @if ($catalog)
                         @foreach ($catalog->jobs as $item)
                             <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
-                                <p class="mb-1 text-gray-500">{{ $item->name }}{{ $item->id }}</p>
-                                
+                                <p class="mb-1 text-gray-500">{{ $item->name }}</p>
+
                                 @if (in_array($item->id, $jobsIds))
-                                    <a href="#" wire:click="$dispatch('saveJobs', [{{$item->id}}])" >
+                                    <a href="#" wire:click="$dispatch('saveJobs', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
@@ -51,7 +51,7 @@
                                         </span>
                                     </a>
                                 @else
-                                    <a href="#" wire:click="$dispatch('saveJobs', [{{$item->id}}])">
+                                    <a href="#" wire:click="$dispatch('saveJobs', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
@@ -64,14 +64,14 @@
                         @endforeach
                     @endif
                 </div>
-                
+
                 <h2 id="accordion-collapse-heading-3">
                     <button type="button"
                         class="flex items-center justify-between w-full p-2 font-medium rtl:text-right text-green-500  border border-gray-200 focus:ring-4 focus:ring-gray-200   hover:bg-green-50 gap-3"
                         data-accordion-target="#accordion-collapse-body-3" aria-expanded="false"
                         aria-controls="accordion-collapse-body-3">
                         <span>Образовање/усавршавање </span>
-                      
+
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,7 +86,7 @@
                             <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
                                 @if (in_array($item->id, $educationIds))
-                                    <a href="#" wire:click="$dispatch('saveEducations', [{{$item->id}}])" >
+                                    <a href="#" wire:click="$dispatch('saveEducations', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
@@ -94,14 +94,14 @@
                                         </span>
                                     </a>
                                 @else
-                                    <a href="#" wire:click="$dispatch('saveEducations', [{{$item->id}}])">
+                                    <a href="#" wire:click="$dispatch('saveEducations', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                                             Izaberi
                                         </span>
                                     </a>
-                                @endif  
+                                @endif
 
                             </div>
                         @endforeach
@@ -115,18 +115,19 @@
                         <span>Посебни услови за обављање формацијских места</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M9 5 5 1 1 5" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
-                <div id="accordion-collapse-body-4" class="{{ $activeColapse == 'condition' ? 'block' : 'hidden' }}" aria-labelledby="accordion-collapse-heading-4">
+                <div id="accordion-collapse-body-4" class="{{ $activeColapse == 'condition' ? 'block' : 'hidden' }}"
+                    aria-labelledby="accordion-collapse-heading-4">
                     @if ($catalog)
                         @foreach ($catalog->conditions as $item)
-                        <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
                                 @if (in_array($item->id, $conditionIds))
-                                    <a href="#" wire:click="$dispatch('saveConditions', [{{$item->id}}])" >
+                                    <a href="#" wire:click="$dispatch('saveConditions', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
@@ -134,15 +135,15 @@
                                         </span>
                                     </a>
                                 @else
-                                    <a href="#" wire:click="$dispatch('saveConditions', [{{$item->id}}])">
+                                    <a href="#"
+                                        wire:click="$dispatch('saveConditions', [{{ $item->id }}])">
                                         <span
                                             class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                                             Izaberi
                                         </span>
                                     </a>
-                                @endif  
-
+                                @endif
                             </div>
                         @endforeach
                     @endif
@@ -160,14 +161,30 @@
                         </svg>
                     </button>
                 </h2>
-                <div id="accordion-collapse-body-5" class="hidden" aria-labelledby="accordion-collapse-heading-5">
+                <div id="accordion-collapse-body-5" class="{{ $activeColapse == 'experience' ? 'block' : 'hidden' }}" aria-labelledby="accordion-collapse-heading-5">
                     @if ($catalog)
                         @foreach ($catalog->experiences as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex justify-left">
-                                <p class="mb-1 text-gray-500">{{ $item->name }}</p>
-                                <div>
-                                </div>
-                            </div>
+                        <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <p class="mb-1 text-gray-500">{{ $item->name }} </p>
+                            @if (in_array($item->id,$experienceIds))
+                                <a href="#" wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
+                                    <span
+                                        class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                        <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                        Izabrano
+                                    </span>
+                                </a>
+                            @else
+                                <a href="#"
+                                    wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
+                                    <span
+                                        class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                        Izaberi
+                                    </span>
+                                </a>
+                            @endif
+                        </div>
                         @endforeach
                     @endif
                 </div>
@@ -178,11 +195,11 @@
                         data-accordion-target="#accordion-collapse-body-2" aria-expanded="false"
                         aria-controls="accordion-collapse-body-2">
                         <span>Најчешће систематизовани називи формацијских места </span>
-                      
+
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 5 5 1 1 5" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M9 5 5 1 1 5" />
                         </svg>
                     </button>
                 </h2>
@@ -192,7 +209,7 @@
                         @foreach ($catalog->fms as $item)
                             <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
-                               
+
                             </div>
                         @endforeach
                     @endif
