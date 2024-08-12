@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regulations', function (Blueprint $table) {
+        Schema::create('rulebooks_tables', function (Blueprint $table) {
             $table->id();
+            $table->string('rb');
             $table->string('name');
-            $table->string('short_name');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('regulations');
+        Schema::dropIfExists('rulebooks_tables');
     }
 };
