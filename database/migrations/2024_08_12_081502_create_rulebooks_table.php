@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('rulebooks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('regulation_id');
-            $table->unsignedBigInteger('rulebooks_table_id');
+           // $table->unsignedBigInteger('rulebooks_table_id');
+           // $table->foreignId('rulebooks_table_id')->constrained('rulebook_tables')->onDelete('cascade');
+            $table->foreignId('rulebooks_table_id')
+              ->constrained('rulebooks_tables')
+              ->onDelete('cascade');
             $table->integer('rb');
             $table->string('fc_sso');
             $table->string('pg_bb');

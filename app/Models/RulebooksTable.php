@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RulebooksTable extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'rb', 'name'
+   ];
 }
