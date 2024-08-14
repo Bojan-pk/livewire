@@ -9,12 +9,33 @@ use App\Livewire\Forms\RulebookUpdateForm;
 
 use App\Models\Regulation;
 use App\Models\Rulebook;
+use App\Models\RulebooksTable;
 
 class RulebookUpdate extends Component
 {
    
     public RulebookUpdateForm $form;
     public $regulations=[];
+
+
+
+    protected $listeners=[
+        'tableSelected'=>'tableSelected'
+    ];
+
+    public function tableSelected($tableId){
+       
+        if($rulebooksTable=RulebooksTable::where('id',$tableId)->first())
+    {
+       // dd($rulebooksTable);
+       $this->form->table_rb=$rulebooksTable->rb;
+        $this->form->table_name=$rulebooksTable->name;
+        $this->form->table_items=$rulebooksTable->rulebooks->toArray();
+       
+    } else return session()->flash('error','Нема података о табелама');
+       
+       //dd($this->form->regulation);
+    }
 
 
 
@@ -49,33 +70,13 @@ class RulebookUpdate extends Component
         unset($this->form->table_items[$key]);
         $this->form->table_items = array_values( $this->form->table_items); // reindex array;
         //dodaje prazno polje
-        if($this->form->table_items==null) $this->form->addTableRow();
+        if($this->form->table_items==null) $this->addTableRow();
 
     }
 
 
 /* 
-    protected $listeners=[
-        'fmSelected'=>'fmSelected'
-    ];
-
-    public function fmSelected($fmId){
-       
-        if($catalog=Catalog::where('fm_id',$fmId)->first())
-    {
-        $this->form->catalogId=$catalog->id;
-        $this->form->fm=$catalog->fm->name;
-        $this->form->usualy_fms=$catalog->fms->pluck('name')->toArray();
-        $this->form->educations=$catalog->educations->pluck('name')->toArray();  
-        $this->form->conditions=$catalog->conditions->pluck('name')->toArray();  
-        $this->form->experiences=$catalog->experiences->pluck('name')->toArray();  
-        $this->form->jobs=$catalog->jobs->pluck('name')->toArray();  
-        $this->form->regulation=$catalog->regulation->name;  
-
-    } else return session()->flash('error','Нема података о ФМ');
-       
-       //dd($this->form->regulation);
-    }
+   
 
     public function removeFm($key) {
         unset($this->form->usualy_fms[$key]);

@@ -11,11 +11,11 @@ class Rulebook extends Model
 
     use HasFactory;
     protected $fillable = [
-         'rb', 'fc_sso', 'pg_bb','note','regulation_id','rulebooks_table_id'
+         'rb','fm','fc_sso', 'pg_bb','note','regulation_id','rulebooks_table_id'
     ];
 
-    public function rulebooksTables()
+    /* public function rulebooksTables()
     {
         return $this->belongsToMany(RulebooksTable::class, 'rulebooks_tables');
-    }
+    } */
 }

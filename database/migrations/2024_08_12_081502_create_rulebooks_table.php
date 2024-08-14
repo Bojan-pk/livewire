@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreignId('rulebooks_table_id')
               ->constrained('rulebooks_tables')
               ->onDelete('cascade');
-            $table->integer('rb');
+            $table->string('rb');
+            $table->string('fm');
             $table->string('fc_sso');
             $table->string('pg_bb');
             $table->string('note'); 

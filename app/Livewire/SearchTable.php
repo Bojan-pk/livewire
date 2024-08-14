@@ -2,23 +2,23 @@
 
 namespace App\Livewire;
 
-use App\Models\Fm;
+use App\Models\RulebooksTable;
 use Livewire\Component;
 
-class SearchFm extends Component
+class SearchTable extends Component
 {
     public $searchTerm='';
     
     protected $listeners=[
-        'fmSelected'=>'fmSelected'
+        'tableSelected'=>'tableSelected'
     ];
 
-    public function fmSelected($fmId){
+    public function tableSelected($tableId){
         $this->searchTerm="";
     }
 
     public function render()
-    { 
+    {
         $results = [];
         if (empty($this->searchTerm)) {
            
@@ -26,15 +26,19 @@ class SearchFm extends Component
         } else {
             //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
-            $query = Fm::query();
+            $query = RulebooksTable::query();
             // Pretraži svaku ključnu reč u polju name
             foreach ($keywords as $keyword) {
-                $query->where('name', 'LIKE', '%' . $keyword . '%');
+                $query->where('name', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
             }
 
             $results = $query->orderBy('name')->take(10)->get();  
         }
-        return view('livewire.search-fm',
+
+
+
+        return view('livewire.search-table',
         [
             'results' => $results,
         ]);

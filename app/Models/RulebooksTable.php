@@ -11,4 +11,11 @@ class RulebooksTable extends Model
     protected $fillable = [
         'rb', 'name'
    ];
+
+ public function rulebooks()
+    {
+        //dd('stiglo');
+        return $this->hasMany(Rulebook::class);
+    }
+
 }

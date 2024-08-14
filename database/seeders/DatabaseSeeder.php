@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
          $this->call(RegulationSeeder::class);
          $this->call(ExperienceSeeder::class);
          $this->call(UserSeeder::class);
+         $this->call(RulebookSeeder::class);
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
@@ -63,7 +64,7 @@ class DatabaseSeeder extends Seeder
             );
 
         }
-
+            
 
 
     }

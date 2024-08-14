@@ -24,7 +24,13 @@ class RulebookUpdateForm extends Form
     #[Validate('required|max:255')]
     public $table_rb='1';
 
-    /* #[Validate('array|min:1', message: "Барем једно ФМ морате унети.")] */
+    /* #[Validate([
+        //'table_items' => 'required',
+        'table_items.*.rb' =>'required',
+        'table_items.*.fm' =>'required',
+        'table_items.*.fc_sso' =>'required',
+        'table_items.*.pg_bb' =>'required'
+    ], )] */
     public $table_items = [
         [
             'rb' => '1',
@@ -58,8 +64,25 @@ class RulebookUpdateForm extends Form
     #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
     public $new_regulation='Neka regulativa';
 
+    protected function rules()
+    {
+        return [
+            'table_items.*.rb' => 'required',
+            'table_items.*.fm' => 'required',
+            'table_items.*.fc_sso' => 'required',
+            'table_items.*.pg_bb' => 'required',
+        ];
+    }
 
-   
+    protected function messages()
+    {
+        return [
+            'table_items.*.rb.required' => 'Obavezno polje',
+            'table_items.*.fm.required' => 'Obavezno polje',
+            'table_items.*.fc_sso.required' => 'Obavezno polje',
+            'table_items.*.pg_bb.required' => 'Obavezno polje',
+        ];
+    }
 
     public function customValidate()
     {

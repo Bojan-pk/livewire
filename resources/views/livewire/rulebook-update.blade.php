@@ -69,43 +69,45 @@
       
       @if ($form->table_items)
       @foreach ($form->table_items as $key => $value)
-      <div class="flex items-start mb-2">
+      <div class="flex items-start mb-1">
       <div class="w-1/12">
-            <input wire:model="form.table_items.{{$key}}.rb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="РБ">
+            <input wire:model="form.table_items.{{$key}}.rb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="РБ">
             <div>
-               @error('form.table_items.{{$key}}.rb')
+           
+               @error("form.table_items.{$key}.rb")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
+              
             </div>
          </div>
          <div class="w-4/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив РМ">
+            <input wire:model="form.table_items.{{$key}}.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="Унеси назив РМ">
             <div>
-               @error('form.table_items.{{$key}}.fm')
+               @error("form.table_items.{$key}.fm")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-2/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.fc_sso" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="фч/ссо">
+            <input wire:model="form.table_items.{{$key}}.fc_sso" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="фч/ссо">
             <div>
-               @error('form.table_items.{{$key}}.fc_sso')
+               @error("form.table_items.{$key}.fc_sso")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-1/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.pg_bb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="пг/бб">
+            <input wire:model="form.table_items.{{$key}}.pg_bb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="пг/бб">
             <div>
-               @error('form.table_items.{{$key}}.pg_bb')
+               @error("form.table_items.{$key}.pg_bb")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-3/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.note" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Напомена">
+            <input wire:model="form.table_items.{{$key}}.note" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="Напомена">
             <div>
-               @error('form.table_items.{{$key}}.note')
+               @error("form.table_items.{$key}.note")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
@@ -130,7 +132,7 @@
    <div class="w-3/12 mx-2 rounded border p-2">
       <!-- <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Пронађи
             формацијско место</label> -->
-      @livewire('search-fm')
+      @livewire('search-table')
       <div class="flex items-center p-4 mb-4 mt-8 text-blue-800 rounded-lg bg-blue-50 " role="alert">
          <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
