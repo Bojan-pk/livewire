@@ -31,17 +31,25 @@ class RulebookUpdate extends Component
         
     }
 
-
     public function addTableRow()
     {
-       $this->form->table_items[] = '';
+       $this->form->table_items[]= 
+        [
+            'rb' => '',
+            'fm' => '',
+            'fc_sso' => '',
+            'pg_bb' => '',
+            'note' => '',
+            'regulation_id' => ''
+        ];
     }
+   
     
     public function removeTableRow($key) {
         unset($this->form->table_items[$key]);
         $this->form->table_items = array_values( $this->form->table_items); // reindex array;
         //dodaje prazno polje
-        if($this->form->table_items==null) $this->addTableRow();
+        if($this->form->table_items==null) $this->form->addTableRow();
 
     }
 

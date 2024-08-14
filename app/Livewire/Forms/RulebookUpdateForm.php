@@ -12,19 +12,29 @@ use App\Models\Experience;
 use App\Models\Fm;
 use App\Models\Job;
 use App\Models\Regulation;
+use App\Models\Rulebook;
 use App\Models\RulebooksTable;
 use Livewire\Attributes\Rule;
 
 class RulebookUpdateForm extends Form
 {
     #[Validate('required|max:255')]
-    public $table_name;
+    public $table_name='Uprava za organizaciju';
 
     #[Validate('required|max:255')]
-    public $table_rb;
+    public $table_rb='1';
 
     /* #[Validate('array|min:1', message: "Барем једно ФМ морате унети.")] */
-    public $table_items = [''];
+    public $table_items = [
+        [
+            'rb' => '1',
+            'fm' => 'referent',
+            'fc_sso' => 'pk',
+            'pg_bb' => '19',
+            'note' => 'napomena',
+            'regulation_id' => '',
+        ],
+    ];
 
     /*
     
@@ -46,18 +56,10 @@ class RulebookUpdateForm extends Form
     public $regulation = null;
 
     #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
-    public $new_regulation;
+    public $new_regulation='Neka regulativa';
 
 
-public function mount(){
-    $this->table_items[]=[
-        'rb'=>'',
-        'fm'=>'',
-        'fc_sso'=>'',
-        'pg_bb'=>'',
-        'note'=>'',
-    ];
-}
+   
 
     public function customValidate()
     {
@@ -88,56 +90,32 @@ public function mount(){
             'name' => $this->table_name,
             'rb' => $this->table_rb,
         ]);
+       
         $tableId = $table->id;
-        //  usualy_fms 
-        //dd($table);
-
-       // $usualy_fms = $this->makeCleanArray($this->usualy_fms);
-        //dd($usualy_fms);
-
-        //$fmIds = [];
-        foreach ($usualy_fms as $fmName) {
-            $fm = Fm::firstOrCreate(['name' => $fmName]);
-            $fmIds[] = $fm->id;
-        }
-        //education
-        $educations = $this->makeCleanArray($this->educations);
-        // $educationIds = [];
-        foreach ($educations as $educationName) {
-            $education = Education::firstOrCreate(['name' => $educationName]);
-            $educationIds[] = $education->id;
-        }
-
-
-        //condition
-        $conditions = $this->makeCleanArray($this->conditions);
-        // $conditionIds = [];
-        foreach ($conditions as $conditionName) {
-            $condition = Condition::firstOrCreate(['name' => $conditionName]);
-            $conditionIds[] = $condition->id;
-        }
-
-        //experiences
-        $experiences = $this->makeCleanArray($this->experiences);
-        //$experienceIds = [];
-        foreach ($experiences as $experienceName) {
-            $experience = Experience::firstOrCreate(['name' => $experienceName]);
-            $experienceIds[] = $experience->id;
-        }
-
-        //jobs
-        $jobs = $this->makeCleanArray($this->jobs);
-        // $jobIds = [];
-        foreach ($jobs as $jobName) {
-            $job = Job::firstOrCreate(['name' => $jobName]);
-            $jobIds[] = $job->id;
-        }
-
-        //regulation
         if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
         }
         $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
+        
+        Rulebook::where('rulebooks_table_id', $tableId)->delete();
+        //dd($tableId );
+        foreach ($this->table_items as $item) {
+            Rulebook::create([
+                'rulebooks_table_id' => $tableId,
+                'rb' => $item['rb'],
+                'fm' => $item['fm'],
+                'fc_sso' => $item['fc_sso'],
+                'pg_bb' => $item['pg_bb'],
+                'note' => $item['note'],
+                'regulation_id' => $regulation->id,
+                // ... druga polja
+            ]);
+        }
+         }
+       //regulation
+      
+       
+        /*  $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
 
         //dd($fmId);
         $catalog = Catalog::firstOrCreate(
@@ -152,7 +130,7 @@ public function mount(){
         $catalog->jobs()->sync($jobIds);
         $catalog->experiences()->sync($experienceIds);
     }
-
+ */
 
 
     public function hasNonEmptyValue($array)

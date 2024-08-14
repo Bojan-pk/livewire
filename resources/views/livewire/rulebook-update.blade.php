@@ -47,9 +47,9 @@
             </div>
          </div>
          <div class="w-10/12 ml-3">
-            <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900">Назив табеле
+            <label for="table_name" class="block mb-2 text-sm font-medium text-gray-900">Назив табеле
       </label>
-            <input wire:model="form.table_name" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив табеле">
+            <input wire:model="form.table_name" type="text" id="table_name" aria-describedby="table_name-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив табеле">
             <div>
                @error('form.table_name')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
@@ -71,41 +71,41 @@
       @foreach ($form->table_items as $key => $value)
       <div class="flex items-start mb-2">
       <div class="w-1/12">
-            <input wire:model="form.table_item.{{$key}}.rb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="РБ">
+            <input wire:model="form.table_items.{{$key}}.rb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="РБ">
             <div>
-               @error('form.table_item.{{$key}}.rb')
+               @error('form.table_items.{{$key}}.rb')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-4/12 ml-2">
-            <input wire:model="form.table_item.{{$key}}.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив РМ">
+            <input wire:model="form.table_items.{{$key}}.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив РМ">
             <div>
-               @error('form.table_item.{{$key}}.fm')
+               @error('form.table_items.{{$key}}.fm')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-2/12 ml-2">
-            <input wire:model="form.table_item.{{$key}}.fc_sso" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="фч/ссо">
+            <input wire:model="form.table_items.{{$key}}.fc_sso" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="фч/ссо">
             <div>
-               @error('form.table_item.{{$key}}.fc_sso')
+               @error('form.table_items.{{$key}}.fc_sso')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-1/12 ml-2">
-            <input wire:model="form.table_item.{{$key}}.pg_bb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="пг/бб">
+            <input wire:model="form.table_items.{{$key}}.pg_bb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="пг/бб">
             <div>
-               @error('form.table_item.{{$key}}.pg_bb')
+               @error('form.table_items.{{$key}}.pg_bb')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
          </div>
          <div class="w-3/12 ml-2">
-            <input wire:model="form.table_item.{{$key}}.note" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Напомена">
+            <input wire:model="form.table_items.{{$key}}.note" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Напомена">
             <div>
-               @error('form.table_item.{{$key}}.note')
+               @error('form.table_items.{{$key}}.note')
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
