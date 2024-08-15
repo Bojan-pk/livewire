@@ -15,18 +15,23 @@ class RegulationSeeder extends Seeder
     {
         DB::table('regulations')->insert([
             'name' => 'Katalog FM, PVL, SVL ....',
+            'short_name' => 'Katalog FM',
         ]);
         DB::table('regulations')->insert([
             'name' => 'Katalog FM, CL, SVL ....',
+            'short_name' => 'Katalog FM',
         ]);
         DB::table('regulations')->insert([
             'name' => 'Pravilnik o elementima FM PVL, SVL ...',
+            'short_name' => 'Elementi FM',
         ]);
         DB::table('regulations')->insert([
             'name' => 'Pravilnik o elementima FM CL, SVL ...',
+            'short_name' => 'Elementi FM',
         ]);
         DB::table('regulations')->insert([
             'name' => 'Pravilnik o VES i ES, SVL ...',
+            'short_name' => 'Pravilnik VES',
         ]);
         
     }

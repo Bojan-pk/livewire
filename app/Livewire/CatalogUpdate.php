@@ -98,7 +98,7 @@ class CatalogUpdate extends Component
 
     public function mount()
     {
-        $this->regulations = Regulation::pluck('name')->toArray(); 
+        $this->regulations = Regulation::where('short_name','Katalog FM')->pluck('name')->toArray(); 
     }
 
     public function submitForm() {

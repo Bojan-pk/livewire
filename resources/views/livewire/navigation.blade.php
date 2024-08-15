@@ -23,8 +23,11 @@
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg></button>
           <!-- Dropdown menu -->
-          <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+          <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-70">
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
+              <li>
+                <a href="/regulation-administration" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Унос Правне нормативе</a>
+              </li>
               <li>
                 <a href="/catalog-administration" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Унос каталога</a>
               </li>

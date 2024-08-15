@@ -13,86 +13,92 @@ use App\Models\RulebooksTable;
 
 class RulebookUpdate extends Component
 {
-   
+
     public RulebookUpdateForm $form;
-    public $regulations=[];
+    public $regulations = [];
 
 
 
-    protected $listeners=[
-        'tableSelected'=>'tableSelected'
+    protected $listeners = [
+        'tableSelected' => 'tableSelected'
     ];
 
-    public function tableSelected($tableId){
-        $this->resetValidation();
-        if($rulebooksTable=RulebooksTable::where('id',$tableId)->first())
+
+    public function mount()
     {
-       // dd($rulebooksTable);
-       $this->form->table_rb=$rulebooksTable->rb;
-        $this->form->table_name=$rulebooksTable->name;
-        $this->form->table_id=$rulebooksTable->id;
-        $this->form->table_items=$rulebooksTable->rulebooks->sortBy('rb')->toArray();
-       
-    } else return session()->flash('error','Нема података о табелама');
-       
-       //dd($this->form->regulation);
+        $this->regulations = Regulation::where('short_name', 'Elementi FM')->pluck('name')->toArray();
+    }
+
+    public function tableSelected($tableId)
+    {
+        $this->resetValidation();
+
+        if ($rulebooksTable = RulebooksTable::where('id', $tableId)->first()) {
+            // dd($rulebooksTable);
+            $this->form->table_rb = $rulebooksTable->rb;
+            $this->form->table_name = $rulebooksTable->name;
+            $this->form->table_id = $rulebooksTable->id;
+            $this->form->table_items = $rulebooksTable->rulebooks->sortBy('rb')->toArray();
+        } else return session()->flash('error', 'Нема података о табелама');
+
+
     }
 
 
 
-    public function submitForm() {
-        
+    public function submitForm()
+    {
+
         $this->validate();
 
-        
+
         //if($this->form->customValidate()) return;
 
         $this->form->store();
-        session()->flash('success','Подаци су успешно унети');
+        session()->flash('success', 'Подаци су успешно унети');
         $this->form->reset();
-        
     }
 
     public function addTableRow()
     {
-       $this->form->table_items[]= 
-        [
-            'rb' => '',
-            'fm' => '',
-            'fc_sso' => '',
-            'pg_bb' => '',
-            'note' => '',
-            'regulation_id' => ''
-        ];
-    }
-   
-    
-    public function removeTableRow($key) {
-        unset($this->form->table_items[$key]);
-        $this->form->table_items = array_values( $this->form->table_items); // reindex array;
-        //dodaje prazno polje
-        if($this->form->table_items==null) $this->addTableRow();
+        $this->form->table_items[] =
+            [
+                'rb' => '',
+                'fm' => '',
+                'fc_sso' => '',
+                'pg_bb' => '',
+                'note' => '',
+                'regulation_id' => ''
+            ];
     }
 
-    public function removeTable($id=null)
+
+    public function removeTableRow($key)
     {
-        
+        unset($this->form->table_items[$key]);
+        $this->form->table_items = array_values($this->form->table_items); // reindex array;
+        //dodaje prazno polje
+        if ($this->form->table_items == null) $this->addTableRow();
+    }
+
+    public function removeTable($id = null)
+    {
+
         if ($id) {
-            $rulebooksTable=RulebooksTable::find($id);
-            session()->flash('success',"Табела бр. ". $rulebooksTable->rb. " је успешно обрисан!!!");
+            $rulebooksTable = RulebooksTable::find($id);
+            session()->flash('success', "Табела бр. " . $rulebooksTable->rb . " је успешно обрисан!!!");
             $rulebooksTable->delete();
             $this->form->reset();
-        } 
-        else $this->cleanTable();
+        } else $this->cleanTable();
     }
 
     public function cleanTable()
     {
         $this->form->reset();
 
-        session()->flash('success','Обрисана је форма за унос');
+        session()->flash('success', 'Обрисана је форма за унос');
     }
-/* 
+    /* 
    
 
     public function removeFm($key) {
@@ -158,8 +164,8 @@ class RulebookUpdate extends Component
     
  */
 
-    
-    
+
+
     public function render()
     {
         return view('livewire.rulebook-update');

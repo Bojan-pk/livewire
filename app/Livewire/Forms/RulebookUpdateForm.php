@@ -16,14 +16,9 @@ class RulebookUpdateForm extends Form
 
     #[Validate('required|max:255')]
     public $table_rb='';
+    public $table_id='';
 
-    /* #[Validate([
-        //'table_items' => 'required',
-        'table_items.*.rb' =>'required',
-        'table_items.*.fm' =>'required',
-        'table_items.*.fc_sso' =>'required',
-        'table_items.*.pg_bb' =>'required'
-    ], )] */
+
     public $table_items = [
         [
             'rb' => '',
@@ -34,28 +29,13 @@ class RulebookUpdateForm extends Form
             'regulation_id' => '',
         ],
     ];
-    public $table_id='';
-    /*
     
-    public $educations = [''];
-
-    
-    public $conditions = [''];
-
-    
-    public $experiences = [''];
-
-    #[Validate('required')]
-    public $jobs = [''];
-
-    public $catalogId = null; 
-    */
-                   
+               
     #[Validate('required_without:new_regulation', message: "Изаберите или унесите нови документ")]
     public $regulation = null;
 
     #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
-    public $new_regulation='Neka regulativa';
+    public $new_regulation='';
 
     protected function rules()
     {
@@ -78,20 +58,29 @@ class RulebookUpdateForm extends Form
     }
 
    
-
     public function store()
     {
         //razmisliti o ovome
-        $table = RulebooksTable::firstOrCreate([
+       
+        $table = RulebooksTable::updateOrCreate(
+            [
+                'id'=>$this->table_id,
+            ],
+        [
             'name' => $this->table_name,
             'rb' => $this->table_rb,
         ]);
-       
+
+
         $tableId = $table->id;
         if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
         }
-        $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
+
+        $regulation = Regulation::firstOrCreate([
+        'name' => $this->regulation,
+        'short_name' => 'Elementi FM']);
+
         
         Rulebook::where('rulebooks_table_id', $tableId)->delete();
         //dd($tableId );

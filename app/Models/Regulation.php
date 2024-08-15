@@ -9,6 +9,6 @@ class Regulation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'name','short_name'
     ];
 }

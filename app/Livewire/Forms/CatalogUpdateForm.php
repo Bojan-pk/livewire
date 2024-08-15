@@ -116,7 +116,11 @@ class CatalogUpdateForm extends Form
         if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
         }
-        $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
+       
+
+        $regulation = Regulation::firstOrCreate([
+            'name' => $this->regulation,
+            'short_name' => 'Katalog FM']);
 
         //dd($fmId);
         $catalog = Catalog::firstOrCreate(
