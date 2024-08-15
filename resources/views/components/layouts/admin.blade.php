@@ -17,8 +17,6 @@
    
 @livewire('navigation')
 
-<p>Admin blade</p>
-
    <!--  <div class=" flex w-full justify-left px-4 bg-purple-900 text-white">
         <a class="mx-3 py-4" wire:navigate href="/">Home</a>
         <a class="mx-3 py-4" wire:navigate href="/login">Login</a>

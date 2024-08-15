@@ -4,13 +4,6 @@ namespace App\Livewire\Forms;
 
 use Livewire\Attributes\Validate;
 use Livewire\Form;
-
-use App\Models\Catalog;
-use App\Models\Condition;
-use App\Models\Education;
-use App\Models\Experience;
-use App\Models\Fm;
-use App\Models\Job;
 use App\Models\Regulation;
 use App\Models\Rulebook;
 use App\Models\RulebooksTable;
@@ -18,11 +11,11 @@ use Livewire\Attributes\Rule;
 
 class RulebookUpdateForm extends Form
 {
-    #[Validate('required|max:255')]
-    public $table_name='Uprava za organizaciju';
+    #[Validate('required|max:255',message:"Обавезно поље")]
+    public $table_name='';
 
     #[Validate('required|max:255')]
-    public $table_rb='1';
+    public $table_rb='';
 
     /* #[Validate([
         //'table_items' => 'required',
@@ -33,15 +26,15 @@ class RulebookUpdateForm extends Form
     ], )] */
     public $table_items = [
         [
-            'rb' => '1',
-            'fm' => 'referent',
-            'fc_sso' => 'pk',
-            'pg_bb' => '19',
-            'note' => 'napomena',
+            'rb' => '',
+            'fm' => '',
+            'fc_sso' => '',
+            'pg_bb' => '',
+            'note' => '',
             'regulation_id' => '',
         ],
     ];
-
+    public $table_id='';
     /*
     
     public $educations = [''];
@@ -84,27 +77,7 @@ class RulebookUpdateForm extends Form
         ];
     }
 
-    public function customValidate()
-    {
-        $error = false;
-
-        /* if ($this->fm && Fm::where('name', $this->fm)->exists()) {
-            $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
-            $error =true;
-        }  */
-
-        if (!$this->hasNonEmptyValue($this->usualy_fms)) {
-            $this->addError('usualy_fms', 'Барем једно ФМ морате унети.');
-            $error = true;
-        }
-
-        if (!$this->hasNonEmptyValue($this->jobs)) {
-            $this->addError('jobs', 'Барем један посао морате унети.');
-            $error = true;
-        }
-
-        return $error;
-    }
+   
 
     public function store()
     {

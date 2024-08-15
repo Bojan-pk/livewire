@@ -33,7 +33,7 @@ class SearchTable extends Component
                 ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
             }
 
-            $results = $query->orderBy('name')->take(10)->get();  
+            $results = $query->orderBy('rb')->take(10)->get();  
         }
 
 

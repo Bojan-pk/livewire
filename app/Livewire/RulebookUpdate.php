@@ -24,13 +24,14 @@ class RulebookUpdate extends Component
     ];
 
     public function tableSelected($tableId){
-       
+        $this->resetValidation();
         if($rulebooksTable=RulebooksTable::where('id',$tableId)->first())
     {
        // dd($rulebooksTable);
        $this->form->table_rb=$rulebooksTable->rb;
         $this->form->table_name=$rulebooksTable->name;
-        $this->form->table_items=$rulebooksTable->rulebooks->toArray();
+        $this->form->table_id=$rulebooksTable->id;
+        $this->form->table_items=$rulebooksTable->rulebooks->sortBy('rb')->toArray();
        
     } else return session()->flash('error','Нема података о табелама');
        
@@ -71,10 +72,26 @@ class RulebookUpdate extends Component
         $this->form->table_items = array_values( $this->form->table_items); // reindex array;
         //dodaje prazno polje
         if($this->form->table_items==null) $this->addTableRow();
-
     }
 
+    public function removeTable($id=null)
+    {
+        
+        if ($id) {
+            $rulebooksTable=RulebooksTable::find($id);
+            session()->flash('success',"Табела бр. ". $rulebooksTable->rb. " је успешно обрисан!!!");
+            $rulebooksTable->delete();
+            $this->form->reset();
+        } 
+        else $this->cleanTable();
+    }
 
+    public function cleanTable()
+    {
+        $this->form->reset();
+
+        session()->flash('success','Обрисана је форма за унос');
+    }
 /* 
    
 
@@ -136,26 +153,9 @@ class RulebookUpdate extends Component
 
     
 
-    public function removeCatalog($id=null)
-    {
-        
-        if ($id) {
-            $catalog=Catalog::find($id);
-            session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
-            $catalog->delete();
-            $this->form->reset();
-        } 
-        else $this->cleanCatalog();
+   
 
-        
-    }
-
-    public function cleanCatalog()
-    {
-        $this->form->reset();
-
-        session()->flash('success','Обрисана је форма за унос');
-    }
+    
  */
 
     
