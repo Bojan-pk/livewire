@@ -8,12 +8,12 @@ use Livewire\Component;
 class RegulationAdministration extends Component
 {
     
-    /* public $currentTab = 'update'; // 'create' or 'update'
+    public $currentTab = 'update'; // 'create' or 'update'
 
     public function switchTab($tab)
     {
         $this->currentTab = $tab;
-    } */
+    }
     
     
     public function render()

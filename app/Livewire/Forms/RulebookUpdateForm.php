@@ -7,17 +7,15 @@ use Livewire\Form;
 use App\Models\Regulation;
 use App\Models\Rulebook;
 use App\Models\RulebooksTable;
-use Livewire\Attributes\Rule;
 
 class RulebookUpdateForm extends Form
 {
-    #[Validate('required|max:255',message:"Обавезно поље")]
-    public $table_name='';
+    #[Validate('required|max:255', message: "Обавезно поље")]
+    public $table_name = '';
 
     #[Validate('required|max:255')]
-    public $table_rb='';
-    public $table_id='';
-
+    public $table_rb = '';
+    public $table_id = '';
 
     public $table_items = [
         [
@@ -29,13 +27,12 @@ class RulebookUpdateForm extends Form
             'regulation_id' => '',
         ],
     ];
-    
-               
+
     #[Validate('required_without:new_regulation', message: "Изаберите или унесите нови документ")]
     public $regulation = null;
 
     #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
-    public $new_regulation='';
+    public $new_regulation = '';
 
     protected function rules()
     {
@@ -57,20 +54,18 @@ class RulebookUpdateForm extends Form
         ];
     }
 
-   
     public function store()
     {
-        //razmisliti o ovome
-       
+
         $table = RulebooksTable::updateOrCreate(
             [
-                'id'=>$this->table_id,
+                'id' => $this->table_id,
             ],
-        [
-            'name' => $this->table_name,
-            'rb' => $this->table_rb,
-        ]);
-
+            [
+                'name' => $this->table_name,
+                'rb' => $this->table_rb,
+            ]
+        );
 
         $tableId = $table->id;
         if ($this->new_regulation) {
@@ -78,10 +73,10 @@ class RulebookUpdateForm extends Form
         }
 
         $regulation = Regulation::firstOrCreate([
-        'name' => $this->regulation,
-        'short_name' => 'Elementi FM']);
+            'name' => $this->regulation,
+            'short_name' => 'Elementi FM'
+        ]);
 
-        
         Rulebook::where('rulebooks_table_id', $tableId)->delete();
         //dd($tableId );
         foreach ($this->table_items as $item) {
@@ -93,53 +88,7 @@ class RulebookUpdateForm extends Form
                 'pg_bb' => $item['pg_bb'],
                 'note' => $item['note'],
                 'regulation_id' => $regulation->id,
-                // ... druga polja
             ]);
         }
-         }
-       //regulation
-      
-       
-        /*  $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
-
-        //dd($fmId);
-        $catalog = Catalog::firstOrCreate(
-            ['fm_id' => $fmId],
-            ['regulation_id' => $regulation->id]
-
-        );
-        // Povezivanje  sa katalogom
-        $catalog->fms()->sync($fmIds);
-        $catalog->educations()->sync($educationIds);
-        $catalog->conditions()->sync($conditionIds);
-        $catalog->jobs()->sync($jobIds);
-        $catalog->experiences()->sync($experienceIds);
-    }
- */
-
-
-    public function hasNonEmptyValue($array)
-    {
-        foreach ($array as $value) {
-            if (!empty(trim($value))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected function makeCleanArray($array)
-    {
-        // Koristite array_map da izvršite preg_replace na svakom elementu niza
-        $array = array_map(function ($q) {
-            return $q = preg_replace('/^[^\p{L}\p{N}]+/u', '', $q);
-        }, $array);
-
-        // Koristite array_filter da uklonite prazne stringove iz niza
-        $array = array_filter($array, function ($value) {
-            return !empty($value);
-        });
-
-        return array_values($array); // Resetujte indekse niza
     }
 }

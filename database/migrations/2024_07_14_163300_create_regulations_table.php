@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_name')->nullable();
+            $table->string('svl')->nullable();
+            $table->boolean('valid')->default(true);
             $table->timestamps();
         });
     }

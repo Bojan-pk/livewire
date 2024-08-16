@@ -1,14 +1,9 @@
 <?php
 
 namespace App\Livewire;
-
 use Livewire\Component;
-
-
 use App\Livewire\Forms\RulebookUpdateForm;
-
 use App\Models\Regulation;
-use App\Models\Rulebook;
 use App\Models\RulebooksTable;
 
 class RulebookUpdate extends Component
@@ -17,12 +12,9 @@ class RulebookUpdate extends Component
     public RulebookUpdateForm $form;
     public $regulations = [];
 
-
-
     protected $listeners = [
         'tableSelected' => 'tableSelected'
     ];
-
 
     public function mount()
     {
@@ -40,20 +32,11 @@ class RulebookUpdate extends Component
             $this->form->table_id = $rulebooksTable->id;
             $this->form->table_items = $rulebooksTable->rulebooks->sortBy('rb')->toArray();
         } else return session()->flash('error', 'Нема података о табелама');
-
-
     }
-
-
 
     public function submitForm()
     {
-
         $this->validate();
-
-
-        //if($this->form->customValidate()) return;
-
         $this->form->store();
         session()->flash('success', 'Подаци су успешно унети');
         $this->form->reset();
@@ -72,7 +55,6 @@ class RulebookUpdate extends Component
             ];
     }
 
-
     public function removeTableRow($key)
     {
         unset($this->form->table_items[$key]);
@@ -83,7 +65,6 @@ class RulebookUpdate extends Component
 
     public function removeTable($id = null)
     {
-
         if ($id) {
             $rulebooksTable = RulebooksTable::find($id);
             session()->flash('success', "Табела бр. " . $rulebooksTable->rb . " је успешно обрисан!!!");
@@ -98,74 +79,7 @@ class RulebookUpdate extends Component
 
         session()->flash('success', 'Обрисана је форма за унос');
     }
-    /* 
    
-
-    public function removeFm($key) {
-        unset($this->form->usualy_fms[$key]);
-        $this->form->usualy_fms = array_values( $this->form->usualy_fms); // reindex array;
-        //dodaje prazno polje
-        if($this->form->usualy_fms==null) $this->addFm();
-
-    }
-    
-
-    public function removeEducation($key) {
-        unset($this->form->educations[$key]);
-        $this->form->educations = array_values( $this->form->educations); // reindex array;
-        //dodaje prazno polje
-        if($this->form->educations==null) $this->addEducation();
-
-    }
-    public function addEducation()
-    {
-       $this->form->educations[] = '';
-    }
-
-    public function removeCondition($key) {
-        unset($this->form->conditions[$key]);
-        $this->form->conditions = array_values( $this->form->conditions); // reindex array;
-        //dodaje prazno polje
-        if($this->form->conditions==null) $this->addCondition();
-
-    }
-    public function addCondition()
-    {
-       $this->form->conditions[] = '';
-    }
-
-    public function removeExperience($key) {
-        unset($this->form->experiences[$key]);
-        $this->form->experiences = array_values( $this->form->experiences); // reindex array;
-        //dodaje prazno polje
-        if($this->form->experiences==null) $this->addExperience();
-
-    }
-    public function addExperience()
-    {
-       $this->form->experiences[] = '';
-    }
-   
-    public function addJob()
-    {
-       $this->form->jobs[] = '';
-    }
-
-
-    public function mount()
-    {
-        $this->regulations = Regulation::pluck('name')->toArray(); 
-    }
-
-    
-
-   
-
-    
- */
-
-
-
     public function render()
     {
         return view('livewire.rulebook-update');
