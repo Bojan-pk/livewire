@@ -27,7 +27,7 @@ class RegulationForm extends Form
 
     public function store()
     {
-        dd($this->valid);
+        //dd($this->svl);
         $regulation = Regulation::updateOrCreate(
             [
                 'id' => $this->id,
@@ -41,7 +41,7 @@ class RegulationForm extends Form
             ]
         );
 
-        
+       // dd($regulation);
     }
 
 }

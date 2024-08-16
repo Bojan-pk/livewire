@@ -48,7 +48,7 @@
          </div>
          <div class="w-10/12 ml-3">
             <label for="table_name" class="block mb-2 text-sm font-medium text-gray-900">Назив табеле
-      </label>
+            </label>
             <input wire:model="form.table_name" type="text" id="table_name" aria-describedby="table_name-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" placeholder="Унеси назив табеле">
             <div>
                @error('form.table_name')
@@ -57,76 +57,96 @@
             </div>
          </div>
       </div>
-      <label for="helper-text" class="block my-2 text-sm font-medium text-gray-900 dark:text-white">Елементи табеле </label>
-      <div class="flex items-start mb-2">
-      <label for="helper-text" class="w-1/12 block mb-2 text-sm font-medium text-gray-900">РБ</label>
-      <label for="helper-text" class="ml-2 w-4/12 block mb-2 text-sm font-medium text-gray-900">Назив РМ</label>
-      <label for="helper-text" class="ml-2 w-2/12 block mb-2 text-sm font-medium text-gray-900">ФЧ/ССО</label>
-      <label for="helper-text" class="ml-2 w-1/12 block mb-2 text-sm font-medium text-gray-900">ПГ/ББ</label>
-      <label for="helper-text" class="ml-2 w-3/12 block mb-2 text-sm font-medium text-gray-900">НАПОМЕНА</label>
-      <label for="helper-text" class=" w-1/12 block mb-2 text-sm font-medium text-gray-900"></label>
-      </div>
-      
-      @if ($form->table_items)
-      @foreach ($form->table_items as $key => $value)
-      <div class="flex items-start mb-1">
-      <div class="w-1/12">
-            <input wire:model="form.table_items.{{$key}}.rb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="РБ">
-            <div>
-           
-               @error("form.table_items.{$key}.rb")
-               <span class=" text-red-500 text-xs">{{ $message }}</span>
-               @enderror
-              
-            </div>
-         </div>
-         <div class="w-4/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="Унеси назив РМ">
-            <div>
-               @error("form.table_items.{$key}.fm")
-               <span class=" text-red-500 text-xs">{{ $message }}</span>
-               @enderror
-            </div>
-         </div>
-         <div class="w-2/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.fc_sso" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="фч/ссо">
+   <hr class="h-px my-8 bg-gray-200 border-2">
+
+      <div class="relative overflow-x-auto">
+         <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+            <thead class="text-xs text-gray-700  bg-gray-50 ">
+               <tr>
+                  <th scope="col" class="px-6 py-3">
+                     РБ
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                     Назив РМ
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                     ФЧ/ССО
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                     ПГ/ББ
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                     Напомена
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                     Обриши
+                  </th>
+               </tr>
+            </thead>
+            <tbody>
+               @if ($form->table_items)
+               @foreach ($form->table_items as $key => $value)
+               <tr :key="$value->id" class="bg-white border-b hover:bg-gray-50 ">
+                  <th scope="row"
+                     class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap ">
+                     <input wire:model="form.table_items.{{$key}}.rb" type="text" id="" aria-describedby="helper-text-explanation" class="border-0 border-b-2 bg-gray-50 border-gray-300 text-gray-900 text-sm  focus:outline-none focus:ring-0 focus:border-blue-500 block w-full p-1.5" placeholder="РБ">
+                     <div>
+
+                        @error("form.table_items.{$key}.rb")
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+
+                     </div>
+                  </th>
+                  <td class="px-2 py-1">
+                  <input wire:model="form.table_items.{{$key}}.fm" type="text" id="" aria-describedby="helper-text-explanation" class="border-0 border-b-2 bg-gray-50 border-gray-300 text-gray-900 text-sm  focus:outline-none focus:ring-0 focus:border-blue-500 block w-full p-1.5" placeholder="Унеси назив РМ">
+                  <div>
+                     @error("form.table_items.{$key}.fm")
+                     <span class=" text-red-500 text-xs">{{ $message }}</span>
+                     @enderror
+                  </div>
+                  </td>
+                  <td class="px-2 py-1">
+                  <input wire:model="form.table_items.{{$key}}.fc_sso" type="text" id="" aria-describedby="helper-text-explanation" class="border-0 border-b-2 bg-gray-50 border-gray-300 text-gray-900 text-sm  focus:outline-none focus:ring-0 focus:border-blue-500 block w-full p-1.5" placeholder="фч/ссо">
             <div>
                @error("form.table_items.{$key}.fc_sso")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
-         </div>
-         <div class="w-1/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.pg_bb" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="пг/бб">
+                  </td>
+                  <td class="px-2 py-1">
+                  <input wire:model="form.table_items.{{$key}}.pg_bb" type="text" id="" aria-describedby="helper-text-explanation" class="border-0 border-b-2 bg-gray-50 border-gray-300 text-gray-900 text-sm  focus:outline-none focus:ring-0 focus:border-blue-500 block w-full p-1.5" placeholder="пг/бб">
             <div>
                @error("form.table_items.{$key}.pg_bb")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
-         </div>
-         <div class="w-3/12 ml-2">
-            <input wire:model="form.table_items.{{$key}}.note" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" placeholder="Напомена">
+                  </td>
+                  <td class="px-2 py-1">
+                  <input wire:model="form.table_items.{{$key}}.note" type="text" id="" aria-describedby="helper-text-explanation" class="border-0 border-b-2 bg-gray-50 border-gray-300 text-gray-900 text-sm  focus:outline-none focus:ring-0 focus:border-blue-500 block w-full p-1.5" placeholder="Напомена">
             <div>
                @error("form.table_items.{$key}.note")
                <span class=" text-red-500 text-xs">{{ $message }}</span>
                @enderror
             </div>
-         </div>
-         <div class="w-1/12">
-         <button wire:click="removeTableRow({{ $key }})" type="button" class="px-2 py-1   text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg  text-center  my-1">x</button>
-         </div>
+                  </td>
 
-         </div>
-      @endforeach
-      <div>
-         @error('form.table_items')
-         <span class=" text-red-500 text-xs">{{ $message }} </span>
-         @enderror
-      </div>
-      <div class="flex items-start mb-2">
-         <button wire:click="addTableRow()" type="button" class="px-2 py-1 items-start  text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg  mx-1 my-1">+</button>
-      </div>
-      @endif
+                  <td class="px-2 py-1">
+                  <!-- <button wire:click="removeTableRow({{ $key }})" type="button" class="px-2 py-1   text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg  text-center  my-1">x</button> -->
+                  <a href="#" wire:click="removeTableRow({{ $key }})" class=" text-red-700 hover:underline">Бриши</a>
+                  </td>
+
+               </tr>
+               @endforeach
+               <div>
+                  @error('form.table_items')
+                  <span class=" text-red-500 text-xs">{{ $message }} </span>
+                  @enderror
+               </div>
+               @endif
+            </tbody>
+         </table>
+      </div> 
    </div>
 
    <div class="w-3/12 mx-2 rounded border p-2">
@@ -159,16 +179,16 @@
          <span class=" text-red-500 text-xs">{{ $message }}</span>
          @enderror
 
-         <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Или унеси
+         <!-- <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Или унеси
             нови</label>
-         <input wire:model="form.new_regulation" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Унеси документ ако није на листи">
-         <div>
+         <input wire:model="form.new_regulation" type="text" id="helper-text" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Унеси документ ако није на листи"> -->
+        <!--  <div>
             @error('form.new_regulation')
             <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
-         </div>
+         </div> -->
          <div class="flex justify-between">
-            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши ФМ </button>
+            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши табелу </button>
             <button wire:click="cleanTable()" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши унос</button>
             <button type="submit" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
          </div>

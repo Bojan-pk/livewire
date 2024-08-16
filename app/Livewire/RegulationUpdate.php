@@ -26,6 +26,19 @@ class RegulationUpdate extends Component
         $this->form->reset();
     }
 
+    public function regulationSelected($id){
+        $regulation=Regulation::find($id);
+        
+        if($regulation) {
+            $this->form->id=$regulation->id;
+            $this->form->name=$regulation->name;
+            $this->form->svl=$regulation->svl;
+            $this->form->short_name=$regulation->short_name;
+            $this->form->valid=$regulation->valid;
+        }
+        
+    }
+
     public function render()
     {
         $results = [];
