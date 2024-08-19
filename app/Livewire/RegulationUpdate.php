@@ -39,6 +39,22 @@ class RegulationUpdate extends Component
         
     }
 
+    public function removeRegulation($id = null)
+    {
+        if ($id) {
+            $regulation = Regulation::find($id);
+            session()->flash('success', "Propis " . $regulation->name . " је успешно обрисан!!!");
+            $regulation->delete();
+            $this->form->reset();
+        } else $this->cleanTable();
+    }
+    public function cleanTable()
+    {
+        $this->form->reset();
+
+        session()->flash('success', 'Обрисана је форма за унос');
+    }
+
     public function render()
     {
         $results = [];

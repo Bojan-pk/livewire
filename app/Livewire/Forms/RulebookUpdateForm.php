@@ -19,6 +19,7 @@ class RulebookUpdateForm extends Form
 
     public $table_items = [
         [
+            'id' => '',
             'rb' => '',
             'fm' => '',
             'fc_sso' => '',
@@ -28,11 +29,8 @@ class RulebookUpdateForm extends Form
         ],
     ];
 
-    #[Validate('required_without:new_regulation', message: "Изаберите или унесите нови документ")]
-    public $regulation = null;
-
-    #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
-    public $new_regulation = '';
+    #[Validate('required', message: "Обавезан унос")]
+    public $regulation_id = null;
 
     protected function rules()
     {
@@ -68,16 +66,9 @@ class RulebookUpdateForm extends Form
         );
 
         $tableId = $table->id;
-        if ($this->new_regulation) {
-            $this->regulation = $this->new_regulation;
-        }
-
-        $regulation = Regulation::firstOrCreate([
-            'name' => $this->regulation,
-            'short_name' => 'Elementi FM'
-        ]);
-
-        Rulebook::where('rulebooks_table_id', $tableId)->delete();
+   
+//ovo je staro
+        /* Rulebook::where('rulebooks_table_id', $tableId)->delete();
         //dd($tableId );
         foreach ($this->table_items as $item) {
             Rulebook::create([
@@ -87,8 +78,61 @@ class RulebookUpdateForm extends Form
                 'fc_sso' => $item['fc_sso'],
                 'pg_bb' => $item['pg_bb'],
                 'note' => $item['note'],
-                'regulation_id' => $regulation->id,
+                'regulation_id' => $this->regulation_id,
             ]);
+        }*/
+
+        foreach ($this->table_items as $item) {
+            // Pronađi postojeći zapis, ako postoji
+           /*  $existingRulebook = Rulebook::where('rulebooks_table_id', $tableId)
+                ->where('rb', $item['rb'])
+                ->where('fm', $item['fm'])
+                ->where('fc_sso', $item['fc_sso'])
+                ->where('pg_bb', $item['pg_bb'])
+                ->where('note', $item['note'])
+                ->first(); */
+                
+            $existingRulebook = Rulebook::find($item['id']);
+        
+            if ($existingRulebook) {
+                // Ako zapis postoji, proveri da li postoje promene
+                $existingRulebook->fill([
+                    'rulebooks_table_id' => $tableId,
+                    'id' => $item['id'],
+                    'rb' => $item['rb'],
+                    'fm' => $item['fm'],
+                    'fc_sso' => $item['fc_sso'],
+                    'pg_bb' => $item['pg_bb'],
+                    'note' => $item['note'],
+                    // ... druga polja
+                ]);
+                
+                // Ako postoje promene, ažuriraj regulation_id
+                if ($existingRulebook->isDirty()) {
+                    //dd($existingRulebook);
+                    $existingRulebook->regulation_id =  $this->regulation_id;
+                    
+                $existingRulebook->save();
+                //dd($existingRulebook);
+                }
+        
+                
+            } else {
+                // Ako zapis ne postoji, kreiraj novi
+                
+                Rulebook::create([
+                    'rulebooks_table_id' => $tableId,
+                    'rb' => $item['rb'],
+                    'fm' => $item['fm'],
+                    'fc_sso' => $item['fc_sso'],
+                    'pg_bb' => $item['pg_bb'],
+                    'note' => $item['note'],
+                    'regulation_id' => $this->regulation_id,
+                    // ... druga polja
+                ]);
+            }
         }
-    }
+
+
+    } 
 }

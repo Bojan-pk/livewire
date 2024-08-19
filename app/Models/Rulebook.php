@@ -14,8 +14,10 @@ class Rulebook extends Model
          'rb','fm','fc_sso', 'pg_bb','note','regulation_id','rulebooks_table_id'
     ];
 
-    /* public function rulebooksTables()
+
+    public function regulations()
     {
-        return $this->belongsToMany(RulebooksTable::class, 'rulebooks_tables');
-    } */
+        //dd('stiglo');
+        return $this->hasMany(Regulation::class);
+    }
 }

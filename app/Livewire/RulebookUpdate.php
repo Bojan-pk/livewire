@@ -18,7 +18,7 @@ class RulebookUpdate extends Component
 
     public function mount()
     {
-        $this->regulations = Regulation::where('short_name', 'Elementi FM')->pluck('name')->toArray();
+        $this->regulations = Regulation::where('short_name', 'Елементи ФМ')->get();
     }
 
     public function tableSelected($tableId)
@@ -46,6 +46,7 @@ class RulebookUpdate extends Component
     {
         $this->form->table_items[] =
             [
+                'id' => '',
                 'rb' => '',
                 'fm' => '',
                 'fc_sso' => '',
