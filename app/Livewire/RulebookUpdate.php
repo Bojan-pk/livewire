@@ -4,6 +4,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Livewire\Forms\RulebookUpdateForm;
 use App\Models\Regulation;
+use App\Models\Rulebook;
 use App\Models\RulebooksTable;
 
 class RulebookUpdate extends Component
@@ -15,6 +16,39 @@ class RulebookUpdate extends Component
     protected $listeners = [
         'tableSelected' => 'tableSelected'
     ];
+
+    public $selectedRow;
+
+    public $showDeleteModal = false;
+
+    public function confirmDelete($key)
+    {
+        $this->selectedRow =$key;
+        //dump( $this->selectedRow);
+        $this->showDeleteModal = true; // Prikazuje modal
+    }
+
+    public function deleteRow()
+    {
+       
+        $id=$this->form->table_items[$this->selectedRow]['id'];
+       if($id) Rulebook::find($id)->delete();
+        
+       //briše niz
+        unset($this->form->table_items[$this->selectedRow]);
+        $this->form->table_items = array_values($this->form->table_items); // reindex array;
+        //dodaje prazno polje
+        if ($this->form->table_items == null) $this->addTableRow();
+
+        $this->showDeleteModal = false; // Sakriva modal nakon brisanja
+        $this->selectedRow = null;
+        session()->flash('success', 'Успешно обрисан ред');  
+    }
+
+    public function closeModal()
+    {
+        $this->showDeleteModal = false; // Sakriva modal bez brisanja
+    }
 
     public function mount()
     {
@@ -56,13 +90,13 @@ class RulebookUpdate extends Component
             ];
     }
 
-    public function removeTableRow($key)
+   /*  public function removeTableRow($key)
     {
         unset($this->form->table_items[$key]);
         $this->form->table_items = array_values($this->form->table_items); // reindex array;
         //dodaje prazno polje
         if ($this->form->table_items == null) $this->addTableRow();
-    }
+    } */
 
     public function removeTable($id = null)
     {

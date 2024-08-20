@@ -52,41 +52,7 @@ class Catalog extends Component
     }
 
 
-    /* public function saveJobs($id)
-    {
-        //dd($id);
-        if (in_array($id, $this->jobsIds)) {
-            $this->jobsIds = array_diff($this->jobsIds, [$id]);
-        } else $this->jobsIds[] = $id;
-
-        $this->activeColapse = 'jobs';
-    }
-
-
-    public function saveEducations($id)
-    {
-        if (in_array($id, $this->educationIds)) {
-            $this->educationIds = array_diff($this->educationIds, [$id]);
-        } else $this->educationIds[] = $id;
-
-        $this->activeColapse = 'education';
-    }
-
-    public function saveConditions($id)
-    {
-        if (in_array($id, $this->conditionIds)) {
-            $this->conditionIds = array_diff($this->conditionIds, [$id]);
-        } else $this->conditionIds[] = $id;
-        $this->activeColapse = 'condition';
-    }
-
-    public function saveExperiences($id)
-    {
-        if (in_array($id, $this->experienceIds)) {
-            $this->experienceIds = array_diff($this->experienceIds, [$id]);
-        } else $this->experienceIds[] = $id;
-        $this->activeColapse = 'experience';
-    } */
+    
 
     public function saveItem($id, &$array, $collapse)
     {
