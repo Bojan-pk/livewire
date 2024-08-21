@@ -19,6 +19,9 @@
                         Радно искуство
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Елементи ФМ
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Бриши</span>
                     </th>
                 </tr>
@@ -70,6 +73,16 @@
                         @endforeach
                         @endif
 
+                    </td>
+                    <td class="px-6 py-4">
+                        @if ($rulebooksId=$direction['rulebooks'])
+                       
+                        {{@App\Models\Rulebook::find($rulebooksId)->fc_sso }}
+                        {{ @App\Models\Rulebook::find($rulebooksId)->pg_bb }}
+
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveRulebooks', [{{$rulebooksId}}])">x</a>
+                       
+                        @endif
                     </td>
 
                     <td class="px-6 py-4 text-right">

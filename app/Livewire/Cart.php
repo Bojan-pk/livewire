@@ -14,38 +14,37 @@ class Cart extends Component
     //public $fms = [];
     public  $selectedFm;
     public $newJobName = [];
+    public $rulebooksId;
 
-    //uputstvo o UOIR
+    //uputstvo o UOIR i elementi FM -- promeniti naziv u cart
     public $directions = [];
+    
 
     protected $listeners = [
         'saveJobs',
         'saveEducations',
         'saveConditions',
         'saveExperiences',
+        'saveRulebooks',
     ];
 
-   /*  public function mount()
-    {
-        //session()->flush('directions');
-        // Učitaj podatke iz sesije ako postoje
-        $this->directions = session()->get('directions', [
-            [
-                'newJobName' => 'Радно место 1',
-                'jobs' => [],
-                'educations' => [],
-                'conditions' => [],
-                'experiences' => [],
-            ]
-        ]);
-        $this->selectedFm = 0;
-    } */
-
+    
     public function mount()
     {
+        
+        
         //session()->flush('directions');
         // Učitaj podatke iz sesije ako postoje
-        $this->directions = session()->get('directions', $this->addFm());
+        
+       // $this->directions = session()->get('directions', $this->addFm());
+
+        if (session()->has('directions') && !empty(session('directions'))) {
+            $this->directions = session()->get('directions');
+        } else {
+            $this->addFm();
+        }
+        //$this->rulebooks = session()->get('rulebooks', $this->addRulebooks());
+       // dump($this->directions);
         $this->selectedFm = 0;
     }
 
@@ -56,15 +55,19 @@ class Cart extends Component
         session()->put('directions', $this->directions);
     }
 
+   
+
     public function addFm()
     {
-        //dd('stiglo');
+       
         $this->directions[] = [
             'newJobName' => 'Радно место ' . count($this->directions) + 1,
             'jobs' => [],
             'educations' => [],
             'conditions' => [],
             'experiences' => [],
+            'rulebooks'=>'',
+            
         ];
         // Čuvanje u sesiji
         session()->put('directions', $this->directions);
@@ -75,50 +78,7 @@ class Cart extends Component
         unset($this->directions[$index]); // briše posao u okviru FM  
         session()->put('directions', $this->directions);
     }
-    /* public function saveJobs($index) 
-    {
-
-        if (in_array($index, $this->directions[$this->selectedFm]['jobs'])) //proverava da li posao već postoji
-        {  
-            $this->directions[$this->selectedFm]['jobs'] = array_diff($this->directions[$this->selectedFm]['jobs'], [$index]);
-        }   else $this->directions[$this->selectedFm]['jobs'][] = $index;
-
-        session()->put('directions', $this->directions);
-    }
-
-    public function saveEducations($index) 
-    {
-
-        if (in_array($index, $this->directions[$this->selectedFm]['educations'])) //proverava da li edukacija već postoji
-        {            
-            $this->directions[$this->selectedFm]['educations'] = array_diff($this->directions[$this->selectedFm]['educations'], [$index]);
-        } else $this->directions[$this->selectedFm]['educations'][] = $index;
-
-        session()->put('directions', $this->directions);
-    }
-
-    public function saveConditions($index) 
-    {
-
-        if (@in_array($index, $this->directions[$this->selectedFm]['conditions'])) //proverava da li edukacija već postoji
-        {            
-            $this->directions[$this->selectedFm]['conditions'] = array_diff($this->directions[$this->selectedFm]['conditions'], [$index]);
-        } else $this->directions[$this->selectedFm]['conditions'][] = $index;
-
-        session()->put('directions', $this->directions);
-    }
-
-    public function saveExperiences($index) 
-    {
-
-        if (@in_array($index, $this->directions[$this->selectedFm]['experiences'])) //proverava da li edukacija već postoji
-        {            
-            $this->directions[$this->selectedFm]['experiences'] = array_diff($this->directions[$this->selectedFm]['experiences'], [$index]);
-        } else $this->directions[$this->selectedFm]['experiences'][] = $index;
-
-        session()->put('directions', $this->directions);
-    }
- */
+   
 
     public function saveItem($index, $type)
     {
@@ -130,6 +90,19 @@ class Cart extends Component
 
         session()->put('directions', $this->directions);
     }
+
+    public function saveRulebooks($index)
+    
+    {
+        if ($this->directions[$this->selectedFm]['rulebooks']!=$index)
+        $this->directions[$this->selectedFm]['rulebooks']=$index;
+    else $this->directions[$this->selectedFm]['rulebooks']='';
+        
+        session()->put('directions', $this->directions);
+
+    }
+
+
 
     public function saveJobs($index)
     {
