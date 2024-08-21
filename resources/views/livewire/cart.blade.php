@@ -27,15 +27,15 @@
                 </tr>
             </thead>
             <tbody>
-                @if($directions)
-                @foreach ($directions as $index=>$direction)
+                @if($cart)
+                @foreach ($cart as $index=>$value)
                 <tr class="border-b {{$selectedFm==$index?' text-white bg-green-500':'bg-white '}}" wire:click="fmSelected('{{$index}}')" >
                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
-                         <input type="text"  wire:model="directions.{{ $index }}.newJobName"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"  />
+                         <input type="text"  wire:model="cart.{{ $index }}.newJobName"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"  />
                     </th>
                     <td class="px-6 py-4">
-                        @if ($direction['jobs'])
-                        @foreach ($direction['jobs'] as $jobId)
+                        @if ($value['jobs'])
+                        @foreach ($value['jobs'] as $jobId)
                         {{ @App\Models\Job::find($jobId)->name }}
 
                         <a href="#" class=" text-red-700" wire:click="$dispatch('saveJobs', [{{$jobId}}])">x</a>
@@ -44,8 +44,8 @@
                         @endif
                     </td>
                     <td class="px-6 py-4">
-                        @if (@$direction['conditions'])
-                        @foreach ($direction['conditions'] as $conditionId)
+                        @if (@$value['conditions'])
+                        @foreach ($value['conditions'] as $conditionId)
                         {{ App\Models\Condition::find($conditionId)->name }}
 
                         <a href="#" class=" text-red-700" wire:click="$dispatch('saveConditions', [{{$conditionId}}])">x</a>
@@ -54,8 +54,8 @@
                         @endif
                     </td>
                     <td class="px-6 py-4">
-                        @if ($direction['educations'])
-                        @foreach ($direction['educations'] as $educationId)
+                        @if ($value['educations'])
+                        @foreach ($value['educations'] as $educationId)
                         {{ App\Models\Education::find($educationId)->name }}
 
                         <a href="#" class=" text-red-700" wire:click="$dispatch('saveEducations', [{{$educationId}}])">x</a>
@@ -65,8 +65,8 @@
                     </td>
                     <td class="px-6 py-4">
 
-                        @if ($direction['experiences'])
-                        @foreach ($direction['experiences'] as $experienceId)
+                        @if ($value['experiences'])
+                        @foreach ($value['experiences'] as $experienceId)
                         {{ App\Models\Experience::find($experienceId)->name }}
 
                         <a href="#" class=" text-red-700" wire:click="$dispatch('saveExperiences', [{{$experienceId}}])">x</a>
@@ -75,7 +75,7 @@
 
                     </td>
                     <td class="px-6 py-4">
-                        @if ($rulebooksId=$direction['rulebooks'])
+                        @if ($rulebooksId=$value['rulebooks'])
                        
                         {{@App\Models\Rulebook::find($rulebooksId)->fc_sso }}
                         {{ @App\Models\Rulebook::find($rulebooksId)->pg_bb }}

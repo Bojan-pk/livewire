@@ -43,12 +43,12 @@ class Catalog extends Component
 
     public function fmCartSelected($index)
     {
-        $directions = session()->get('directions', []);
+        $cart = session()->get('cart', []);
 
-        $this->jobsIds = isset($directions[$index]['jobs']) ? $directions[$index]['jobs'] : [];
-        $this->educationIds = isset($directions[$index]['educations']) ? $directions[$index]['educations'] : [];
-        $this->conditionIds = isset($directions[$index]['conditions']) ? $directions[$index]['conditions'] : [];
-        $this->experienceIds = isset($directions[$index]['experiences']) ? $directions[$index]['experiences'] : [];
+        $this->jobsIds = isset($cart[$index]['jobs']) ? $cart[$index]['jobs'] : [];
+        $this->educationIds = isset($cart[$index]['educations']) ? $cart[$index]['educations'] : [];
+        $this->conditionIds = isset($cart[$index]['conditions']) ? $cart[$index]['conditions'] : [];
+        $this->experienceIds = isset($cart[$index]['experiences']) ? $cart[$index]['experiences'] : [];
     }
 
 

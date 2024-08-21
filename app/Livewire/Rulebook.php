@@ -30,9 +30,9 @@ class Rulebook extends Component
 
     public function fmCartSelected($index)
     {
-        $directions = session()->get('directions', []);
+        $cart = session()->get('cart', []);
 
-        $this->rulebooksId = isset($directions[$index]['rulebooks']) ? $directions[$index]['rulebooks'] : '';
+        $this->rulebooksId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
        
     }
 
