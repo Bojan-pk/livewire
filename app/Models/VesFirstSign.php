@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VesFirstSign extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'order','sign', 'description','note'
+    ];
 }
