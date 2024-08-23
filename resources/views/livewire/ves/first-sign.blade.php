@@ -76,17 +76,17 @@
                     @if ($firstSigns)
                         @foreach ($firstSigns as $key => $value)
                             <tr wire:click="rowSelected({{ $value->id }})"
-                                class="bg-white border-b hover:bg-gray-50 cursor-pointer">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                class=" border-b  cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} hover:bg-gray-100">
+                                <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap ">
                                     {{ $value->order}}.
                                 </th>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-2">
                                     {{ $value->sign }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-2">
                                     {{ $value->description }}
                                 </td>
-                                <td class="px-6 py-4">
+                                <td class="px-6 py-2">
                                     {{ $value->note}}
                                 </td>
                             </tr>
@@ -113,14 +113,14 @@
                 </svg>
             </div>
             <input wire:model.live="searchTerm"
-                class="block w-full p-2.5 ps-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                class="block w-full p-2.5 ps-10  text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Пронађи знак ...." />
         </div>
         <div>
             <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Редни број</label>
                 <input wire:model="form.order" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
             </div>
             <div>
                 @error('form.order')
@@ -128,9 +128,9 @@
                 @enderror
             </div>
             <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Ознака</label>
+                <label for="" class="block mt-2 mb-2  font-medium text-start">Ознака</label>
                 <input wire:model="form.sign" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
             </div>
             <div>
                 @error('form.sign')
@@ -140,7 +140,7 @@
             <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Опис</label>
                 <input wire:model="form.description" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
             </div>
             <div>
                 @error('form.description')
@@ -150,7 +150,7 @@
             <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Напомена</label>
                 <input wire:model="form.note" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
             </div>
             <div>
                 @error('form.note')
@@ -183,7 +183,7 @@
             <div class="flex justify-between">
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    пропис </button>
+                    ознаку </button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     унос</button>
@@ -214,12 +214,12 @@
                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 <h3 class="mb-5 text-lg font-normal text-gray-500 ">Да ли сте сигурни да желите да
-                    обршите пропис?</h3>
-               {{--  <button data-modal-hide="popup-modal" type="button"
-                    wire:click="removeRegulation({{ $form->id }})"
+                    обршите ознаку?</h3>
+              <button data-modal-hide="popup-modal" type="button"
+                    wire:click="removeRow({{ $form->id }})"
                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                     Да, јесам
-                </button> --}}
+                </button> 
                 <button data-modal-hide="popup-modal" type="button"
                     class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Не,
                     откажи</button>

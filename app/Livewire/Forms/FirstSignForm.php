@@ -8,6 +8,8 @@ use Livewire\Form;
 
 class FirstSignForm extends Form
 {
+    public $id;
+    
     public $order;
 
     public $sign;
@@ -15,6 +17,8 @@ class FirstSignForm extends Form
     public $description;
 
     public $note;
+
+   
 
     public function store()
     {

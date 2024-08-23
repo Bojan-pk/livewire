@@ -13,8 +13,25 @@ class FirstSign extends Component
 
    public FirstSignForm $form;
    public $searchTerm='';
-   //public $firstSigns=[];
+   public $selectedId;
     
+
+   public function removeRow($id = null)
+    {
+        if ($id) {
+            $firstSign = VesFirstSign::find($id);
+            session()->flash('success', "Ознака за " . $firstSign->description . " је успешно обрисанa!!!");
+            $firstSign->delete();
+            $this->form->reset();
+        } else $this->cleanTable();
+    }
+
+    public function cleanTable()
+    {
+        $this->form->reset();
+
+        session()->flash('success', 'Обрисана је форма за унос');
+    }
 
     public function submitForm()
     {
@@ -25,15 +42,21 @@ class FirstSign extends Component
     }
     public function rowSelected($id){
         
+        if($this->selectedId!=$id) {
+        $this->selectedId=$id;
         $firstSign=VesFirstSign::find($id);
         
         if($firstSign) {
-           // $this->form->id=$regulation->id;
+           $this->form->id=$firstSign->id;
             $this->form->order=$firstSign->order;
             $this->form->sign=$firstSign->sign;
             $this->form->description=$firstSign->description;
             $this->form->note=$firstSign->note;
         }
+    } else {
+        $this->selectedId='';
+        $this->form->reset();
+    }
 
     }
 
