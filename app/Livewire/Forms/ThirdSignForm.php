@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\VesFirstSign;
+use App\Models\VesThirdSign;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class FirstSignForm extends Form
+class ThirdSignForm extends Form
 {
     public $id;
 
@@ -21,6 +21,9 @@ class FirstSignForm extends Form
     #[Validate('required', message: "Обавезно поље")]
     public $description;
 
+    #[Validate('required', message: "Обавезно поље")]
+    public $ves_second_sign_id;
+
     public $note;
 
 
@@ -28,14 +31,16 @@ class FirstSignForm extends Form
     public function store()
     {
         //dd($this->svl);
-        $regulation = VesFirstSign::updateOrCreate(
+        $regulation = VesThirdSign::updateOrCreate(
             [
                 'sign' => $this->sign,
+                'ves_second_sign_id' => $this->ves_second_sign_id
             ],
             [
                 'order' => $this->order,
                 'description' => $this->description,
                 'note' => $this->note,
+                
 
             ]
         );
@@ -43,7 +48,7 @@ class FirstSignForm extends Form
     public function defaultOrder()
     {
         // Dohvati maksimalni redni broj
-        $maxOrder = VesFirstSign::max('order');
+        $maxOrder = VesThirdSign::max('order');
 
         // Izračunaj novi redni broj
         $newSerialNumber = ceil(($maxOrder+1) / 10) * 10;

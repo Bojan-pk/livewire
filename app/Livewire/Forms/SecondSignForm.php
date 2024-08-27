@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Forms;
 
-use App\Models\VesFirstSign;
+use App\Models\VesSecondSign;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class FirstSignForm extends Form
+class SecondSignForm extends Form
 {
     public $id;
 
@@ -28,7 +28,7 @@ class FirstSignForm extends Form
     public function store()
     {
         //dd($this->svl);
-        $regulation = VesFirstSign::updateOrCreate(
+        $regulation = VesSecondSign::updateOrCreate(
             [
                 'sign' => $this->sign,
             ],
@@ -43,7 +43,7 @@ class FirstSignForm extends Form
     public function defaultOrder()
     {
         // Dohvati maksimalni redni broj
-        $maxOrder = VesFirstSign::max('order');
+        $maxOrder = VesSecondSign::max('order');
 
         // Izračunaj novi redni broj
         $newSerialNumber = ceil(($maxOrder+1) / 10) * 10;

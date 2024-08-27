@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class VesThirdSign extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'order','sign', 'description','note','ves_second_sign_id',
+    ];
+
+
+    public function secondSign() {
+        return $this->belongsTo(VesSecondSign::class,'ves_second_sign_id');
+    }
 }

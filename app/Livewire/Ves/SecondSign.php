@@ -2,45 +2,40 @@
 
 namespace App\Livewire\Ves;
 
-use App\Livewire\Forms\FirstSignForm;
-use App\Models\VesFirstSign;
+use App\Livewire\Forms\SecondSignForm;
+use App\Models\VesSecondSign;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class FirstSign extends Component
+class SecondSign extends Component
 {
    use WithPagination;
 
-   public FirstSignForm $form;
+   public SecondSignForm $form;
    public $searchTerm='';
    public $selectedId;
-    
    public $showDeleteModal = false;
 
    Public function mount()
    {
     $this->form->defaultOrder();
    }
-
    public function confirmDelete()
    {
         
      if ($this->form->id) $this->showDeleteModal = true;
      else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
    }
-
    public function closeModal()
    {
        $this->showDeleteModal = false; // Sakriva modal bez brisanja
-   }    
-
-
+   } 
    public function removeRow($id = null)
     {
         if ($id) {
-            $firstSign = VesFirstSign::find($id);
-            session()->flash('success', "Ознака за " . $firstSign->description . " је успешно обрисанa!!!");
-            $firstSign->delete();
+            $secondSign = VesSecondSign::find($id);
+            session()->flash('success', "Ознака за " . $secondSign->description . " је успешно обрисанa!!!");
+            $secondSign->delete();
             $this->form->reset();
         } else $this->cleanTable();
         $this->showDeleteModal = false; // Sakriva modal nakon brisanja
@@ -66,14 +61,14 @@ class FirstSign extends Component
         
         if($this->selectedId!=$id) {
         $this->selectedId=$id;
-        $firstSign=VesFirstSign::find($id);
+        $secondSign=VesSecondSign::find($id);
         
-        if($firstSign) {
-           $this->form->id=$firstSign->id;
-            $this->form->order=$firstSign->order;
-            $this->form->sign=$firstSign->sign;
-            $this->form->description=$firstSign->description;
-            $this->form->note=$firstSign->note;
+        if($secondSign) {
+           $this->form->id=$secondSign->id;
+            $this->form->order=$secondSign->order;
+            $this->form->sign=$secondSign->sign;
+            $this->form->description=$secondSign->description;
+            $this->form->note=$secondSign->note;
         }
     } else {
         $this->selectedId='';
@@ -87,22 +82,22 @@ class FirstSign extends Component
     {
         if (empty($this->searchTerm)) {
            
-            $firstSigns = VesFirstSign::orderBy('order')->paginate(10);
+            $secondSigns = VesSecondSign::orderBy('order')->paginate(10);
         } else {
             //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
-            $query = VesFirstSign::query();
+            $query = VesSecondSign::query();
             // Pretraži svaku ključnu reč 
             foreach ($keywords as $keyword) {
                 $query->where('sign', 'LIKE', '%' . $keyword . '%')->
                 orWhere('description', 'LIKE', '%' . $keyword . '%');
             }
 
-            $firstSigns = $query->orderBy('order')->paginate(10);  
+            $secondSigns = $query->orderBy('order')->paginate(10);  
         }
 
-        return view('livewire.ves.first-sign', [
-            'firstSigns' => $firstSigns
+        return view('livewire.ves.second-sign', [
+            'secondSigns' => $secondSigns
         ]);
     }
 }

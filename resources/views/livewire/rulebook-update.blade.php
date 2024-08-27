@@ -301,9 +301,11 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="p-6 text-center">
-                        <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2V6m4 14H6a2 2 0 01-2-2V6a2 2 0 012-2h4m10 0h-4m10 0H6m16 0a2 2 0 00-2-2H6a2 2 0 00-2 2m16 0a2 2 0 012 2v12a2 2 0 01-2 2h-4"></path>
-                        </svg>
+                     <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Да ли сте сигурни да желите да обришете овај ред?</h3>
                         <button wire:click.prevent="deleteRow" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                            Да, сигуран сам

@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit="submitForm" class=" flex justify-center">
+<form wire:submit="submitForm" class=" flex justify-center">
     <div class="w-8/12 rounded border p-2">
 
         <div>
@@ -65,7 +65,7 @@
                             Знак
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Категорија кадра
+                            Видови, родови и службе
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Напомена
@@ -74,8 +74,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($firstSigns)
-                        @foreach ($firstSigns as $key => $value)
+                    @if ($secondSigns)
+                        @foreach ($secondSigns as $key => $value)
                             <tr wire:click="rowSelected({{ $value->id }})"
                                 class=" border-b  cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} hover:bg-gray-100">
                                 <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap ">
@@ -97,7 +97,7 @@
                 </tbody>
             </table>
             <div>
-                {{ $firstSigns->links('vendor.livewire.tailwind') }}
+                {{ $secondSigns->links('vendor.livewire.tailwind') }}
             </div>
         </div>
 
@@ -181,13 +181,13 @@
             @error('form.valid')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror --}}
-           {{-- < div class="flex justify-between">
-                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
+            <div class="flex justify-between">
+                {{-- <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     ознаку </button> --}}
                     <button wire:click.prevent="confirmDelete" type="button"
-                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    ознаку </button>
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
+                        ознаку </button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     унос</button>
@@ -230,6 +230,7 @@
             </div>
         </div>
     </div>
+    
 </div> --}}
 @if ($showDeleteModal)
         <!-- Modal Background Overlay -->
