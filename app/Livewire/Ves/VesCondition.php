@@ -69,6 +69,7 @@ class VesCondition extends Component
         
         if($vesCondition) {
             $this->form->id=$vesCondition->id;
+            $this->form->rb=$vesCondition->rb;
             $this->form->old_ves=$vesCondition->old_ves;
             $this->form->old_alternative=$vesCondition->old_alternative;
             $this->form->old_condition=$vesCondition->old_condition;

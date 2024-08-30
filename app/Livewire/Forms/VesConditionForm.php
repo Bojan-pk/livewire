@@ -9,6 +9,8 @@ use Livewire\Form;
 class VesConditionForm extends Form
 {
     public $id;
+    public $rb;
+
 
     //#[Validate('required', message: "Обавезно поље")]
     #[Validate('size:5', message: "Морате унети тачно 5 карактера")]
@@ -36,6 +38,7 @@ class VesConditionForm extends Form
             ],
             [
                 'old_alternative' => $this->old_alternative,
+                'rb' => $this->rb,
                 'old_kind' => $this->old_kind,
                 'old_condition' => $this->old_condition,
                 'condition' => $this->condition,

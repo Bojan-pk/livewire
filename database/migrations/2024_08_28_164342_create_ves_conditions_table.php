@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('ves_conditions', function (Blueprint $table) {
             $table->id();
+            $table->string('rb')->nullable();
             $table->string('old_ves')->nullable();
             $table->string('old_alternative')->nullable();
             $table->string('old_kind')->nullable();
             $table->string('old_condition')->nullable();
             $table->string('ves')->nullable();
             $table->string('condition')->nullable();
-            $table->string('alternative')->nullable();
+            $table->text('alternative')->nullable();
             $table->timestamps();
         });
     }

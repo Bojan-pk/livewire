@@ -59,6 +59,9 @@
                 <thead class="text-xs text-gray-700  bg-gray-50 ">
                     <tr>
                         <th scope="col" class="px-6 py-3">
+                            РБ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             ВЕС (ван снаге)
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -87,8 +90,11 @@
                         @foreach ($vesConditions as $key => $value)
                             <tr wire:click="rowSelected({{ $value->id }})"
                                 class=" border-b  cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} hover:bg-gray-100">
-                                <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap ">
-                                    {{ $value->old_ves}}.
+                                <td scope="row" class="px-6 py-2  ">
+                                    {{ $value->rb}}
+                                </td>
+                                <td scope="row" class="px-6 py-2  ">
+                                    {{ $value->old_ves}}
                                 </td>
                                 <td class="px-6 py-2">
                                     {{ $value->old_alternative }}

@@ -9,6 +9,7 @@ class VesCondition extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'rb',
         'old_ves',
         'old_alternative',
         'old_kind',
