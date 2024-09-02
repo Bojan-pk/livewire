@@ -23,7 +23,7 @@ class ImportExcel extends Component
 
         Excel::import(new VesDataImport, $this->excelFile);
 
-        session()->flash('success', 'Excel file imported successfully.');
+        session()->flash('success', 'Успешно је учитзан Excel file.');
     }
 
 

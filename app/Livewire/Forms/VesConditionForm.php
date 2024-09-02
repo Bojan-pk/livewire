@@ -24,11 +24,14 @@ class VesConditionForm extends Form
     #[Validate('size:5', message: "Морате унети тачно 5 карактера")]
     public $ves;
 
+    public $reading;
+
    // #[Validate('required_without:excelFile', message: "Обавезан унос")]
     #[Validate('required', message: "Обавезно поље")]
     public $condition;
 
     public $excelFile;
+   
 
     public $old_alternative;
     public $old_kind;
@@ -50,6 +53,7 @@ class VesConditionForm extends Form
                 'old_condition' => $this->old_condition,
                 'condition' => $this->condition,
                 'alternative' => $this->alternative,
+                'reading' => $this->reading,
 
             ]
         );

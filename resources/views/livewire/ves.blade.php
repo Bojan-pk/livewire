@@ -1,6 +1,7 @@
 <div class="w-10/12  justify-center">
     <div class="flex justify-between">
-        <h1 class="text-xl font-medium mb-2 text-center">ВЕС/ЕС</h1>
+        <h1 class="text-xl font-medium mb-2 text-center"> Преглед услова 
+        за одрређивање ВЕС и ЕС</h1>
         <div class="relative mr-2 w-1/4">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -16,11 +17,11 @@
     </div>
 
     <div class="flex mt-4">
-        <div class="w-7/12 rounded border p-2">
-            <h1 class=" text-l font-medium mb-2 text-blue-600">УСЛОВИ: <span class=" text-gray-500">
-                    {{-- {{ @$rulebooksTable->rb }} - {{ @$rulebooksTable->name }} --}}</span> </h1>
+        <div class="w-9/12 rounded border p-2">
+           <!--  <h1 class=" text-l font-medium mb-2 text-blue-600">УСЛОВИ: <span class=" text-gray-500">
+                    </span> </h1>
 
-            <hr class="h-px my-8 bg-gray-200 border-2">
+            <hr class="h-px my-8 bg-gray-200 border-2"> -->
 
              <div class="relative overflow-x-auto">
                   <table class="w-full text-l text-left rtl:text-right text-gray-500 ">
@@ -33,10 +34,13 @@
                               ВЕС
                            </th>
                            <th scope="col" class="px-6 py-3">
+                              ИШЧИТАВАЊЕ ВЕС
+                           </th>
+                           <th scope="col" class="px-6 py-3">
                               Услови за одређивање
                            </th>
                            <th scope="col" class="px-6 py-3">
-                              Фможе се попуњавати
+                              Може се попуњавати
                            </th>
                            
                            <th></th>
@@ -53,10 +57,13 @@
                            <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap ">
                               {{ $value->ves }}
                            </th>
-                           <td class="px-2 py-1">
+                           <td class="px-2 py-1 text-xs">
+                              {{ $value->reading }}
+                           </td>
+                           <td class="px-2 py-1 text-xs">
                               {{ $value->condition }}
                            </td>
-                           <td class="px-2 py-1">
+                           <td class="px-2 py-1 text-xs">
                               {{ $value->alternative }}
                            </td>
                            <td></td>
@@ -65,11 +72,14 @@
                         @endif
                      </tbody>
                   </table>
+                  <div class="pt-4">
+                    {{ $ves_conditions ->links('vendor.livewire.tailwind') }}
+                </div>
                </div> 
         </div>
 
-        <div class="w-5/12 mx-2 rounded border p-2">
-            <h1 class=" text-xl font-medium mb-2">Tabela</h1>
+        <div class="w-3/12 mx-2 rounded border p-2">
+            <!-- <h1 class=" text-xl font-medium mb-2">Tabela</h1> -->
 
             <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -79,21 +89,12 @@
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input wire:model.live.debounce.500ms="combinedVes"  {{-- wire:input="updateSelects" --}}
+                <input wire:model.live.debounce.500ms="combinedVes"  maxlength="5"
                     class="block w-full p-2.5 ps-10  text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Пронађи знак ...." />
             </div>
             <div>
-                {{-- <div>
-                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Редни број</label>
-                    <input wire:model="form.order" type="text" id=""
-                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-                </div>
-                <div>
-                    @error('form.order')
-                        <span class=" text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div> --}}
+                
                 <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак категорије
                     кадра
                 </label>

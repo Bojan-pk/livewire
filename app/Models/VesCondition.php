@@ -16,6 +16,7 @@ class VesCondition extends Model
         'old_condition',
         'ves',
         'condition',
+        'reading',
         'alternative',
         
     ];

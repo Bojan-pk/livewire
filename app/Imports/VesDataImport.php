@@ -29,8 +29,9 @@ class VesDataImport implements ToModel
             'old_kind' => $row[5],
             'old_condition' => $row[6],
             'ves' => $row[7] . $row[8] . $row[9] . $row[10] . $row[11],
-            'condition' => $row[12],
-            'alternative' => $row[13]
+            'reading' => $row[12],
+            'condition' => $row[13],
+            'alternative' => $row[14]
         ]);
     }
 }

@@ -81,7 +81,7 @@ class Ves extends Component
         $searchTerm=str_replace('*', '', $this->combinedVes);
             $ves_conditions = VesCondition::where('ves', 'LIKE', '%' . $searchTerm . '%')
             ->orderBy('rb')
-            ->paginate(10);
+            ->paginate(15);
 
         return view('livewire.ves', [
             'ves_conditions' => $ves_conditions

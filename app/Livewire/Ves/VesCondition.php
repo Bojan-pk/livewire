@@ -20,9 +20,9 @@ class VesCondition extends Component
 
     public $showDeleteModal = false;
 
-    public function mount()
+    public function updatedSearchTerm()
     {
-        //$this->form->defaultOrder();
+        $this->resetPage();
     }
     public function confirmDelete()
     {
@@ -49,7 +49,6 @@ class VesCondition extends Component
     public function cleanTable()
     {
         $this->form->reset();
-
         session()->flash('success', 'Обрисана је форма за унос');
     }
 
@@ -63,8 +62,6 @@ class VesCondition extends Component
 
         session()->flash('success', 'Подаци су успешно унети');
         $this->form->reset();
-        //$this->form->defaultOrder();
-
     }
     public function rowSelected($id)
     {
@@ -82,6 +79,7 @@ class VesCondition extends Component
                 $this->form->ves = $vesCondition->ves;
                 $this->form->condition = $vesCondition->condition;
                 $this->form->alternative = $vesCondition->alternative;
+                $this->form->reading = $vesCondition->reading;
             }
         } else {
             $this->selectedId = '';

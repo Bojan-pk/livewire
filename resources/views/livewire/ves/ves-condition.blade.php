@@ -1,6 +1,6 @@
 <div>
     <form wire:submit="submitForm" class=" flex justify-center">
-        <div class="w-8/12 rounded border p-2">
+        <div class="w-9/12 rounded border p-2">
 
             <div>
                 @if (session()->has('success'))
@@ -56,7 +56,7 @@
             </div>
 
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <table class="w-full text-xs text-left rtl:text-right text-gray-500 ">
                     <thead class="text-xs text-gray-700  bg-gray-50 ">
                         <tr>
                             <th scope="col" class="px-6 py-3">
@@ -78,6 +78,9 @@
                                 ВЕС
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Ишчитавање ВЕС/ЕС
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Услови за одређивање
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -94,7 +97,7 @@
                                     <td scope="row" class="px-6 py-2  ">
                                         {{ $value->rb }}
                                     </td>
-                                    <td scope="row" class="px-6 py-2  ">
+                                    <td scope="row" class="px-6 py-2 text-sm ">
                                         {{ $value->old_ves }}
                                     </td>
                                     <td class="px-6 py-2">
@@ -106,8 +109,11 @@
                                     <td class="px-6 py-2">
                                         {{ $value->old_condition }}
                                     </td>
-                                    <td class="px-6 py-2">
+                                    <td class="px-6 py-2 text-sm ">
                                         {{ $value->ves }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->reading}}
                                     </td>
                                     <td class="px-6 py-2">
                                         {{ $value->condition }}
@@ -129,7 +135,7 @@
 
         </div>
 
-        <div class="w-4/12 mx-2 rounded border p-2">
+        <div class="w-3/12 mx-2 rounded border p-2">
             <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -192,6 +198,16 @@
                 </div>
                 <div>
                     @error('form.ves')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Ишчитавање ВЕС/ЕС</label>
+                    <textarea wire:model="form.reading" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"  placeholder="..."></textarea>
+                    
+                </div>
+                <div>
+                    @error('form.reading')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
                 </div>

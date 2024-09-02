@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('old_ves')->nullable();
             $table->string('old_alternative')->nullable();
             $table->string('old_kind')->nullable();
-            $table->string('old_condition')->nullable();
+            $table->text('old_condition')->nullable();
             $table->string('ves')->nullable();
-            $table->string('condition')->nullable();
+            $table->text('reading')->nullable();
+            $table->text('condition')->nullable();
             $table->text('alternative')->nullable();
             $table->timestamps();
         });
