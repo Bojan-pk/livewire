@@ -1,219 +1,231 @@
 <div>
     <form wire:submit="submitForm" class=" flex justify-center">
-    <div class="w-8/12 rounded border p-2">
+        <div class="w-8/12 rounded border p-2">
 
-        <div>
-            @if (session()->has('success'))
-                <div id="alert-border-3"
-                    class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50"
-                    role="alert">
-                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <div class="ms-3 text-sm font-medium">
-                        {{ session('success') }} <a href="#"
-                            class="font-semibold underline hover:no-underline"></a>
-                    </div>
-                    <button type="button"
-                        class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8"
-                        data-dismiss-target="#alert-border-3" aria-label="Close">
-                        <span class="sr-only">Dismiss</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            <div>
+                @if (session()->has('success'))
+                    <div id="alert-border-3"
+                        class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50"
+                        role="alert">
+                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                         </svg>
-                    </button>
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div id="alert-border-2"
-                    class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 "
-                    role="alert">
-                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <div class="ms-3 text-sm font-medium">
-                        {{ session('error') }}<a href="#" class="font-semibold underline hover:no-underline"></a>
+                        <div class="ms-3 text-sm font-medium">
+                            {{ session('success') }} <a href="#"
+                                class="font-semibold underline hover:no-underline"></a>
+                        </div>
+                        <button type="button"
+                            class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8"
+                            data-dismiss-target="#alert-border-3" aria-label="Close">
+                            <span class="sr-only">Dismiss</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                        </button>
                     </div>
-                    <button type="button"
-                        class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
-                        data-dismiss-target="#alert-border-2" aria-label="Close">
-                        <span class="sr-only">Dismiss</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                @endif
+                @if (session()->has('error'))
+                    <div id="alert-border-2"
+                        class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:text-red-400 "
+                        role="alert">
+                        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                         </svg>
-                    </button>
+                        <div class="ms-3 text-sm font-medium">
+                            {{ session('error') }}<a href="#"
+                                class="font-semibold underline hover:no-underline"></a>
+                        </div>
+                        <button type="button"
+                            class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700"
+                            data-dismiss-target="#alert-border-2" aria-label="Close">
+                            <span class="sr-only">Dismiss</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                        </button>
+                    </div>
+                @endif
+            </div>
+
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead class="text-xs text-gray-700  bg-gray-50 ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                РБ
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                ВЕС (ван снаге)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Може се попуњавати
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Род (служба)
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Услови за одређивање
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                ВЕС
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Услови за одређивање
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Може се попуњавати
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($vesConditions)
+                            @foreach ($vesConditions as $key => $value)
+                                <tr wire:click="rowSelected({{ $value->id }})"
+                                    class=" border-b  cursor-pointer {{ $selectedId == $value->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white ' }} hover:bg-gray-100">
+                                    <td scope="row" class="px-6 py-2  ">
+                                        {{ $value->rb }}
+                                    </td>
+                                    <td scope="row" class="px-6 py-2  ">
+                                        {{ $value->old_ves }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->old_alternative }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->old_kind }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->old_condition }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->ves }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->condition }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->alternative }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        @endif
+                    </tbody>
+                </table>
+                <div>
+                    {{ $vesConditions->links('vendor.livewire.tailwind') }}
                 </div>
-            @endif
+            </div>
+
+
         </div>
 
-        <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                <thead class="text-xs text-gray-700  bg-gray-50 ">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            РБ
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            ВЕС (ван снаге)
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Може се попуњавати
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Род (служба)
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Услови за одређивање
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            ВЕС 
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Услови за одређивање
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Може се попуњавати
-                        </th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($vesConditions)
-                        @foreach ($vesConditions as $key => $value)
-                            <tr wire:click="rowSelected({{ $value->id }})"
-                                class=" border-b  cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} hover:bg-gray-100">
-                                <td scope="row" class="px-6 py-2  ">
-                                    {{ $value->rb}}
-                                </td>
-                                <td scope="row" class="px-6 py-2  ">
-                                    {{ $value->old_ves}}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->old_alternative }}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->old_kind }}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->old_condition }}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->ves}}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->condition}}
-                                </td>
-                                <td class="px-6 py-2">
-                                    {{ $value->alternative}}
-                                </td>
-                            </tr>
-                        @endforeach
-                        
-                    @endif
-                </tbody>
-            </table>
-            <div>
-                {{ $vesConditions->links('vendor.livewire.tailwind') }}
+        <div class="w-4/12 mx-2 rounded border p-2">
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input wire:model.live="searchTerm"
+                    class="block w-full p-2.5 ps-10  text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Пронађи ВЕС...." />
             </div>
-        </div>
+            <div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС (ван
+                        снаге)</label>
+                    <input wire:model="form.old_ves" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.old_ves')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
+                    <input wire:model="form.old_alternative" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.old_alternative')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Род (служба)</label>
+                    <input wire:model="form.old_kind" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.old_kind')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за
+                        одређивање</label>
+                    <input wire:model="form.old_condition" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.old_condition')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС</label>
+                    <input wire:model="form.ves" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.ves')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за
+                        одређивање</label>
+                    <input wire:model="form.condition" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.condition')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
+                    <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
+                    <input wire:model="form.alternative" type="text" id=""
+                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
+                </div>
+                <div>
+                    @error('form.alternative')
+                        <span class=" text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+                {{-- @livewire('import-excell') --}}
+                <div>
+                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Унеси фајл</label>
+                    <input type="file" wire:model="form.excelFile" {{-- wire:click.prevent="import" --}} class="block w-full   mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50" >
 
-
-    </div>
-
-    <div class="w-4/12 mx-2 rounded border p-2">
-        <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
-            </div>
-            <input wire:model.live="searchTerm"
-                class="block w-full p-2.5 ps-10  text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Пронађи ВЕС...." />
-        </div>
-        <div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС (ван снаге)</label>
-                <input wire:model="form.old_ves" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.old_ves')
+                    @error('form.excelFile')
                     <span class=" text-red-500 text-xs">{{ $message }}</span>
                 @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
-                <input wire:model="form.old_alternative" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.old_alternative')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Род (служба)</label>
-                <input wire:model="form.old_kind" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.old_kind')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за одређивање</label>
-                <input wire:model="form.old_condition" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.old_condition')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС</label>
-                <input wire:model="form.ves" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.ves')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за одређивање</label>
-                <input wire:model="form.condition" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.condition')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
-                <input wire:model="form.alternative" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.alternative')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            @livewire('import-excel')
-                    <button wire:click.prevent="confirmDelete" type="button"
+                </div>
+                <button wire:click.prevent="confirmDelete" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     ознаку </button>
                 <button wire:click="cleanTable()" type="button"
@@ -223,10 +235,10 @@
                     class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
             </div>
 
-        </div> 
-</form>
+        </div>
+    </form>
 
-@if ($showDeleteModal)
+    @if ($showDeleteModal)
         <!-- Modal Background Overlay -->
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
             <!-- Modal Content -->

@@ -4,24 +4,31 @@ namespace App\Livewire\Forms;
 
 use App\Models\VesCondition;
 use Livewire\Attributes\Validate;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\VesDataImport; // Vaša klasa za import
 use Livewire\Form;
 
 class VesConditionForm extends Form
 {
     public $id;
     public $rb;
-
-
+    use WithFileUploads;
+    
     //#[Validate('required', message: "Обавезно поље")]
+    //#[Validate('required_without:excelFile', message: "Обавезан унос")]
     #[Validate('size:5', message: "Морате унети тачно 5 карактера")]
     public $old_ves;
 
+   // #[Validate('required_without:excelFile', message: "Обавезан унос")]
     #[Validate('size:5', message: "Морате унети тачно 5 карактера")]
     public $ves;
 
-    
+   // #[Validate('required_without:excelFile', message: "Обавезан унос")]
     #[Validate('required', message: "Обавезно поље")]
     public $condition;
+
+    public $excelFile;
 
     public $old_alternative;
     public $old_kind;
@@ -46,5 +53,16 @@ class VesConditionForm extends Form
 
             ]
         );
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'excelFile' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new VesDataImport, $this->excelFile);
+
+       // session()->flash('success', 'Excel file imported successfully.');
     }
 }

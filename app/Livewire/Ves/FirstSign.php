@@ -17,7 +17,7 @@ class FirstSign extends Component
     
    public $showDeleteModal = false;
 
-   Public function mount()
+   public function mount()
    {
     $this->form->defaultOrder();
    }

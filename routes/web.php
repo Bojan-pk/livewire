@@ -23,6 +23,7 @@ Route::get('/login',\App\Livewire\Login::class);
 Route::get('/search',\App\Livewire\Search::class);
 Route::get('/catalog',\App\Livewire\Catalog::class)->name('catalog');
 Route::get('/rulebook',\App\Livewire\Rulebook::class)->name('rulebook');
+Route::get('/ves',\App\Livewire\Ves::class)->name('ves');
 Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)->name('catalog-administration')->middleware(['auth', 'verified']);
 Route::get('/rulebook-administration',\App\Livewire\RulebookAdministration::class)->name('rulebook-administration')->middleware(['auth', 'verified']);
 Route::get('/regulation-administration',\App\Livewire\RegulationAdministration::class)->name('regulation-administration')->middleware(['auth', 'verified']);

@@ -5,35 +5,36 @@ namespace App\Livewire\Ves;
 use App\Livewire\Forms\VesConditionForm;
 use App\Models\VesCondition as ModelsVesCondition;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 use Livewire\WithPagination;
 
 class VesCondition extends Component
 {
-   
+    use WithFileUploads;
     use WithPagination;
 
     public VesConditionForm $form;
-    public $searchTerm='';
+    public $searchTerm = '';
     public $selectedId;
-     
+
     public $showDeleteModal = false;
-   
-    Public function mount()
+
+    public function mount()
     {
-     //$this->form->defaultOrder();
+        //$this->form->defaultOrder();
     }
     public function confirmDelete()
-   {
-        
-     if ($this->form->id) $this->showDeleteModal = true;
-     else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
-   }
+    {
 
-   public function closeModal()
-   {
-       $this->showDeleteModal = false; // Sakriva modal bez brisanja
-   }    
+        if ($this->form->id) $this->showDeleteModal = true;
+        else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
+    }
+
+    public function closeModal()
+    {
+        $this->showDeleteModal = false; // Sakriva modal bez brisanja
+    }
     public function removeRow($id = null)
     {
         if ($id) {
@@ -54,41 +55,45 @@ class VesCondition extends Component
 
     public function submitForm()
     {
-        $this->validate();
-        $this->form->store();
+        if ($this->form->excelFile) $this->form->import();
+        else {
+            $this->validate();
+            $this->form->store();
+        }
+
         session()->flash('success', 'Подаци су успешно унети');
         $this->form->reset();
         //$this->form->defaultOrder();
-      
+
     }
-    public function rowSelected($id){
-        
-        if($this->selectedId!=$id) {
-        $this->selectedId=$id;
-        $vesCondition=ModelsVesCondition::find($id);
-        
-        if($vesCondition) {
-            $this->form->id=$vesCondition->id;
-            $this->form->rb=$vesCondition->rb;
-            $this->form->old_ves=$vesCondition->old_ves;
-            $this->form->old_alternative=$vesCondition->old_alternative;
-            $this->form->old_condition=$vesCondition->old_condition;
-            $this->form->ves=$vesCondition->ves; 
-            $this->form->condition=$vesCondition->condition; 
-            $this->form->alternative=$vesCondition->alternative; 
+    public function rowSelected($id)
+    {
+
+        if ($this->selectedId != $id) {
+            $this->selectedId = $id;
+            $vesCondition = ModelsVesCondition::find($id);
+
+            if ($vesCondition) {
+                $this->form->id = $vesCondition->id;
+                $this->form->rb = $vesCondition->rb;
+                $this->form->old_ves = $vesCondition->old_ves;
+                $this->form->old_alternative = $vesCondition->old_alternative;
+                $this->form->old_condition = $vesCondition->old_condition;
+                $this->form->ves = $vesCondition->ves;
+                $this->form->condition = $vesCondition->condition;
+                $this->form->alternative = $vesCondition->alternative;
+            }
+        } else {
+            $this->selectedId = '';
+            $this->form->reset();
+            //$this->form->defaultOrder();
         }
-    } else {
-        $this->selectedId='';
-        $this->form->reset();
-        //$this->form->defaultOrder();
     }
 
-    }
-
-     public function render()
+    public function render()
     {
         if (empty($this->searchTerm)) {
-           
+
             $vesConditions = ModelsVesCondition::orderBy('old_ves')->paginate(10);
         } else {
             //dd('radi');
@@ -96,12 +101,11 @@ class VesCondition extends Component
             $query = ModelsVesCondition::query();
             // Pretraži svaku ključnu reč 
             foreach ($keywords as $keyword) {
-                $query->where('ves', 'LIKE', '%' . $keyword . '%')->
-                orWhere('old_ves', 'LIKE', '%' . $keyword . '%');
+                $query->where('ves', 'LIKE', '%' . $keyword . '%')->orWhere('old_ves', 'LIKE', '%' . $keyword . '%');
             }
 
-            $vesConditions = $query->orderBy('old_ves')->paginate(10);  
-        } 
+            $vesConditions = $query->orderBy('old_ves')->paginate(10);
+        }
 
         return view('livewire.ves.ves-condition', [
             'vesConditions' => $vesConditions
