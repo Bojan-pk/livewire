@@ -22,12 +22,15 @@ class RegulationForm extends Form
     #[Validate('required',message:"Обавезно поље")]
     public $valid='1';
     
+    public $file;
+
     public $id='id';
 
 
     public function store()
     {
-        //dd($this->svl);
+        $file=$this->storeFile(); 
+
         $regulation = Regulation::updateOrCreate(
             [
                 'id' => $this->id,
@@ -37,11 +40,21 @@ class RegulationForm extends Form
                 'svl' => $this->svl,
                 'short_name' => $this->short_name,
                 'valid' => $this->valid,
+                'file'=>$file
                 
             ]
         );
 
-       // dd($regulation);
+    }
+
+    public function storeFile() {
+        
+        if (!$this->file) return null;
+
+        $path=$this->file->store('public/file');//snima fajl
+
+        return basename($path);
+
     }
 
 }

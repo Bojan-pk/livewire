@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('reading')->nullable();
             $table->text('condition')->nullable();
             $table->text('alternative')->nullable();
+            $table->unsignedBigInteger('regulation_id');
             $table->timestamps();
         });
     }

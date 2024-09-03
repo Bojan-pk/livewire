@@ -72,6 +72,9 @@
                         <th scope="col" class="px-6 py-3">
                             Активан
                         </th>
+                        <th>
+                            Линк   
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -98,6 +101,10 @@
                                         Не
                                     @endif
                                 </td>
+                                <td class="px-6 py-4">
+                                    <a href="{{ asset('storage/file/'.$value->file)}}">Види...</a>
+                                </td>
+                                
 
                             </tr>
                         @endforeach
@@ -171,6 +178,14 @@
             @error('form.valid')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
+            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Учитај документ</label>
+            <input wire:model="form.file" type="file" type="text" id=""
+                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+            @error('form.valid')
+                <span class=" text-red-500 text-xs">{{ $message }}</span>
+            @enderror
+
+
             <div class="flex justify-between">
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши

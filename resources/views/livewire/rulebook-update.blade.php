@@ -237,7 +237,6 @@
             <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
 
-
             <div class="flex justify-between">
                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                   class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
@@ -250,8 +249,6 @@
             </div>
 
          </div>
-
-
    </form>
    <div id="popup-modal" tabindex="-1"
       class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">

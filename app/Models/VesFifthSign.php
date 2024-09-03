@@ -9,6 +9,6 @@ class VesFifthSign extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order','sign', 'description','note'
+        'order','sign', 'description','note','regulation_id'
     ];
 }

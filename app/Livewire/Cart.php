@@ -13,6 +13,7 @@ class Cart extends Component
     public  $selectedFm;
     public $newJobName = [];
     public $rulebooksId;
+    public $vesId;
 
     //uputstvo o UOIR i elementi FM -- promeniti naziv u cart
     public $cart = [];
@@ -23,6 +24,7 @@ class Cart extends Component
         'saveConditions',
         'saveExperiences',
         'saveRulebooks',
+        'saveVes'
     ];
 
     public function mount()
@@ -57,6 +59,7 @@ class Cart extends Component
             'conditions' => [],
             'experiences' => [],
             'rulebooks'=>'', 
+            'ves'=>'', 
         ];
         // Čuvanje u sesiji
         session()->put('cart', $this->cart);
@@ -89,6 +92,17 @@ class Cart extends Component
         session()->put('cart', $this->cart);
 
     }
+
+    public function saveVes($index) 
+    {
+        if ($this->cart[$this->selectedFm]['ves']!=$index)
+        $this->cart[$this->selectedFm]['ves']=$index;
+    else $this->cart[$this->selectedFm]['ves']='';
+        
+        session()->put('cart', $this->cart);
+
+    }
+
     public function saveJobs($index)
     {
         $this->saveItem($index, 'jobs');

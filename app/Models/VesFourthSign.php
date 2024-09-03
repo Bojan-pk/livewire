@@ -9,7 +9,7 @@ class VesFourthSign extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order','sign', 'description','note','ves_third_sign_id',
+        'order','sign', 'description','note','ves_third_sign_id','regulation_id'
     ];
 
     public function thirdSign() {

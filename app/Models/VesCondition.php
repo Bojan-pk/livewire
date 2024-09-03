@@ -18,6 +18,7 @@ class VesCondition extends Model
         'condition',
         'reading',
         'alternative',
+        'regulation_id'
         
     ];
 }

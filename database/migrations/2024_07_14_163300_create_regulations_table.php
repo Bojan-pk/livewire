@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('short_name')->nullable();
             $table->string('svl')->nullable();
             $table->boolean('valid')->default(true);
+            //$table->boolean('valid')->default(true);
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

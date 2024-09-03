@@ -3,6 +3,7 @@
 namespace App\Livewire\Ves;
 
 use App\Livewire\Forms\FirstSignForm;
+use App\Models\Regulation;
 use App\Models\VesFirstSign;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,12 +15,14 @@ class FirstSign extends Component
    public FirstSignForm $form;
    public $searchTerm='';
    public $selectedId;
+   public $regulations = [];
     
    public $showDeleteModal = false;
 
    public function mount()
    {
     $this->form->defaultOrder();
+    $this->regulations = Regulation::where('short_name', 'Правилник ВЕС')->get();
    }
 
    public function confirmDelete()

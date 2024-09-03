@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sign');
             $table->string('description');
             $table->integer('order')->nullable();
+            $table->unsignedBigInteger('regulation_id');
             $table->string('note')->nullable();
             $table->timestamps();
         });

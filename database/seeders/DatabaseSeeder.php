@@ -28,11 +28,11 @@ class DatabaseSeeder extends Seeder
          $this->call(ExperienceSeeder::class);
          $this->call(UserSeeder::class);
          $this->call(RulebookSeeder::class);
-         $this->call(VesFirstSignSeeder::class);
-         $this->call(VesSecondSignSeeder::class);
-         $this->call(VesThirdSignSeeder::class);
-         $this->call(VesFourthSignSeeder::class);
-         $this->call(VesFifthSignSeeder::class);
+        // $this->call(VesFirstSignSeeder::class);
+         //$this->call(VesSecondSignSeeder::class);
+        // $this->call(VesThirdSignSeeder::class);
+        // $this->call(VesFourthSignSeeder::class);
+         //$this->call(VesFifthSignSeeder::class);
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);

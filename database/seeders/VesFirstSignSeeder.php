@@ -17,6 +17,7 @@ class VesFirstSignSeeder extends Seeder
             'sign' => 'Ф',
             'description' => 'официр',
             'note' => 'neka napomena',
+            
         ]);
         DB::table('ves_first_signs')->insert([
             'sign' => '1',

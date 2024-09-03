@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\RegulationForm;
 use App\Models\Regulation;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class RegulationUpdate extends Component
 {
@@ -13,6 +14,8 @@ class RegulationUpdate extends Component
     public $regulations = [];
     public $searchTerm='';
 
+    use WithFileUploads;
+    
     public function mount()
     {
         //$this->regulations = Regulation::all();

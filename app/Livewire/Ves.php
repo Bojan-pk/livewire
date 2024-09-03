@@ -24,7 +24,16 @@ class Ves extends Component
     public $ves_fourth_signs;
     public $ves_fifth_signs;
 
+    public $vesId;
+
     public $combinedVes = '';
+
+    protected $listeners = [
+        'saveVes',
+        'fmCartSelected',
+
+
+    ];
 
     public function mount()
     {
@@ -32,6 +41,21 @@ class Ves extends Component
         $this->ves_second_signs = VesSecondSign::orderBy('order')->get();
         $this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
     }
+
+    public function saveVes($id)
+    {
+       if($this->vesId != $id) $this->vesId = $id;     
+         else $this->vesId='';
+    }
+
+    public function fmCartSelected($index)
+    {
+        $cart = session()->get('cart', []);
+
+        $this->vesId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
+       
+    }
+
     public function updatedSecondSign($value)
     {
         $this->ves_third_signs = VesThirdSign::where('ves_second_sign_id', $value)->orderBy('order')->get();

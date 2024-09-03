@@ -43,7 +43,7 @@ class Comments extends Component
         $this->validate([
             'newComment'=>'required|max:255'
         ]);
-        $image=$this->storeImage();
+        $image=$this->storeImage(); 
         //dd($this->ticketId);
         $createdComment=Comment::create([
             'body'=>$this->newComment,

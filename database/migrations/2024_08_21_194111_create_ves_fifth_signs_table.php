@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->integer('order')->nullable();
             $table->string('note')->nullable();
+            $table->unsignedBigInteger('regulation_id');
             $table->timestamps();
         });
     }

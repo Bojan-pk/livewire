@@ -21,6 +21,9 @@ class FirstSignForm extends Form
     #[Validate('required', message: "Обавезно поље")]
     public $description;
 
+    #[Validate('required', message: "Обавезно поље")]
+    public $regulation_id;
+
     public $note;
 
 
@@ -35,6 +38,7 @@ class FirstSignForm extends Form
             [
                 'order' => $this->order,
                 'description' => $this->description,
+                'regulation_id' => $this->regulation_id,
                 'note' => $this->note,
 
             ]

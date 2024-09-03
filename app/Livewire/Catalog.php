@@ -51,9 +51,6 @@ class Catalog extends Component
         $this->experienceIds = isset($cart[$index]['experiences']) ? $cart[$index]['experiences'] : [];
     }
 
-
-    
-
     public function saveItem($id, &$array, $collapse)
     {
         if (in_array($id, $array)) {

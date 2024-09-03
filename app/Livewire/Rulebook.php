@@ -46,7 +46,7 @@ class Rulebook extends Component
     public function saveRulebooks($id)
     {
        if($this->rulebooksId != $id) $this->rulebooksId = $id;     
-         else$this->rulebooksId='';
+         else $this->rulebooksId='';
     }
 
     public function render()

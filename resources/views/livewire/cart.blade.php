@@ -7,6 +7,10 @@
                         Формацијско место
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        ВЕС/ЕС
+                    </th>
+
+                    <th scope="col" class="px-6 py-3">
                         Послови
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -33,6 +37,17 @@
                     <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                          <input type="text"  wire:model="cart.{{ $index }}.newJobName"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"  />
                     </th>
+                    <td class="px-6 py-4">
+                        @if ($vesId=$value['ves'])
+                       
+                        {{@App\Models\VesCondition::find($vesId)->ves }}
+                        
+
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveVes', [{{$vesId}}])">x</a>
+                       
+                        @endif
+                    </td>
+
                     <td class="px-6 py-4">
                         @if ($value['jobs'])
                         @foreach ($value['jobs'] as $jobId)
