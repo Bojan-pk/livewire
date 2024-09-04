@@ -53,12 +53,8 @@ class RegulationForm extends Form
     public function storeFile($id) {
         
         if (!$this->file) return null;
-
         $filename = 'document_' . $id . '.' . $this->file->getClientOriginalExtension();
         $path = $this->file->storeAs('public/file', $filename);//snima fajl
-
-        //$path=$this->file->store('public/file');
-
         return basename($path);
 
     }
