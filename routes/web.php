@@ -16,7 +16,7 @@ use App\Models\User;
 */
 
 //Route::view('/', 'welcome');
-/* Route::view('/', 'livewire.home'); */
+Route::view('/', 'livewire.home');
 
 //Route::get('/','\App\Livewire\Home::class');
 Route::get('/login',\App\Livewire\Login::class);
