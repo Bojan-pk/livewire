@@ -29,7 +29,7 @@ class RegulationForm extends Form
 
     public function store()
     {
-        $file=$this->storeFile(); 
+        
 
         $regulation = Regulation::updateOrCreate(
             [
@@ -40,18 +40,24 @@ class RegulationForm extends Form
                 'svl' => $this->svl,
                 'short_name' => $this->short_name,
                 'valid' => $this->valid,
-                'file'=>$file
+                //'file'=>$file
                 
             ]
         );
+        $file=$this->storeFile($regulation->id); 
+        $regulation->file=$file;
+        $regulation->save();
 
     }
 
-    public function storeFile() {
+    public function storeFile($id) {
         
         if (!$this->file) return null;
 
-        $path=$this->file->store('public/file');//snima fajl
+        $filename = 'document_' . $id . '.' . $this->file->getClientOriginalExtension();
+        $path = $this->file->storeAs('public/file', $filename);//snima fajl
+
+        //$path=$this->file->store('public/file');
 
         return basename($path);
 

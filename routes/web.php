@@ -16,9 +16,11 @@ use App\Models\User;
 */
 
 //Route::view('/', 'welcome');
-Route::view('/', 'livewire.home');
-
+//Route::view('/', 'livewire.home');
+Route::get('/',\App\Livewire\Home::class);
 //Route::get('/','\App\Livewire\Home::class');
+//Route::redirect('/', '/ves', 301);
+
 Route::get('/login',\App\Livewire\Login::class);
 Route::get('/search',\App\Livewire\Search::class);
 Route::get('/catalog',\App\Livewire\Catalog::class)->name('catalog');

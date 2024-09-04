@@ -31,8 +31,6 @@ class Ves extends Component
     protected $listeners = [
         'saveVes',
         'fmCartSelected',
-
-
     ];
 
     public function mount()

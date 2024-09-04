@@ -13,6 +13,7 @@ class RegulationUpdate extends Component
     public RegulationForm $form;
     public $regulations = [];
     public $searchTerm='';
+    public $selectedId;
 
     use WithFileUploads;
     
@@ -30,6 +31,9 @@ class RegulationUpdate extends Component
     }
 
     public function regulationSelected($id){
+       
+        if($this->selectedId!=$id) {
+            $this->selectedId=$id;
         $regulation=Regulation::find($id);
         
         if($regulation) {
@@ -38,7 +42,13 @@ class RegulationUpdate extends Component
             $this->form->svl=$regulation->svl;
             $this->form->short_name=$regulation->short_name;
             $this->form->valid=$regulation->valid;
+            $this->form->file=$regulation->file;
         }
+    } else {
+        $this->selectedId='';
+        $this->form->reset();
+        
+    }
         
     }
 
