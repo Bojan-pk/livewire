@@ -46,15 +46,20 @@ class RegulationForm extends Form
         );
         $file=$this->storeFile($regulation->id); 
         $regulation->file=$file;
+        //dd($regulation->file=$file);
         $regulation->save();
 
     }
 
     public function storeFile($id) {
         
+        
         if (!$this->file) return null;
+     
         $filename = 'document_' . $id . '.' . $this->file->getClientOriginalExtension();
         $path = $this->file->storeAs('public/file', $filename);//snima fajl
+
+        $this->file="";
         return basename($path);
 
     }

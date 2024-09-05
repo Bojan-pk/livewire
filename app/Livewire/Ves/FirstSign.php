@@ -44,7 +44,10 @@ class FirstSign extends Component
             $firstSign = VesFirstSign::find($id);
             session()->flash('success', "Ознака за " . $firstSign->description . " је успешно обрисанa!!!");
             $firstSign->delete();
+            //$regulation_id=$this->form->regulation_id;
             $this->form->reset();
+           // $this->form->regulation_id=$regulation_id;
+            
         } else $this->cleanTable();
         $this->showDeleteModal = false; // Sakriva modal nakon brisanja
     }
@@ -61,7 +64,9 @@ class FirstSign extends Component
         $this->validate();
         $this->form->store();
         session()->flash('success', 'Подаци су успешно унети');
+        $regulation_id=$this->form->regulation_id;
         $this->form->reset();
+        $this->form->regulation_id=$regulation_id;
         $this->form->defaultOrder();
       
     }
@@ -103,7 +108,8 @@ class FirstSign extends Component
 
             $firstSigns = $query->orderBy('order')->paginate(10);  
         }
-
+       // $this->setPage($this->paginator->lastPage());
+        
         return view('livewire.ves.first-sign', [
             'firstSigns' => $firstSigns
         ]);

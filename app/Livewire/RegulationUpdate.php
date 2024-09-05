@@ -27,7 +27,7 @@ class RegulationUpdate extends Component
         $this->validate();
         $this->form->store();
         session()->flash('success', 'Подаци су успешно унети');
-        $this->form->reset();
+        //$this->form->reset();
     }
 
     public function regulationSelected($id){

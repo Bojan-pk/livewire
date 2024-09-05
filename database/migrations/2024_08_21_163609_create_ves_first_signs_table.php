@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ves_first_signs');
+       /*  Schema::dropIfExists('ves_first_signs'); */
     }
 };
