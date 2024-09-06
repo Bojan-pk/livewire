@@ -3,6 +3,7 @@
 namespace App\Livewire\Ves;
 
 use App\Livewire\Forms\SecondSignForm;
+use App\Models\Regulation;
 use App\Models\VesSecondSign;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,11 +15,13 @@ class SecondSign extends Component
    public SecondSignForm $form;
    public $searchTerm='';
    public $selectedId;
+   public $regulations = [];
    public $showDeleteModal = false;
 
    Public function mount()
    {
     $this->form->defaultOrder();
+    $this->regulations = Regulation::where('short_name', 'Правилник ВЕС')->get();
    }
    public function confirmDelete()
    {
@@ -53,7 +56,9 @@ class SecondSign extends Component
         $this->validate();
         $this->form->store();
         session()->flash('success', 'Подаци су успешно унети');
+        $regulation_id=$this->form->regulation_id;
         $this->form->reset();
+        $this->form->regulation_id=$regulation_id;
         $this->form->defaultOrder();
       
     }

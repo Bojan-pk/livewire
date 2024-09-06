@@ -11,4 +11,10 @@ class VesFifthSign extends Model
     protected $fillable = [
         'order','sign', 'description','note','regulation_id'
     ];
+
+    public function regulation() {
+
+        return $this->belongsTo(Regulation::class);
+
+       }
 }

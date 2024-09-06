@@ -17,4 +17,10 @@ class VesThirdSign extends Model
     public function secondSign() {
         return $this->belongsTo(VesSecondSign::class,'ves_second_sign_id');
     }
+
+    public function regulation() {
+
+        return $this->belongsTo(Regulation::class);
+
+       }
 }

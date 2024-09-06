@@ -68,6 +68,9 @@
                             Видови, родови и службе
                         </th>
                         <th scope="col" class="px-6 py-3">
+                            СВЛ
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                             Напомена
                         </th>
                         
@@ -86,6 +89,9 @@
                                 </td>
                                 <td class="px-6 py-2">
                                     {{ $value->description }}
+                                </td>
+                                <td class="px-6 py-2">
+                                    {{ $value->regulation->svl }}
                                 </td>
                                 <td class="px-6 py-2">
                                     {{ $value->note}}
@@ -148,6 +154,20 @@
                     <span class=" text-red-500 text-xs">{{ $message }}</span>
                 @enderror
             </div>
+            <label for="regulations"class="block mt-2 mb-2 text-sm font-medium text-start">Документ
+                који је
+                основ уноса</label>
+            <select wire:model="form.regulation_id" id="regulations"
+                class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 ">
+                <option>Изабери документ</option>
+                @foreach ($regulations as $regulation)
+                <option value="{{ $regulation->id }}">{{ $regulation->name }}</option>
+                @endforeach
+            </select>
+            <div>
+                @error('form.regulation_id')
+                <span class=" text-red-500 text-xs">{{ $message }}</span>
+                @enderror
             <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Напомена</label>
                 <input wire:model="form.note" type="text" id=""
