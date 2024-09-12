@@ -24,14 +24,16 @@ class ThirdSignForm extends Form
     #[Validate('required', message: "Обавезно поље")]
     public $ves_second_sign_id;
 
+    #[Validate('required', message: "Обавезно поље")]
+    public $regulation_id;
+
     public $note;
 
 
 
     public function store()
     {
-        //dd($this->svl);
-        $regulation = VesThirdSign::updateOrCreate(
+         VesThirdSign::updateOrCreate(
             [
                 'sign' => $this->sign,
                 'ves_second_sign_id' => $this->ves_second_sign_id
@@ -39,6 +41,7 @@ class ThirdSignForm extends Form
             [
                 'order' => $this->order,
                 'description' => $this->description,
+                'regulation_id' => $this->regulation_id,
                 'note' => $this->note,
                 
 

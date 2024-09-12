@@ -70,7 +70,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Знак специјалности
                             </th>
-                            
+                            <th scope="col" class="px-6 py-3">
+                                СВЛ
+                            </th>
                             <th scope="col" class="px-6 py-3">
                                 Напомена
                             </th>
@@ -96,7 +98,10 @@
                                     <td class="px-6 py-2">
                                         {{ $value->sign }} - {{ $value->description }}
                                     </td>
-                                    
+                                    <td class="px-6 py-2">
+                                        {{ $value->regulation->svl }}
+                                    </td>
+
                                     <td class="px-6 py-2">
                                         {{ $value->note }}
                                     </td>
@@ -128,7 +133,7 @@
                     placeholder="Пронађи знак ...." />
             </div>
             <div>
-                <div>
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Редни број</label>
                     <input wire:model="form.order" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -137,10 +142,12 @@
                     @error('form.order')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак рода/службе
-                    </label>
-                <select id="" wire:model="form.selectSecondSign"  {{-- wire:change="selectedSecondSign($event.target.value)" --}} wire:change="$refresh"
+                </div> --}}
+                <x-input-text name="form.order" label="Редни број" />
+
+                {{-- <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак рода/службе
+                </label>
+                <select id="" wire:model="form.selectSecondSign"  wire:change="$refresh"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                     <option selected>Изабери ...</option>
                     @foreach ($secondSigns as $key => $value)
@@ -152,8 +159,13 @@
                     @error('form.short_name')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак врсте</label>
+                </div> --}}
+
+                <x-input-select name="form.selectSecondSign" label="Изабери знак рода/службе" :options="$secondSigns"
+                    optionValue="id" :optionText="['sign', 'description']" />
+
+                {{-- <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак
+                    врсте</label>
                 <select id="" wire:model="form.ves_third_sign_id" wire:change="selectedThirdSign()"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                     <option selected>Изабери ...</option>
@@ -166,8 +178,11 @@
                     @error('form.short_name')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-select name="form.ves_third_sign_id" label="Изабери знак
+                    врсте"
+                    :options="$thirdSigns" optionValue="id" :optionText="['sign', 'description']" wire:change="selectedThirdSign()" />
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2  font-medium text-start">Ознака</label>
                     <input wire:model="form.sign" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -176,8 +191,9 @@
                     @error('form.sign')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.sign" label="Ознака" />
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Опис</label>
                     <input wire:model="form.description" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -186,8 +202,10 @@
                     @error('form.description')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.description" label="Опис" />
+               
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Напомена</label>
                     <input wire:model="form.note" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -196,7 +214,10 @@
                     @error('form.note')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
+                <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
+                    :options="$regulations" optionValue="id" :optionText="['name']" />
+                    <x-input-text name="form.note" label="Напомена" />
 
 
                 <div class="flex justify-between">

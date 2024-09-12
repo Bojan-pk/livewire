@@ -1,7 +1,7 @@
 <div>
     <form wire:submit="submitForm" class=" flex justify-center">
     <div class="w-8/12 rounded border p-2">
-
+{{-- 
         <div>
             @if (session()->has('success'))
                 <div id="alert-border-3"
@@ -52,8 +52,9 @@
                     </button>
                 </div>
             @endif
-        </div>
+        </div> --}}
 
+        <x-flash-message/>
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -64,11 +65,12 @@
                         <th scope="col" class="px-6 py-3">
                             Школовање, усавршавање, односно оспособљавање
                         </th>
-                        
+                        <th scope="col" class="px-6 py-3">
+                            СВЛ
+                        </th>
                         <th scope="col" class="px-6 py-3">
                             Напомена
-                        </th>
-                        
+                        </th>   
                     </tr>
                 </thead>
                 <tbody>
@@ -82,7 +84,9 @@
                                 <td class="px-6 py-2">
                                     {{ $value->sign }} - {{ $value->description }}
                                 </td>
-                                
+                                <td class="px-6 py-2">
+                                    {{ $value->regulation->svl }}
+                                </td>
                                 <td class="px-6 py-2">
                                     {{ $value->note}}
                                 </td>
@@ -96,10 +100,7 @@
                 {{ $fifthSigns->links('vendor.livewire.tailwind') }}
             </div>
         </div>
-
-
     </div>
-
     <div class="w-4/12 mx-2 rounded border p-2">
         <div class="relative">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -114,47 +115,12 @@
                 placeholder="Пронађи знак ...." />
         </div>
         <div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Редни број</label>
-                <input wire:model="form.order" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.order')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2  font-medium text-start">Ознака</label>
-                <input wire:model="form.sign" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.sign')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Опис</label>
-                <input wire:model="form.description" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.description')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Напомена</label>
-                <input wire:model="form.note" type="text" id=""
-                    class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.note')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-
+            <x-input-text name="form.order" label="Редни број" />
+                <x-input-text name="form.sign" label="Ознака" />
+                <x-input-text name="form.description" label="Опис" />
+                <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
+                  :options="$regulations" optionValue="id" :optionText="['name']" />
+                <x-input-text name="form.note" label="Напомена" wire:model="form.note" />
             {{-- <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери скраћени
                 назив</label>
             <select id="countries" wire:model="form.short_name"

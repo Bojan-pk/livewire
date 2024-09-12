@@ -31,7 +31,7 @@ class FirstSignForm extends Form
     public function store()
     {
         //dd($this->svl);
-        $regulation = VesFirstSign::updateOrCreate(
+        VesFirstSign::updateOrCreate(
             [
                 'sign' => $this->sign,
             ],

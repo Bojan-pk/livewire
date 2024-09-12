@@ -42,8 +42,22 @@ class Ves extends Component
 
     public function saveVes($id)
     {
-       if($this->vesId != $id) $this->vesId = $id;     
-         else $this->vesId='';
+        if ($this->vesId != $id) $this->vesId = $id;
+        else $this->vesId = '';
+    }
+
+    public function cleanForm()
+    {
+        $this->reset(
+           'firstSign',
+           'secondSign',
+           'thirdSign',
+           'fourthSign',
+           'fifthSign',
+           'combinedVes'
+        );
+
+        session()->flash('success', 'Обрисана је форма за унос');
     }
 
     public function fmCartSelected($index)
@@ -51,7 +65,6 @@ class Ves extends Component
         $cart = session()->get('cart', []);
 
         $this->vesId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
-       
     }
 
     public function updatedSecondSign($value)
@@ -88,10 +101,10 @@ class Ves extends Component
         $this->firstSign = @VesFirstSign::where('sign', $characters[0])->first()->id ?? '';
         // 2
         $this->secondSign = @VesSecondSign::where('sign', $characters[1])->first()->id ?? '';
-        $this->updatedSecondSign($this->secondSign );
+        $this->updatedSecondSign($this->secondSign);
         // 3
         $this->thirdSign = @VesThirdSign::where('sign', $characters[2])->where('ves_second_sign_id', $this->secondSign)->first()->id ?? '';
-        $this->updatedThirdSign($this->thirdSign );
+        $this->updatedThirdSign($this->thirdSign);
         //4
         $this->fourthSign = @VesFourthSign::where('sign', $characters[3])->where('ves_third_sign_id', $this->thirdSign)->first()->id ?? '';
         //5
@@ -100,8 +113,8 @@ class Ves extends Component
 
     public function render()
     {
-        $searchTerm=str_replace('*', '', $this->combinedVes);
-            $ves_conditions = VesCondition::where('ves', 'LIKE', '%' . $searchTerm . '%')
+        $searchTerm = str_replace('*', '', $this->combinedVes);
+        $ves_conditions = VesCondition::where('ves', 'LIKE', '%' . $searchTerm . '%')
             ->orderBy('rb')
             ->paginate(15);
 

@@ -3,6 +3,7 @@
 namespace App\Livewire\Ves;
 
 use App\Livewire\Forms\FourthSignForm;
+use App\Models\Regulation;
 use App\Models\VesThirdSign;
 use App\Models\VesFourthSign;
 use App\Models\VesSecondSign;
@@ -17,7 +18,7 @@ class FourthSign extends Component
     public $searchTerm = '';
     public $selectedId;
     public $selectThirdSign;
-    
+    public $regulations = [];
     public $thirdSigns=[];
     public $secondSigns;
 
@@ -27,7 +28,7 @@ class FourthSign extends Component
     {
         $this->form->defaultOrder();
        $this->secondSigns = VesSecondSign::orderBy('order')->get();
-        //$this->thirdSigns = VesThirdSign::orderBy('order')->get();
+       $this->regulations = Regulation::where('short_name', 'Правилник ВЕС')->get();
     }
 
     public function updatedFormSelectSecondSign($value)
@@ -64,20 +65,13 @@ class FourthSign extends Component
     {
         $this->form->reset();
         $this->selectThirdSign = '';
-       
-        
+    
         session()->flash('success', 'Обрисана је форма за унос');
     }
 
-    /* public function selectedSecondSign($value)
-    {
-        //dump($value);
-        //$this->selectThirdSign = $this->form->ves_third_sign_id;
-        $this->thirdSigns = VesThirdSign::where('ves_second_sign_id',$value)->orderBy('order')->get();
-    } */
-
     public function selectedThirdSign()
     {
+        //dd('stiglo');
         $this->selectThirdSign = $this->form->ves_third_sign_id;
     }
 
@@ -90,10 +84,12 @@ class FourthSign extends Component
         //cuva $this->ves_second_sign_id
         $ves_third_sign_id = $this->form->ves_third_sign_id;
         $selectSecondSign = $this->form->selectSecondSign;
+        $regulation_id=$this->form->regulation_id;
         $this->form->reset();
         //vraća je 
         $this->form->ves_third_sign_id = $ves_third_sign_id;
         $this->form->selectSecondSign = $selectSecondSign;
+        $this->form->regulation_id=$regulation_id;
         $this->form->defaultOrder();
     }
 

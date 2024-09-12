@@ -21,13 +21,13 @@ class FourthSignForm extends Form
     #[Validate('required', message: "Обавезно поље")]
     public $description;
 
-    
-   // public $ves_second_sign_id;
-
     #[Validate('required', message: "Обавезно поље")]
     public $ves_third_sign_id;
 
     public $selectSecondSign;
+
+    #[Validate('required', message: "Обавезно поље")]
+    public $regulation_id;
 
     public $note;
 
@@ -36,8 +36,8 @@ class FourthSignForm extends Form
 
     public function store()
     {
-       // dump('store');
-        $regulation = VesFourthSign::updateOrCreate(
+       
+         VesFourthSign::updateOrCreate(
             [
                 'sign' => $this->sign,
                 //'ves_second_sign_id' => $this->ves_second_sign_id,
@@ -46,6 +46,7 @@ class FourthSignForm extends Form
             [
                 'order' => $this->order,
                 'description' => $this->description,
+                'regulation_id' => $this->regulation_id,
                 'note' => $this->note,
                 
 

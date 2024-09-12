@@ -44,10 +44,7 @@ class FirstSign extends Component
             $firstSign = VesFirstSign::find($id);
             session()->flash('success', "Ознака за " . $firstSign->description . " је успешно обрисанa!!!");
             $firstSign->delete();
-            //$regulation_id=$this->form->regulation_id;
-            $this->form->reset();
-           // $this->form->regulation_id=$regulation_id;
-            
+            $this->form->reset(); 
         } else $this->cleanTable();
         $this->showDeleteModal = false; // Sakriva modal nakon brisanja
     }
@@ -68,7 +65,6 @@ class FirstSign extends Component
         $this->form->reset();
         $this->form->regulation_id=$regulation_id;
         $this->form->defaultOrder();
-      
     }
     public function rowSelected($id){
         

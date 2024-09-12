@@ -112,18 +112,20 @@
                     placeholder="Пронађи знак ...." />
             </div>
             <div>
-                
-                <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак категорије
-                    кадра
-                </label>
-                <select id="" wire:model="firstSign" wire:change="$refresh"
+                {{-- 
+                <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак категорије кадра
+                </label> --}}
+                {{-- <select id="" wire:model="firstSign" wire:change="$refresh"
                     class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                     <option selected value="">Изабери ...</option>
                     @foreach ($ves_first_signs as $key => $value)
                         <option value="{{ $value->id}}">{{ $value->sign }} - {{ $value->description }}
                         </option>
                     @endforeach
-                </select>
+                </select> --}}
+                <x-input-select name="firstSign" label="Изабери знак категорије кадра"
+                    :options="$ves_first_signs" optionValue="id" :optionText="['sign','description']" />
+
                 <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак вида, рода или
                     службе
                 </label>
@@ -170,7 +172,7 @@
                 </select>
 
 
-                <div>
+               {{--  <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Опис</label>
                     <input wire:model="form.description" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -189,22 +191,22 @@
                     @error('form.note')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <div class="flex justify-between">
                     {{-- <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                         class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                         ознаку </button> --}}
-                    <button wire:click.prevent="confirmDelete" type="button"
+                   {{--  <button wire:click.prevent="confirmDelete" type="button"
                         class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                        ознаку </button>
+                        ознаку </button> --}}
 
-                    <button wire:click.prevent="cleanTable()" type="button"
+                    <button wire:click.prevent="cleanForm()" type="button"
                         class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                         унос</button>
-                    <button type="submit"
-                        class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
+                    {{-- <button type="submit"
+                        class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button> --}}
                 </div>
 
             </div>

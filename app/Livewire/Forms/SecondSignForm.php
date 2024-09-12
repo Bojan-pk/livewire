@@ -31,8 +31,7 @@ class SecondSignForm extends Form
 
     public function store()
     {
-        //dd($this->svl);
-        $regulation = VesSecondSign::updateOrCreate(
+         VesSecondSign::updateOrCreate(
             [
                 'sign' => $this->sign,
             ],

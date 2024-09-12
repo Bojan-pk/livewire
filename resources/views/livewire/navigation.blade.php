@@ -25,6 +25,9 @@
           <a href="/catalog" class="block py-2 px-3 md:p-0 {{ $activeTab == 'catalog' ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700' }}" aria-current="page" wire:navigate>Каталог</a>
         </li>
         <li>
+          <a href="/ves-conversion" class="block py-2 px-3 md:p-0 {{ $activeTab == 'ves-conversion' ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700' }}" aria-current="page" wire:navigate>Конверзија ВЕС/ЕС</a>
+        </li>
+        <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto {{ $activeTab == 'catalog-administration' ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700' }}">Администрацијa <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg></button>
@@ -43,6 +46,7 @@
               <li>
                 <a href="/ves-administration" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Унос ВЕС/ЕС</a>
               </li>
+              
             </ul>
             
           </div>
