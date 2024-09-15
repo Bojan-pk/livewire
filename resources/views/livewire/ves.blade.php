@@ -83,7 +83,7 @@
                     </tbody>
                 </table>
                 <div class="pt-4">
-                    {{ $ves_conditions->links('vendor.livewire.tailwind') }}
+                    {{ @$ves_conditions->links('vendor.livewire.tailwind') }}
                 </div>
             </div>
         </div>

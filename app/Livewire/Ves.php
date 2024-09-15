@@ -49,10 +49,7 @@ class Ves extends Component
 
     public function cleanForm()
     {
-        $this->reset();
-        $this->ves_fourth_signs = null;
-        $this->ves_third_signs = null;
-
+        $this->resetExcept('ves_first_signs','ves_second_signs','ves_fifth_signs');
         session()->flash('success', 'Обрисана је форма за унос');
     }
 
@@ -100,6 +97,7 @@ class Ves extends Component
             }
             return $query;
         }
+        
 
     public function render()
     {
