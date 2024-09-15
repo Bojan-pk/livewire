@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Livewire;
-
 use App\Models\VesCondition;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
+#[Layout('components.layouts.admin')]
 class VesConversion extends Component
 {
     public $code1;
@@ -12,10 +13,8 @@ class VesConversion extends Component
     public $code3;
     public $code4;
     public $code5;
-
     public $ves_conditions;
-
-    
+ 
 public function updatedCode5($code) {
     
     $oldVes=$this->code1.$this->code2.$this->code3.$this->code4.$this->code5;

@@ -20,4 +20,8 @@ class Rulebook extends Model
         //dd('stiglo');
         return $this->hasMany(Regulation::class);
     }
+
+    public function rulebooksTable()  {
+        return $this->belongsTo(RulebooksTable::class);
+       }
 }

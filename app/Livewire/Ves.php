@@ -9,7 +9,7 @@ use App\Models\VesFourthSign;
 use App\Models\VesSecondSign;
 use App\Models\VesThirdSign;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 class Ves extends Component
 {
     public $firstSign;
@@ -26,8 +26,9 @@ class Ves extends Component
 
     public $vesId;
 
-    public $combinedVes = '';
-
+   //public $combinedVes = '';
+   public $searchTerm = '';
+   use WithPagination;
     protected $listeners = [
         'saveVes',
         'fmCartSelected',
@@ -36,8 +37,8 @@ class Ves extends Component
     public function mount()
     {
         $this->ves_first_signs = VesFirstSign::orderBy('order')->get();
-        $this->ves_second_signs = VesSecondSign::orderBy('order')->get();
-        $this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
+        $this->ves_second_signs =VesSecondSign::orderBy('order')->get();
+        $this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();   
     }
 
     public function saveVes($id)
@@ -48,14 +49,9 @@ class Ves extends Component
 
     public function cleanForm()
     {
-        $this->reset(
-           'firstSign',
-           'secondSign',
-           'thirdSign',
-           'fourthSign',
-           'fifthSign',
-           'combinedVes'
-        );
+        $this->reset();
+        $this->ves_fourth_signs = null;
+        $this->ves_third_signs = null;
 
         session()->flash('success', 'Обрисана је форма за унос');
     }
@@ -63,60 +59,54 @@ class Ves extends Component
     public function fmCartSelected($index)
     {
         $cart = session()->get('cart', []);
-
         $this->vesId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
     }
 
-    public function updatedSecondSign($value)
+    public function updatedSecondSign($sign)
     {
-        $this->ves_third_signs = VesThirdSign::where('ves_second_sign_id', $value)->orderBy('order')->get();
-        $this->ves_fourth_signs = '';
-    }
-    public function updatedThirdSign($value)
-    {
-        $this->ves_fourth_signs = VesFourthSign::where('ves_third_sign_id', $value)->orderBy('order')->get();
+        @$ves_second_sign_id=VesSecondSign::whereIn('sign',[$sign,'0'])->pluck('id');
+
+        $this->ves_third_signs = VesThirdSign::whereIn('ves_second_sign_id', $ves_second_sign_id)->orderBy('order')->get();
+        $this->ves_fourth_signs = null;
+        $this->reset('thirdSign','fourthSign');
     }
 
-    public function updated($propertyName)
+    public function updatedThirdSign($sign)
     {
-        if ($propertyName !== 'combinedVes') {
-            $this->combineVes();
+        @$ves_third_sign_id=$this->ves_third_signs->whereIn('sign',[$sign,'0'])->pluck('id');
+        $this->ves_fourth_signs = VesFourthSign::whereIn('ves_third_sign_id', $ves_third_sign_id)->orderBy('order')->get();
+        $this->reset('fourthSign');
+    }
+
+        protected function searchByVes($query)
+        {
+            if ($this->firstSign!= null) $query->whereRaw('SUBSTRING(ves, 1, 1) = ?', [$this->firstSign]);
+            if ($this->secondSign!= null) $query->whereRaw('SUBSTRING(ves, 2, 1) = ?', [$this->secondSign]);
+            if ($this->thirdSign!= null) $query->whereRaw('SUBSTRING(ves, 3, 1) = ?', [$this->thirdSign]);
+            if ($this->fourthSign!= null) $query->whereRaw('SUBSTRING(ves, 4, 1) = ?', [$this->fourthSign]);
+            if ($this->fifthSign!= null) $query->whereRaw('SUBSTRING(ves, 5, 1) = ?', [$this->fifthSign]);
+            
+            return $query;
         }
-    }
 
-    public function combineVes()
-    {
-        $this->combinedVes =
-            (@VesFirstSign::find($this->firstSign)->sign ?: '*') .
-            (@VesSecondSign::find($this->secondSign)->sign ?: '*') .
-            (@VesThirdSign::find($this->thirdSign)->sign ?: '*') .
-            (@VesFourthSign::find($this->fourthSign)->sign ?: '*') .
-            (@VesFifthSign::find($this->fifthSign)->sign ?: '*');
-    }
-
-    public function updatedCombinedVes()
-    {
-        $characters = mb_str_split($this->combinedVes);
-        //1
-        $this->firstSign = @VesFirstSign::where('sign', $characters[0])->first()->id ?? '';
-        // 2
-        $this->secondSign = @VesSecondSign::where('sign', $characters[1])->first()->id ?? '';
-        $this->updatedSecondSign($this->secondSign);
-        // 3
-        $this->thirdSign = @VesThirdSign::where('sign', $characters[2])->where('ves_second_sign_id', $this->secondSign)->first()->id ?? '';
-        $this->updatedThirdSign($this->thirdSign);
-        //4
-        $this->fourthSign = @VesFourthSign::where('sign', $characters[3])->where('ves_third_sign_id', $this->thirdSign)->first()->id ?? '';
-        //5
-        $this->fifthSign = @VesFifthSign::where('sign', $characters[4])->first()->id ?? '';
-    }
+        protected function searchByTerm($query)
+        {
+            $keywords = explode(' ', $this->searchTerm);
+            foreach ($keywords as $keyword) {
+                $query->where(function($q) use ($keyword) {
+                    $q->where('reading', 'LIKE', '%' . $keyword . '%')
+                      ->orWhere('condition', 'LIKE', '%' . $keyword . '%');  
+                });
+            }
+            return $query;
+        }
 
     public function render()
     {
-        $searchTerm = str_replace('*', '', $this->combinedVes);
-        $ves_conditions = VesCondition::where('ves', 'LIKE', '%' . $searchTerm . '%')
-            ->orderBy('rb')
-            ->paginate(15);
+            $ves_conditions = VesCondition::query();
+            
+            if (!empty($this->searchTerm)) $ves_conditions=$this->searchByTerm($ves_conditions);
+            $ves_conditions=$this->searchByVes($ves_conditions)->orderBy('rb')->paginate(15);
 
         return view('livewire.ves', [
             'ves_conditions' => $ves_conditions

@@ -6,6 +6,7 @@ use App\Models\Rulebook as ModelsRulebook;
 use App\Models\RulebooksTable;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Elementi FM')]
 class Rulebook extends Component
@@ -14,15 +15,13 @@ class Rulebook extends Component
     public $rulebooksTable;
     public $activeTable;
     public $rulebooksId;
-    // public $rulebooks;
+    //public $rulebooks;
 
     protected $listeners = [
         'saveRulebooks',
         'fmCartSelected',
-
-
     ];
-
+    use WithPagination;
     public function mount()
     {
         $this->rulebooksTable = RulebooksTable::first();
@@ -31,9 +30,7 @@ class Rulebook extends Component
     public function fmCartSelected($index)
     {
         $cart = session()->get('cart', []);
-
         $this->rulebooksId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
-       
     }
 
     public function tableSelected($fmTable)
@@ -42,36 +39,39 @@ class Rulebook extends Component
         $this->rulebooksTable = RulebooksTable::find($fmTable);
     }
 
-
     public function saveRulebooks($id)
     {
-       if($this->rulebooksId != $id) $this->rulebooksId = $id;     
-         else $this->rulebooksId='';
+        if ($this->rulebooksId != $id) $this->rulebooksId = $id;
+        else $this->rulebooksId = '';
     }
 
     public function render()
     {
         $results = [];
 
-        if (empty($this->searchTerm)) {
+        if ($this->searchTerm == null) {
 
-            $results = "";
+            $results = RulebooksTable::orderBy('rb')->paginate(10);
         } else {
-            //dd('radi');
+
             $keywords = explode(' ', $this->searchTerm);
             $query = RulebooksTable::query();
             // Pretraži svaku ključnu reč u polju name
             foreach ($keywords as $keyword) {
-                $query->where('name', 'LIKE', '%' . $keyword . '%')->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('name', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                });
             }
-
-            $results = $query->orderBy('rb')->take(10)->get();
+            $results = $query->orderBy('rb')->paginate(10);
         }
+        $rulebooks = $this->rulebooksTable->rulebooks()->paginate(2, pageName: 'rulebooks-page');
         return view(
             'livewire.rulebook',
             [
                 'results' => $results,
-
+                'rulebooks'=>$rulebooks
             ]
         );
     }
