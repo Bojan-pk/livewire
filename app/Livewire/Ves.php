@@ -27,7 +27,6 @@ class Ves extends Component
 
     public $vesId;
 
-    //public $combinedVes = '';
     public $searchTerm = '';
     use WithPagination;
     protected $listeners = [
@@ -60,8 +59,14 @@ class Ves extends Component
         $this->vesId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
     }
 
+    public function updatedFirstSign($sign)
+    {
+        $this->firstSign = mb_strtoupper($sign, 'UTF-8');  
+    }
+
     public function updatedSecondSign($sign)
     {
+        $this->secondSign = mb_strtoupper($sign, 'UTF-8');  
         @$ves_second_sign_id = VesSecondSign::whereIn('sign', [$sign, '0'])->pluck('id');
 
         $this->ves_third_signs = VesThirdSign::whereIn('ves_second_sign_id', $ves_second_sign_id)->orderBy('order')->get();
@@ -75,9 +80,19 @@ class Ves extends Component
 
     public function updatedThirdSign($sign)
     {
+        $this->thirdSign = mb_strtoupper($sign, 'UTF-8');  
         @$ves_third_sign_id = $this->ves_third_signs->whereIn('sign', [$sign, '0'])->pluck('id');
         $this->ves_fourth_signs = VesFourthSign::whereIn('ves_third_sign_id', $ves_third_sign_id)->orderBy('order')->get();
         $this->reset('fourthSign');
+    }
+    public function updatedFourthSign($sign)
+    {
+        $this->fourthSign = mb_strtoupper($sign, 'UTF-8');  
+    }
+
+    public function updatedFifthSign($sign)
+    {
+        $this->fifthSign = mb_strtoupper($sign, 'UTF-8');  
     }
 
     protected function searchByVes($query)
@@ -102,7 +117,6 @@ class Ves extends Component
         }
         return $query;
     }
-
 
     public function render()
     {

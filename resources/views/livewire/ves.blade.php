@@ -108,49 +108,49 @@
                 <div class="flex mb-2 space-x-2 rtl:space-x-reverse">
                     <div>
                         <label for="code-1" class="sr-only">First code</label>
-                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-next="code-2"
+                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-next="code-2" 
                             autocomplete="off" wire:model="firstSign" id="code-1" wire:change="$refresh"
-                            class="block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
                              {{($firstSign && !$ves_first_signs->where('sign',$firstSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
                     <div>
                         <label for="code-2" class="sr-only">Second code</label>
-                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-1"
+                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-1" 
                             wire:change="$refresh" autocomplete="off" wire:model="secondSign"
                             data-focus-input-next="code-3" id="code-2"
-                            class="block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
                              {{($secondSign && !$ves_second_signs->where('sign',$secondSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
                     <div>
                         <label for="code-3" class="sr-only">Third code</label>
-                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-2"
+                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-2" 
                             wire:change="$refresh" autocomplete="off" data-focus-input-next="code-4" id="code-3"
                             wire:model="thirdSign"
-                            class="block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
                              {{($thirdSign && !$ves_third_signs->where('sign',$thirdSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
                     <div>
                         <label for="code-4" class="sr-only">Fourth code</label>
-                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-3"
+                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-3" 
                             wire:change="$refresh" autocomplete="off" data-focus-input-next="code-5" id="code-4"
                             wire:model="fourthSign"
-                            class="block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
                              {{($fourthSign && !$ves_fourth_signs->where('sign',$fourthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
                     <div>
                         <label for="code-5" class="sr-only">Fifth code</label>
-                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-4"
+                        <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-4" 
                             autocomplete="off" wire:keyup="$refresh" data-focus-input-next="code-6" id="code-5"
                             wire:model="fifthSign"
-                            class="block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
                              {{($fifthSign && !$ves_fifth_signs->where('sign',$fifthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />

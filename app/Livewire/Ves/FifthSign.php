@@ -102,7 +102,7 @@ class FifthSign extends Component
                 orWhere('description', 'LIKE', '%' . $keyword . '%');
             }
 
-            $firstSigns = $query->orderBy('order')->paginate(10);  
+            $fifthSigns= $query->orderBy('order')->paginate(10);  
         }
 
         return view('livewire.ves.fifth-sign', [
