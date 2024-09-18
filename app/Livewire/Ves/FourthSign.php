@@ -37,7 +37,6 @@ class FourthSign extends Component
         $this->form->ves_third_sign_id="";
     }
     
-
     public function confirmDelete()
     {
         if ($this->form->id) $this->showDeleteModal = true;
@@ -104,7 +103,13 @@ class FourthSign extends Component
                 $this->form->order = $fourthSign->order;
                 $this->form->sign = $fourthSign->sign;
                 $this->form->description = $fourthSign->description;
+                $this->form->regulation_id = $fourthSign->regulation_id;
+
                 $this->form->note = $fourthSign->note;
+                
+                $this->form->selectSecondSign=VesThirdSign::find($fourthSign->ves_third_sign_id)->ves_second_sign_id;
+
+                $this->thirdSigns = VesThirdSign::where('ves_second_sign_id',$this->form->selectSecondSign)->orderBy('order')->get();
                 $this->form->ves_third_sign_id = $fourthSign->ves_third_sign_id;
             }
         } else {

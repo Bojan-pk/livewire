@@ -31,15 +31,13 @@ class FourthSignForm extends Form
 
     public $note;
 
-    
-
-
     public function store()
     {
        
          VesFourthSign::updateOrCreate(
             [
-                'sign' => $this->sign,
+                'sign' => mb_strtoupper($this->sign, 'UTF-8'),
+                
                 //'ves_second_sign_id' => $this->ves_second_sign_id,
                 'ves_third_sign_id' => $this->ves_third_sign_id,
             ],
@@ -48,8 +46,6 @@ class FourthSignForm extends Form
                 'description' => $this->description,
                 'regulation_id' => $this->regulation_id,
                 'note' => $this->note,
-                
-
             ]
         );
     }
