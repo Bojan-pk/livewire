@@ -21,4 +21,10 @@ class VesCondition extends Model
         'regulation_id'
         
     ];
+
+    public function regulation() {
+
+        return $this->belongsTo(Regulation::class);
+
+       }
 }

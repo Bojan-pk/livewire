@@ -86,6 +86,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Може се попуњавати
                             </th>
+                            <th scope="col" class="px-6 py-3">
+                                СВЛ
+                            </th>
 
                         </tr>
                     </thead>
@@ -121,6 +124,10 @@
                                     <td class="px-6 py-2">
                                         {{ $value->alternative }}
                                     </td>
+                                    <td class="px-6 py-2">
+                                        {{ @$value->regulation->svl }}
+                                    </td>
+                                    
                                 </tr>
                             @endforeach
 
@@ -149,18 +156,20 @@
                     placeholder="Пронађи ВЕС...." />
             </div>
             <div>
-                <div>
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС (ван
                         снаге)</label>
                     <input wire:model="form.old_ves" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
                 </div>
+                
                 <div>
                     @error('form.old_ves')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.old_ves" label="ВЕС (ван снаге)" maxlength="5" class="uppercase"/>
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
                     <input wire:model="form.old_alternative" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -169,8 +178,10 @@
                     @error('form.old_alternative')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.old_alternative" label="Може се попуњавати" />
+
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Род (служба)</label>
                     <input wire:model="form.old_kind" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -179,8 +190,10 @@
                     @error('form.old_kind')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.old_kind" label="Род (служба)" />
+                
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за
                         одређивање</label>
                     <input wire:model="form.old_condition" type="text" id=""
@@ -190,8 +203,10 @@
                     @error('form.old_condition')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.old_condition" label="Услови за одређивање" />
+                
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС</label>
                     <input wire:model="form.ves" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -200,7 +215,9 @@
                     @error('form.ves')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
+                <x-input-text name="form.ves" label="ВЕС" maxlength="5" class="uppercase"/>
+
                 <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Ишчитавање
                         ВЕС/ЕС</label>
@@ -214,7 +231,7 @@
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
                 </div>
-                <div>
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Услови за
                         одређивање</label>
                     <input wire:model="form.condition" type="text" id=""
@@ -224,8 +241,10 @@
                     @error('form.condition')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                <div>
+                </div> --}}
+                <x-input-text name="form.condition" label="Услови за одређивање" />
+
+                {{-- <div>
                     <label for="" class="block mt-2 mb-2  font-medium text-start">Може се попуњавати</label>
                     <input wire:model="form.alternative" type="text" id=""
                         class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
@@ -234,8 +253,11 @@
                     @error('form.alternative')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
                     @enderror
-                </div>
-                
+                </div> --}}
+                <x-input-text name="form.alternative" label="Може се попуњавати" />
+                <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
+                    :options="$regulations" optionValue="id" :optionText="['short_name','svl']" />
+
                 
                 <div>
                     <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Унеси фајл</label>

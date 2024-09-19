@@ -9,11 +9,13 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class VesDataImport implements ToModel
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
+    protected $regulation_id;
+
+    public function __construct($regulation_id)
+    {
+        $this->regulation_id = $regulation_id;
+    }
+
     public function model(array $row)
     {
         if (!isset($row[0])) {
@@ -31,7 +33,8 @@ class VesDataImport implements ToModel
             'ves' => $row[7] . $row[8] . $row[9] . $row[10] . $row[11],
             'reading' => $row[12],
             'condition' => $row[13],
-            'alternative' => $row[14]
+            'alternative' => $row[14],
+            'regulation_id'=> $this->regulation_id
         ]);
     }
 }

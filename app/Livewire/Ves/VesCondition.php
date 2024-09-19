@@ -3,6 +3,7 @@
 namespace App\Livewire\Ves;
 
 use App\Livewire\Forms\VesConditionForm;
+use App\Models\Regulation;
 use App\Models\VesCondition as ModelsVesCondition;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,8 +18,14 @@ class VesCondition extends Component
     public VesConditionForm $form;
     public $searchTerm = '';
     public $selectedId;
+    public $regulations = [];
 
     public $showDeleteModal = false;
+
+    public function mount()
+    {
+       $this->regulations = Regulation::where('short_name', 'Правилник ВЕС')->get();
+    }
 
     public function updatedSearchTerm()
     {
@@ -57,7 +64,9 @@ class VesCondition extends Component
         if ($this->form->excelFile) $this->form->import();
         else {
             $this->validate();
+            $regulation_id=$this->form->regulation_id;
             $this->form->store();
+            $this->form->regulation_id=$regulation_id;
         }
 
         session()->flash('success', 'Подаци су успешно унети');
@@ -80,6 +89,7 @@ class VesCondition extends Component
                 $this->form->condition = $vesCondition->condition;
                 $this->form->alternative = $vesCondition->alternative;
                 $this->form->reading = $vesCondition->reading;
+                $this->form->regulation_id = $vesCondition->regulation_id;
             }
         } else {
             $this->selectedId = '';

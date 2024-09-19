@@ -29,10 +29,11 @@ class VesConditionForm extends Form
    // #[Validate('required_without:excelFile', message: "Обавезан унос")]
     #[Validate('required', message: "Обавезно поље")]
     public $condition;
-
-    public $excelFile;
    
-
+    #[Validate('required', message: "Обавезно поље")]
+    public $regulation_id;
+    
+    public $excelFile;
     public $old_alternative;
     public $old_kind;
     public $old_condition;
@@ -41,7 +42,7 @@ class VesConditionForm extends Form
     public function store()
     {
         //dd($this->svl);
-        $regulation = VesCondition::updateOrCreate(
+        VesCondition::updateOrCreate(
             [
                 'old_ves' => $this->old_ves,
                 'ves' => $this->ves,
@@ -54,6 +55,7 @@ class VesConditionForm extends Form
                 'condition' => $this->condition,
                 'alternative' => $this->alternative,
                 'reading' => $this->reading,
+                'regulation_id' => $this->regulation_id
 
             ]
         );
@@ -63,9 +65,10 @@ class VesConditionForm extends Form
     {
         $this->validate([
             'excelFile' => 'required|mimes:xlsx,xls,csv',
+            'regulation_id' => 'required',
         ]);
 
-        Excel::import(new VesDataImport, $this->excelFile);
+        Excel::import(new VesDataImport($this->regulation_id), $this->excelFile);
 
        // session()->flash('success', 'Excel file imported successfully.');
     }
