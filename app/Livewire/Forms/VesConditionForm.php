@@ -32,7 +32,7 @@ class VesConditionForm extends Form
    
     #[Validate('required', message: "Обавезно поље")]
     public $regulation_id;
-    
+    public $note;
     public $excelFile;
     public $old_alternative;
     public $old_kind;
@@ -55,8 +55,8 @@ class VesConditionForm extends Form
                 'condition' => $this->condition,
                 'alternative' => $this->alternative,
                 'reading' => $this->reading,
-                'regulation_id' => $this->regulation_id
-
+                'regulation_id' => $this->regulation_id,
+                'note' => $this->note,
             ]
         );
     }
@@ -67,9 +67,24 @@ class VesConditionForm extends Form
             'excelFile' => 'required|mimes:xlsx,xls,csv',
             'regulation_id' => 'required',
         ]);
-
-        Excel::import(new VesDataImport($this->regulation_id), $this->excelFile);
+        try {
+        Excel::import(new VesDataImport($this->regulation_id,$this->note), $this->excelFile);
 
        // session()->flash('success', 'Excel file imported successfully.');
+       session()->flash('success', 'Подаци су успешно унети');
+    } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+        // Obradi specifične greške validacije iz Excel-a
+        $failures = $e->failures();
+        foreach ($failures as $failure) {
+            $errorMessage = "Row {$failure->row()} failed with error: " . implode(', ', $failure->errors());
+            session()->flash('error', $errorMessage);
+        }
+
+    } catch (\Exception $e) {
+        // Uhvati bilo koju drugu grešku
+        session()->flash('error', 'Јавила се грешка у току учитавања података: ' . $e->getMessage());
     }
+    }
+
+    
 }

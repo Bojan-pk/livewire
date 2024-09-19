@@ -67,14 +67,14 @@ class VesCondition extends Component
             $regulation_id=$this->form->regulation_id;
             $this->form->store();
             $this->form->regulation_id=$regulation_id;
+            session()->flash('success', 'Подаци су успешно унети');
         }
 
-        session()->flash('success', 'Подаци су успешно унети');
+        //session()->flash('success', 'Подаци су успешно унети');
         $this->form->reset();
     }
     public function rowSelected($id)
     {
-
         if ($this->selectedId != $id) {
             $this->selectedId = $id;
             $vesCondition = ModelsVesCondition::find($id);
@@ -90,6 +90,7 @@ class VesCondition extends Component
                 $this->form->alternative = $vesCondition->alternative;
                 $this->form->reading = $vesCondition->reading;
                 $this->form->regulation_id = $vesCondition->regulation_id;
+                $this->form->note = $vesCondition->note;
             }
         } else {
             $this->selectedId = '';
