@@ -46,6 +46,9 @@
               <li>
                 <a href="/ves-administration" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Унос ВЕС/ЕС</a>
               </li>
+              <li>
+                <a href="/user-administration" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Корисници</a>
+              </li>
               
             </ul>
             
