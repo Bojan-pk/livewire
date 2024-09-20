@@ -8,9 +8,11 @@ use App\Models\VesFirstSign;
 use App\Models\VesFourthSign;
 use App\Models\VesSecondSign;
 use App\Models\VesThirdSign;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Title('VES/ES')]
 class Ves extends Component
 {
     public $firstSign;

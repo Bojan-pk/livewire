@@ -3,8 +3,10 @@
 namespace App\Livewire;
 use App\Models\VesCondition;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('VES/ES')]
 #[Layout('components.layouts.admin')]
 class VesConversion extends Component
 {

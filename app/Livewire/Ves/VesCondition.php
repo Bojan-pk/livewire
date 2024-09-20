@@ -5,10 +5,12 @@ namespace App\Livewire\Ves;
 use App\Livewire\Forms\VesConditionForm;
 use App\Models\Regulation;
 use App\Models\VesCondition as ModelsVesCondition;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 use Livewire\WithPagination;
+
 
 class VesCondition extends Component
 {

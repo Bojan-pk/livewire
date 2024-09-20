@@ -3,8 +3,10 @@
 namespace App\Livewire;
 
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Title('VES/ES administracija')]
 #[Layout('components.layouts.admin')]
 class VesAdministration extends Component
 {
