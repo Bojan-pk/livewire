@@ -1,7 +1,7 @@
 <form wire:submit="submitForm" class=" flex justify-center">
     <div class="w-8/12 rounded border p-2">
 
-        <x-flash-message  />
+        <x-flash-message/>
 
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -11,26 +11,21 @@
                             РБ
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Назив
+                            Име
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            СВЛ
+                            Е-маил
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Скраћени назив
+                            Улога
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            Активан
-                        </th>
-                        <th>
-                            Линк   
-                        </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($regulations)
-                        @foreach ($regulations as $key => $value)
-                            <tr wire:click="regulationSelected({{ $value->id }})"
+                    @if ($users)
+                        @foreach ($users as $key => $value)
+                            <tr wire:click="userSelected({{ $value->id }})"
                                 class=" border-b cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} ">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                     {{ $key + 1 }}.
@@ -39,37 +34,22 @@
                                     {{ $value->name }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $value->svl }}
+                                    {{ $value->email }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $value->short_name }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if ($value->valid)
-                                        Да
-                                    @else
-                                        Не
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if ($value->file)
-                                    <a href="{{ asset('storage/file/'.$value->file)}}">Види...</a>
-                                    @endif
+                                    {{ $value->role }}
                                 </td>
                                 
-
                             </tr>
                         @endforeach
-                        <div>
-                            @error('form.table_items')
-                                <span class=" text-red-500 text-xs">{{ $message }} </span>
-                            @enderror
-                        </div>
+                        
                     @endif
                 </tbody>
             </table>
+            <div>
+                {{ $users->links('vendor.livewire.tailwind') }}
+            </div>
         </div>
-
 
     </div>
 
@@ -87,60 +67,22 @@
                 placeholder="Пронађи пропис ...." />
         </div>
         <div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Назив прописа</label>
-                <input wire:model="form.name" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.name')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
-            <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Службени војни лист</label>
-                <input wire:model="form.svl" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.svl')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-input-text name="form.name" label="Име"/>
+            <x-input-text name="form.email" label="Е-маил"/>
+            
+            
 
-            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери скраћени
-                назив</label>
-            <select id="countries" wire:model="form.short_name"
+            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Улога</label>
+            <select id="countries" wire:model="form.role"
                 class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                <option selected>Изабери ...</option>
-                <option value="Каталог ФМ">Каталог ФМ</option>
-                <option value="Елементи ФМ">Елементи ФМ</option>
-                <option value="Правилник ВЕС">Правилник ВЕС</option>
+                <option selected>...Изабери ...</option>
+                <option value="user">Корисник</option>
+                <option value="admin">Администратор</option>
+                <option value="super-admin">Супер администратор</option>
             </select>
-            @error('form.short_name')
+            @error('form.role')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
-            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Да ли је пропис
-                активан?</label>
-            <select id="countries" wire:model="form.valid"
-                class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                <option value="1">Да</option>
-                <option value="0">Не</option>
-            </select>
-            @error('form.valid')
-                <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
-            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Учитај документ</label>
-            <input wire:model="form.file" type="file" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-                    @if ($form->file)
-                    <p class="text-blue-500">Документ је изабран</p>
-                    @endif
-            @error('form.valid')
-                <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
-
-
             <div class="flex justify-between">
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
@@ -177,7 +119,7 @@
                 <h3 class="mb-5 text-lg font-normal text-gray-500 ">Да ли сте сигурни да желите да
                     обршите пропис?</h3>
                 <button data-modal-hide="popup-modal" type="button"
-                    wire:click="removeRegulation({{ $form->id }})"
+                    wire:click="removeUser({{ $form->id }})"
                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                     Да, јесам
                 </button>
