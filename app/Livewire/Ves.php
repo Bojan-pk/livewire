@@ -41,6 +41,7 @@ class Ves extends Component
         $this->ves_first_signs = VesFirstSign::orderBy('order')->get();
         $this->ves_second_signs = VesSecondSign::orderBy('order')->get();
         $this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
+        
     }
 
     public function saveVes($id)
@@ -108,6 +109,42 @@ class Ves extends Component
         return $query;
     }
 
+    protected function highlightKeyword($text, $keyword)
+    {
+        if (!$keyword) return $text;
+    
+        // Користимо mb_ereg_replace за рад са ћирилицом и додајемо 'i' флаг за case-insensitive
+        return mb_ereg_replace('(' . preg_quote($keyword) . ')', '<mark>\1</mark>', $text, 'i');
+    }
+    
+    protected function highlightVes($ves)
+    {
+        // Низ унетих знакова које треба маркирати
+        $signs = [$this->firstSign, $this->secondSign, $this->thirdSign, $this->fourthSign, $this->fifthSign];
+    
+        // Претварамо вес у низ да бисмо обрадили сваки знак појединачно
+        $markedVes = '';
+    
+        // Прођемо кроз сваки знак у низу вес
+        for ($i = 0; $i < mb_strlen($ves); $i++) {
+            $currentChar = mb_substr($ves, $i, 1);
+            
+            // Ако постоји одговарајући знак у $signs на истој позицији и подудара се
+            if (isset($signs[$i]) && $currentChar == $signs[$i]) {
+                // Маркирамо тај знак
+                $markedVes .= '<mark>' . $currentChar . '</mark>';
+            } else {
+                // Додајемо немаркирани знак
+                $markedVes .= $currentChar;
+            }
+        }
+    
+        return $markedVes;
+    }
+    
+    
+
+
     protected function searchByTerm($query)
     {
         $keywords = explode(' ', $this->searchTerm);
@@ -120,7 +157,31 @@ class Ves extends Component
         return $query;
     }
 
-    public function render()
+   /*  protected function searchByTerm($query)
+    {
+        $keywords = explode(' ', $this->searchTerm);
+        foreach ($keywords as $keyword) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('reading', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('condition', 'LIKE', '%' . $keyword . '%');
+            });
+        }
+    
+        // Markiraj ključne reči u rezultatima pretrage
+        $query->get()->transform(function ($item) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $item->reading = $this->highlightKeyword($item->reading, $keyword);
+                $item->condition = $this->highlightKeyword($item->condition, $keyword);
+            }
+            dd($item->reading);
+            return $item;
+        });
+    
+        return $query;
+    } */
+    
+
+   /*  public function render()
     {
         $ves_conditions = VesCondition::query();
 
@@ -130,5 +191,35 @@ class Ves extends Component
         return view('livewire.ves', [
             'ves_conditions' => $ves_conditions
         ]);
+    } */
+    public function render()
+    {
+        $ves_conditions = VesCondition::query();
+    
+        if (!empty($this->searchTerm)) {
+            $ves_conditions = $this->searchByTerm($ves_conditions);
+        }
+    
+        $ves_conditions = $this->searchByVes($ves_conditions)->orderBy('rb')->paginate(15);
+    // Примени маркирање на резултате
+    /* $ves_conditions->getCollection()->transform(function ($item) {
+        $item->ves = $this->highlightVes($item->ves);
+        return $item;
+    }); */
+        // Примени маркирање на резултате
+        $ves_conditions->getCollection()->transform(function ($item) {
+            foreach (explode(' ', $this->searchTerm) as $keyword) {
+                $item->reading = $this->highlightKeyword($item->reading, $keyword);
+                $item->condition = $this->highlightKeyword($item->condition, $keyword);
+                $item->ves = $this->highlightVes($item->ves);
+            }
+            return $item;
+        });
+    
+        return view('livewire.ves', [
+            'ves_conditions' => $ves_conditions
+        ]);
     }
+    
+
 }

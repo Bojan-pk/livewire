@@ -22,6 +22,7 @@ class SecondSign extends Component
    {
     $this->form->defaultOrder();
     $this->regulations = Regulation::where('short_name', 'Правилник ВЕС')->get();
+   // dd($this->regulations );
    }
    public function confirmDelete()
    {

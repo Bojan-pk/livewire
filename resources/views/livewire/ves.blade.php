@@ -1,4 +1,5 @@
 <div class="w-10/12  justify-center">
+    <x-flash-message/>
     <div class="flex justify-between">
         <h1 class="text-xl font-medium mb-2 text-center"> Преглед услова
             за одређивање ВЕС и ЕС</h1>
@@ -47,13 +48,13 @@
                                         {{ $value->rb }}
                                     </th>
                                     <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $value->ves }}
+                                        {!! $value->ves !!}
                                     </th>
                                     <td class="px-2 py-1 text-xs">
-                                        {{ $value->reading }}
+                                        {!! $value->reading !!}
                                     </td>
                                     <td class="px-2 py-1 text-xs">
-                                        {{ $value->condition }}
+                                        {!! $value->condition !!}
                                     </td>
                                     <td class="px-2 py-1 text-xs">
                                         {{ $value->alternative }}

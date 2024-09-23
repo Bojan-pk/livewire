@@ -3,40 +3,54 @@
 namespace App\Livewire\Forms;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-//use Livewire\Attributes\Layout;
-//use Livewire\Volt\Component;
+use Livewire\Attributes\Validate;
+
 use Livewire\Form;
 
 class UserForm extends Form
 {
+    #[Validate('required|string|max:255')]
     public string $name = '';
+
     public string $email = '';
+
     public string $password = '';
-    public string $password_confirmation = '';   
+    
+    #[Validate('required|string')]
     public string $role = '';   
-    public string $id='';   
+    
+    public  $id;   
+
+    public function rules()
+    {
+        return [
+            //'name' => 'required|string|max:255',
+            'email' => $this->id ?'required|email':'required|email|unique:users,email' ,
+            'password' => $this->id ? 'nullable|min:6' : 'required|min:6', // Uslovna validacija
+           // 'role' => 'required|string',
+        ];
+    }
+
 
     public function register(): void
     {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-            'role'=>['required', 'string', 'max:255'],
-        ]);
+        $validated = $this->validate();
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered($user = User::create($validated)));
-
-        Auth::login($user);
-
-        //$this->redirect(RouteServiceProvider::HOME, navigate: true);
+        // Uslovno dodaj lozinku
+    if (!empty($this->password)) {
+        $validated['password'] = Hash::make($this->password);
+    }else {
+        // Ako lozinka nije uneta, ukloni je iz $validatedData
+        unset($validated['password']);
     }
-
+    
+      //dd($this->id);
+       $user= User::updateOrCreate(
+            [
+                'id' => $this->id,
+            ],
+                $validated
+        );
+    }
 }

@@ -16,10 +16,13 @@ use App\Models\User;
 */
 
 //Route::view('/', 'welcome');
+//Route::view('/', 'welcome');
+//Route::view('/', 'welcome');
 //Route::view('/', 'livewire.home');
-Route::get('/',\App\Livewire\Home::class);
+//Route::get('/',\App\Livewire\Home::class);
 //Route::get('/','\App\Livewire\Home::class');
 //Route::redirect('/', '/ves', 301);
+Route::get('/',\App\Livewire\Index::class);
 
 Route::get('/login',\App\Livewire\Login::class);
 Route::get('/search',\App\Livewire\Search::class);
@@ -31,7 +34,7 @@ Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)
 Route::get('/rulebook-administration',\App\Livewire\RulebookAdministration::class)->name('rulebook-administration')->middleware(['auth', 'verified']);
 Route::get('/regulation-administration',\App\Livewire\RegulationAdministration::class)->name('regulation-administration')->middleware(['auth', 'verified']);
 Route::get('/ves-administration',\App\Livewire\VesAdministration::class)->name('ves-administration')->middleware(['auth', 'verified']);
-Route::get('/user-administration',\App\Livewire\UserAdministration::class)->name('user-administration')->middleware(['auth', 'verified']);
+Route::get('/user-administration',\App\Livewire\UserAdministration::class)->name('user-administration')->middleware(['role:super-admin,admin']);
 
 Route::get('/welcome', function(){
     $comments=Comment::all();

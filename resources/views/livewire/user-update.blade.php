@@ -64,29 +64,20 @@
             </div>
             <input wire:model.live="searchTerm"
                 class="block w-full p-2.5 ps-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Пронађи пропис ...." />
+                placeholder="Корисника ...." />
         </div>
         <div>
             <x-input-text name="form.name" label="Име"/>
             <x-input-text name="form.email" label="Е-маил"/>
+            <x-input-text name="form.password" label="Лозинка"/>
             
-            
+            <x-input-select name="form.role" label="Улога" :options="$roles"
+                    optionValue="value" :optionText="['name']" />
 
-            <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Улога</label>
-            <select id="countries" wire:model="form.role"
-                class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                <option selected>...Изабери ...</option>
-                <option value="user">Корисник</option>
-                <option value="admin">Администратор</option>
-                <option value="super-admin">Супер администратор</option>
-            </select>
-            @error('form.role')
-                <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
+            
             <div class="flex justify-between">
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
-                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    пропис </button>
+                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши корисника</button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     унос</button>
@@ -117,7 +108,7 @@
                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
                 <h3 class="mb-5 text-lg font-normal text-gray-500 ">Да ли сте сигурни да желите да
-                    обршите пропис?</h3>
+                    обришите корисника?</h3>
                 <button data-modal-hide="popup-modal" type="button"
                     wire:click="removeUser({{ $form->id }})"
                     class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">

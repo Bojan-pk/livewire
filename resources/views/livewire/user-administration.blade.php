@@ -7,11 +7,11 @@
                 Ажурирање
             </a>
         </li>
-        <li class="me-2">
+        {{-- <li class="me-2">
             <a href="#" wire:click.prevent="switchTab('guide')" class="inline-block p-4 border-b-2 {{ $currentTab == 'guide' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 ' }}">
                 Упутство
             </a>
-        </li>
+        </li> --}}
     </ul>
     <div class="tab-content">
         @if($currentTab == 'update')
