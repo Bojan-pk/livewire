@@ -9,7 +9,7 @@ class VesFirstSign extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'order','sign', 'description','note','regulation_id'
+        'order','sign', 'description','note','regulation_id','rules'
     ];
 
     public function regulation() {

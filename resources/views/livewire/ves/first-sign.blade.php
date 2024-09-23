@@ -67,6 +67,7 @@
                 <x-input-text name="form.description" label="Опис" />
                 <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
                   :options="$regulations" optionValue="id" :optionText="['name']" />
+                <x-input-text name="form.rules" label="Унеси ознаку која треба да се види у претрази за 5. знак и одвоји зарезом " wire:model="form.rules" />
                 <x-input-text name="form.note" label="Напомена" wire:model="form.note" />
 
                 <button wire:click.prevent="confirmDelete" type="button"
