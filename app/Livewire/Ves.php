@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Ves\FifthSign;
 use App\Models\VesCondition;
 use App\Models\VesFifthSign;
 use App\Models\VesFirstSign;
@@ -40,7 +41,7 @@ class Ves extends Component
     {
         $this->ves_first_signs = VesFirstSign::orderBy('order')->get();
         $this->ves_second_signs = VesSecondSign::orderBy('order')->get();
-        $this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
+        //$this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
         
     }
 
@@ -64,7 +65,16 @@ class Ves extends Component
 
     public function updatedFirstSign($sign)
     {
-        $this->firstSign = mb_strtoupper($sign, 'UTF-8');  
+        $this->firstSign = mb_strtoupper($sign, 'UTF-8');
+        
+       //dd($rule);
+        
+        if(@$rule=VesFirstSign::where('sign',$this->firstSign)->first()->rule){
+            $fifthSignsArray=array_map('trim', explode(',', $rule));
+            $this->ves_fifth_signs = VesFifthSign::whereIn('sign',$fifthSignsArray)->orderBy('order')->get();  
+        } else {
+            $this->ves_fifth_signs = null;
+        }
     }
 
     public function updatedSecondSign($sign)

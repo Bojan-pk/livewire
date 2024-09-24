@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ves_first_signs', function (Blueprint $table) {
-            $table->string('rules')->nullable(); // ili drugi tip podatka po potrebi
+            $table->string('rule')->nullable(); // ili drugi tip podatka po potrebi
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('ves_first_signs', function (Blueprint $table) {
-            $table->dropColumn('rules');
+            $table->dropColumn('rule');
         });
     }
 };

@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit="submitForm" class=" flex justify-center">
+    <form wire:submit.prevent="submitForm" class=" flex justify-center">
         <div class="w-8/12 rounded border p-2">
             <x-flash-message/>
             <div class="relative overflow-x-auto">
@@ -15,6 +15,9 @@
 
                             <th scope="col" class="px-6 py-3">
                                 СВЛ
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Одговара 5. знаку
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Напомена
@@ -34,6 +37,9 @@
                                     </td>
                                     <td class="px-6 py-2">
                                         {{ $value->regulation->svl }}
+                                    </td>
+                                    <td class="px-6 py-2">
+                                        {{ $value->rule }}
                                     </td>
                                     <td class="px-6 py-2">
                                         {{ $value->note }}
@@ -66,8 +72,8 @@
                 <x-input-text name="form.sign" label="Ознака" />
                 <x-input-text name="form.description" label="Опис" />
                 <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
-                  :options="$regulations" optionValue="id" :optionText="['name']" />
-                <x-input-text name="form.rules" label="Унеси ознаку која треба да се види у претрази за 5. знак и одвоји зарезом " wire:model="form.rules" />
+                :options="$regulations" optionValue="id" :optionText="['short_name','svl']" />
+                <x-input-text name="form.rule" label="Унеси ознаку која треба да се види у претрази за 5. знак и одвоји зарезом " wire:model="form.rule" />
                 <x-input-text name="form.note" label="Напомена" wire:model="form.note" />
 
                 <button wire:click.prevent="confirmDelete" type="button"

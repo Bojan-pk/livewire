@@ -24,8 +24,8 @@ class FirstSignForm extends Form
     #[Validate('required', message: "Обавезно поље")]
     public $regulation_id;
 
-    #[Validate('nullable|regex:/^([А-Яа-я0-9],)*[А-Яа-я0-9]$/u', message: "Погрешан унос")]
-    public $rules;
+    #[Validate('nullable|regex:/^([\p{Cyrillic}0-9],)*[\p{Cyrillic}0-9]$/u', message: "Погрешан унос")]
+    public $rule;
      
     public $note;
 
@@ -43,7 +43,7 @@ class FirstSignForm extends Form
                 'description' => $this->description,
                 'regulation_id' => $this->regulation_id,
                 'note' => $this->note,
-                'rules' => $this->rules,
+                'rule' => $this->rule,
 
             ]
         );

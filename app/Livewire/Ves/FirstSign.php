@@ -78,7 +78,8 @@ class FirstSign extends Component
             $this->form->sign=$firstSign->sign;
             $this->form->description=$firstSign->description;
             $this->form->note=$firstSign->note;
-            $this->form->rules=$firstSign->rules;
+            $this->form->rule=$firstSign->rule;
+            $this->form->regulation_id = $firstSign->regulation_id;
         }
     } else {
         $this->selectedId='';
