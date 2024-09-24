@@ -34,7 +34,7 @@ Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)
 Route::get('/rulebook-administration',\App\Livewire\RulebookAdministration::class)->name('rulebook-administration')->middleware(['auth', 'verified']);
 Route::get('/regulation-administration',\App\Livewire\RegulationAdministration::class)->name('regulation-administration')->middleware(['auth', 'verified']);
 Route::get('/ves-administration',\App\Livewire\VesAdministration::class)->name('ves-administration')->middleware(['auth', 'verified']);
-Route::get('/user-administration',\App\Livewire\UserAdministration::class)->name('user-administration')->middleware(['role:super-admin,admin']);
+Route::get('/user-administration',\App\Livewire\UserAdministration::class)->name('user-administration')->middleware(['role:super-admin']);
 
 Route::get('/welcome', function(){
     $comments=Comment::all();

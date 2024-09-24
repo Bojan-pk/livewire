@@ -24,7 +24,7 @@ class RoleMiddleware
         // Proveri da li korisnik ima potrebnu ulogu
         if (!in_array(Auth::user()->role, $roles)) {
             // Ako korisnik nema odgovarajuću ulogu, preusmeri ga
-            return redirect('/ves')->with('error','Нисто овлашћени за приступ');  // Ili 403 stranica, zavisi od tvog dizajna
+            return redirect('/')->with('error','Нисто овлашћени за приступ');  // Ili 403 stranica, zavisi od tvog dizajna
         }
 
         return $next($request);
