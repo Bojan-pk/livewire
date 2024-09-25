@@ -1,7 +1,5 @@
 {{-- flash-message.blade --}}
 <div>
-    
-    {{session()->has('success')}}
     <div id="alert-border-3"   class=" {{ session()->has('success') ? 'block' : 'hidden' }} flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50"
         role="alert">
         <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"

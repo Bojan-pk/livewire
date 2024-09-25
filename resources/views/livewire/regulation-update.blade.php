@@ -131,12 +131,12 @@
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
             <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Учитај документ</label>
-            <input wire:model="form.file" type="file" type="text" id=""
+            <input wire:model="form.uploadedFile" type="file" type="text" id=""
                     class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
                     @if ($form->file)
                     <p class="text-blue-500">Документ је изабран</p>
                     @endif
-            @error('form.valid')
+            @error('form.uploadedFile')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
 
