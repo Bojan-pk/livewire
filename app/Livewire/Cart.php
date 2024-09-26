@@ -13,7 +13,7 @@ class Cart extends Component
     public  $selectedFm;
     public $newJobName = [];
     public $rulebooksId;
-    public $vesId;
+    public $ves;
 
     //uputstvo o UOIR i elementi FM -- promeniti naziv u cart
     public $cart = [];
@@ -95,8 +95,8 @@ class Cart extends Component
 
     public function saveVes($index) 
     {
-        if ($this->cart[$this->selectedFm]['ves']!=$index)
-        $this->cart[$this->selectedFm]['ves']=$index;
+        if ($this->cart[$this->selectedFm]['ves']!=strip_tags($index))
+        $this->cart[$this->selectedFm]['ves']=strip_tags($index);
     else $this->cart[$this->selectedFm]['ves']='';
         
         session()->put('cart', $this->cart);

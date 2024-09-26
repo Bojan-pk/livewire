@@ -38,12 +38,12 @@
                          <input type="text"  wire:model="cart.{{ $index }}.newJobName"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"  />
                     </th>
                     <td class="px-6 py-4">
-                        @if ($vesId=$value['ves'])
+                        @if ($ves=$value['ves'])
                        
-                        {{@App\Models\VesCondition::find($vesId)->ves }}
+                        {{$ves}}
                         
 
-                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveVes', [{{$vesId}}])">x</a>
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveVes', [{{$ves}}])">x</a>
                        
                         @endif
                     </td>

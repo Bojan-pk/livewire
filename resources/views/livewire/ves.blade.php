@@ -60,8 +60,8 @@
                                         {{ $value->alternative }}
                                     </td>
                                     <td>
-                                        @if ($value->id == $vesId)
-                                            <a href="#" wire:click="$dispatch('saveVes', [{{ $value->id }}])">
+                                        @if (strip_tags($value->ves) == $ves)
+                                            <a href="#" wire:click="$dispatch('saveVes', ['{{ strip_tags($value->ves)}}'])">
                                                 <span
                                                     class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                                     <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
@@ -69,7 +69,7 @@
                                                 </span>
                                             </a>
                                         @else
-                                            <a href="#" wire:click="$dispatch('saveVes', [{{ $value->id }}])">
+                                            <a href="#" wire:click="$dispatch('saveVes', ['{{ strip_tags($value->ves)}}'])">
                                                 <span
                                                     class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                                     <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
@@ -90,20 +90,7 @@
         </div>
 
         <div class="w-3/12 mx-2 rounded border p-2">
-            <!-- <h1 class=" text-xl font-medium mb-2">Tabela</h1> -->
-
-           {{--  <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input wire:model.live.debounce.500ms="combinedVes" maxlength="5"
-                    class="block w-full p-2.5 ps-10  text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Пронађи знак ...." />
-            </div> --}}
+           
             <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">ВЕС/ЕС</label>
                 <div class="flex mb-2 space-x-2 rtl:space-x-reverse">

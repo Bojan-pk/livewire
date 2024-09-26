@@ -28,7 +28,7 @@ class Ves extends Component
     public $ves_fourth_signs;
     public $ves_fifth_signs;
 
-    public $vesId;
+    public $ves;
 
     public $searchTerm = '';
     use WithPagination;
@@ -45,10 +45,10 @@ class Ves extends Component
         
     }
 
-    public function saveVes($id)
+    public function saveVes($ves)
     {
-        if ($this->vesId != $id) $this->vesId = $id;
-        else $this->vesId = '';
+        if ($this->ves != $ves) $this->ves = $ves;
+        else $this->ves = '';
     }
 
     public function cleanForm()
@@ -60,7 +60,7 @@ class Ves extends Component
     public function fmCartSelected($index)
     {
         $cart = session()->get('cart', []);
-        $this->vesId = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
+        $this->ves = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
     }
 
     public function updatedFirstSign($sign)
@@ -152,9 +152,6 @@ class Ves extends Component
         return $markedVes;
     }
     
-    
-
-
     protected function searchByTerm($query)
     {
         $keywords = explode(' ', $this->searchTerm);
@@ -167,41 +164,25 @@ class Ves extends Component
         return $query;
     }
 
-   /*  protected function searchByTerm($query)
+    protected function combineVes()
     {
-        $keywords = explode(' ', $this->searchTerm);
-        foreach ($keywords as $keyword) {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('reading', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('condition', 'LIKE', '%' . $keyword . '%');
-            });
-        }
-    
-        // Markiraj ključne reči u rezultatima pretrage
-        $query->get()->transform(function ($item) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                $item->reading = $this->highlightKeyword($item->reading, $keyword);
-                $item->condition = $this->highlightKeyword($item->condition, $keyword);
-            }
-            dd($item->reading);
-            return $item;
-        });
-    
-        return $query;
-    } */
-    
+        return  $this->firstSign.$this->secondSign.$this->thirdSign.$this->fourthSign. $this->fifthSign;
+    }
 
-   /*  public function render()
+    protected function readVes()
     {
-        $ves_conditions = VesCondition::query();
+        $readVes="";
+        
+        if (!$readVes.=@VesFirstSign::where('sign',$this->firstSign)->first()->description) return false;
+        
+        if (!$readVes.=' - '.@VesSecondSign::where('sign',$this->secondSign)->first()->description) return false;
 
-        if (!empty($this->searchTerm)) $ves_conditions = $this->searchByTerm($ves_conditions);
-        $ves_conditions = $this->searchByVes($ves_conditions)->orderBy('rb')->paginate(15);
+       // @$ves_second_sign_id = VesSecondSign::whereIn('sign', [$sign, '0'])->pluck('id');
 
-        return view('livewire.ves', [
-            'ves_conditions' => $ves_conditions
-        ]);
-    } */
+       // $this->ves_third_signs = VesThirdSign::whereIn('ves_second_sign_id', $ves_second_sign_id)->orderBy('order')->get();
+        return $readVes;
+    }
+
     public function render()
     {
         $ves_conditions = VesCondition::query();
@@ -216,6 +197,21 @@ class Ves extends Component
         $item->ves = $this->highlightVes($item->ves);
         return $item;
     }); */
+
+    if ($ves_conditions->isEmpty()&&  mb_strlen($this->combineVes(), 'UTF-8')==5) {
+        // Ukoliko nema zapisa, dodaj novi sa željenom vrednošću za polje 'ves'
+        // Pretpostavljamo da 'ves' i ostala polja treba da imaju određene vrednosti
+        $newVesCondition = new VesCondition([
+            'ves' => $this->combineVes(), // Postavi odgovarajuću vrednost za ves
+            'reading'=> $this->readVes(),
+            'rb' => 1, // Primer dodatnog polja
+            // Dodaj vrednosti za ostala potrebna polja
+        ]);
+    
+        // Ručno dodaj novi objekat u kolekciju ili ga sačuvaj u bazi
+        $ves_conditions->push($newVesCondition);
+    }
+
         // Примени маркирање на резултате
         $ves_conditions->getCollection()->transform(function ($item) {
             foreach (explode(' ', $this->searchTerm) as $keyword) {
