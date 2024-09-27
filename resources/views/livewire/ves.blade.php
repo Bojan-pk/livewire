@@ -51,7 +51,11 @@
                                         {!! $value->ves !!}
                                     </th>
                                     <td class="px-2 py-1 text-xs">
-                                        {!! $value->reading !!}
+                                        @if ($value->reading)
+                                         {!! $value->reading !!}
+                                         @else
+                                         <span class=" text-red-500">Непостојећи ВЕС</span>
+                                         @endif
                                     </td>
                                     <td class="px-2 py-1 text-xs">
                                         {!! $value->condition !!}
@@ -60,7 +64,7 @@
                                         {{ $value->alternative }}
                                     </td>
                                     <td>
-                                        @if (strip_tags($value->ves) == $ves)
+                                        @if (strip_tags($value->ves) == $ves && $value->reading)
                                             <a href="#" wire:click="$dispatch('saveVes', ['{{ strip_tags($value->ves)}}'])">
                                                 <span
                                                     class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
@@ -68,7 +72,7 @@
                                                     Izabrano
                                                 </span>
                                             </a>
-                                        @else
+                                        @elseif ($value->reading)
                                             <a href="#" wire:click="$dispatch('saveVes', ['{{ strip_tags($value->ves)}}'])">
                                                 <span
                                                     class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
@@ -98,7 +102,7 @@
                         <label for="code-1" class="sr-only">First code</label>
                         <input type="text" maxlength="1" data-focus-input-init data-focus-input-next="code-2" 
                             autocomplete="off" wire:model="firstSign" id="code-1" wire:change="$refresh"
-                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
                              {{($firstSign && !$ves_first_signs->where('sign',$firstSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
@@ -108,7 +112,7 @@
                         <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-1" 
                             wire:change="$refresh" autocomplete="off" wire:model="secondSign"
                             data-focus-input-next="code-3" id="code-2"
-                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
                              {{($secondSign && !$ves_second_signs->where('sign',$secondSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
@@ -118,7 +122,7 @@
                         <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-2" 
                             wire:change="$refresh" autocomplete="off" data-focus-input-next="code-4" id="code-3"
                             wire:model="thirdSign"
-                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
                              {{($thirdSign && !$ves_third_signs->where('sign',$thirdSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
@@ -128,7 +132,7 @@
                         <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-3" 
                             wire:change="$refresh" autocomplete="off" data-focus-input-next="code-5" id="code-4"
                             wire:model="fourthSign"
-                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
                              {{($fourthSign && !$ves_fourth_signs->where('sign',$fourthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
@@ -138,7 +142,7 @@
                         <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-4" 
                             autocomplete="off" wire:keyup="$refresh" data-focus-input-next="code-6" id="code-5"
                             wire:model="fifthSign"
-                            class="uppercase block w-9 h-9 py-3 text-xs font-extrabold text-center
+                            class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
                              {{($fifthSign && !$ves_fifth_signs->where('sign',$fifthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
