@@ -14,16 +14,15 @@
                 placeholder="Пронађи табелу ...." />
         </div>
     </div>
-
     <div class="flex mt-4">
-        <div class="w-7/12 rounded border p-2">
+        <div class="w-8/12 rounded border p-2">
             <h1 class=" text-l font-medium mb-2 text-blue-600">Табела: <span class=" text-gray-500">
                     {{ @$rulebooksTable->rb }} - {{ @$rulebooksTable->name }}</span> </h1>
 
             <hr class="h-px my-8 bg-gray-200 border-2">
 
             <div class="relative overflow-x-auto">
-                <table class="w-full text-l text-left rtl:text-right text-gray-500 ">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                     <thead class="text-xs text-gray-700  bg-gray-50 ">
                         <tr>
                             <th scope="col" class="px-6 py-3">
@@ -44,84 +43,92 @@
                             <th>
                                 СВЛ
                             </th>
+                            <th>
+                                Табела
+                            </th>
                             <th></th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @if ($rulebooksTable)
-                            @foreach ($rulebooks as $key => $value)
-                                <tr :key="{{ $key }}" class="bg-white border-b hover:bg-gray-50 ">
-                                    <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap ">
-                                        {{ $value->rb }}
-                                    </th>
-                                    <td class="px-2 py-1">
-                                        {{ $value->fm }}
-                                    </td>
-                                    <td class="px-2 py-1">
-                                        {{ $value->fc_sso }}
-                                    </td>
-                                    <td class="px-2 py-1">
-                                        {{ $value->pg_bb }}
-                                    </td>
-                                    <td class="px-2 py-1">
-                                        {{ $value->note }}
-                                    </td>
-                                    <td class="px-2 py-1">
-                                        {{ @App\Models\Regulation::find($value['regulation_id'])->svl }}
-                                    </td>
+                        @foreach ($rulebooks as $key => $value)
+                        <tr :key="{{ $key }}" class="bg-white border-b hover:bg-gray-50 ">
+                            <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap ">
+                                {{ $value->rb }}
+                            </th>
+                            <td class="px-2 py-1">
+                                {{ $value->fm }}
+                            </td>
+                            <td class="px-2 py-1">
+                                {{ $value->fc_sso }}
+                            </td>
+                            <td class="px-2 py-1">
+                                {{ $value->pg_bb }}
+                            </td>
+                            <td class="px-2 py-1">
+                                {{ $value->note }}
+                            </td>
+                            <td class="px-2 py-1 cursor-pointer text-blue-400">
+                                <a data-popover-target="popover-default{{$value->id}}" 
+                                    >Види ...</a>
+                                <div data-popover id="popover-default{{$value->id}}" role="tooltip"
+                                    class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div
+                                        class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                                        <h3 class="font-semibold text-gray-900 dark:text-white">СВЛ</h3>
+                                    </div>
+                                    <div class="px-3 py-2">
+                                        <p> {{ @App\Models\Regulation::find($value['regulation_id'])->svl }}</p>
+                                    </div>
+                                    <div data-popper-arrow></div>
+                                </div>
+                            </td>
+                            <td class="px-2 py-1">
+                                {{ $value->rulebooksTable->rb }} - {{ $value->rulebooksTable->name }}
+                            </td>
 
-                                    <td class="px-2 py-1">
-                                        @if ($value->id == $rulebooksId)
-                                            <a href="#"
-                                                wire:click="$dispatch('saveRulebooks', [{{ $value->id }}])">
-                                                <span
-                                                    class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                                    <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                                                    Izabrano
-                                                </span>
-                                            </a>
-                                        @else
-                                            <a href="#"
-                                                wire:click="$dispatch('saveRulebooks', [{{ $value->id }}])">
-                                                <span
-                                                    class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                                    <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                                                    Izaberi
-                                                </span>
-                                            </a>
-                                        @endif
+                            <td class="px-2 py-1">
+                                @if ($value->id == $rulebooksId)
+                                <a href="#" wire:click="$dispatch('saveRulebooks', [{{ $value->id }}])">
+                                    <span
+                                        class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                        <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                        Изабрано
+                                    </span>
+                                </a>
+                                @else
+                                <a href="#" wire:click="$dispatch('saveRulebooks', [{{ $value->id }}])">
+                                    <span
+                                        class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                        Изабери
+                                    </span>
+                                </a>
+                                @endif
 
-                                    </td>
-                                </tr>
-                            @endforeach
+                            </td>
+                        </tr>
+                        @endforeach
                         @endif
                     </tbody>
                 </table>
                 <div class="pt-4">
-                  {{ $rulebooks->links('vendor.livewire.tailwind') }} 
-              </div>
+                    {{ $rulebooks->links('vendor.livewire.tailwind') }}
+                </div>
             </div>
         </div>
 
-        <div class="w-5/12 mx-2 rounded border p-2">
-            <h1 class=" text-xl font-medium mb-2">Tabela</h1>
+        <div class="w-4/12 mx-2 rounded border p-2">
+            <h1 class=" text-xl font-medium mb-2">Табела</h1>
 
-           {{--  @if ($results)
-                @foreach ($results as $result)
-                    <p wire:click="tableSelected({{ $result->id }})"
-                        class="mb-1 p-1.0 text-gray-700 border font-medium border-gray-300 rounded bg-gray-50 cursor-pointer {{ $activeTable == $result->id ? ' bg-green-200' : '' }}">
-                        Табела {{ $result->rb }} - {{ $result->name }}
-                    </p>
-                @endforeach
-            @endif --}}
 
             <div class="relative overflow-x-auto">
-                <table class="w-full text-l text-left rtl:text-right text-gray-500 ">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                     <thead class="text-xs text-gray-700  bg-gray-50 ">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                РБ 
+                                РБ
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Назив табеле
@@ -130,22 +137,23 @@
                     </thead>
                     <tbody>
                         @if ($results)
-                            @foreach ($results as $result)
-                                <tr :key="{{ $result->id }}" wire:click="tableSelected({{ $result->id }})" class="bg-white border-b hover:bg-gray-50 cursor-pointer">
-                                    <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap  ">
-                                        {{ $result->rb }}
-                                    </th>
-                                    <td class="px-2 py-1">
-                                        {{ $result->name }}
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($results as $result)
+                        <tr :key="{{ $result->id }}" wire:click="tableSelected({{ $result->id }})"
+                            class="bg-white border-b hover:bg-gray-50 cursor-pointer">
+                            <th scope="row" class="px-2 py-1 font-medium text-gray-900 whitespace-nowrap  ">
+                                {{ $result->rb }}
+                            </th>
+                            <td class="px-2 py-1">
+                                {{ $result->name }}
+                            </td>
+                        </tr>
+                        @endforeach
                         @endif
                     </tbody>
                 </table>
                 <div class="pt-4">
-                  {{ $results->links('vendor.livewire.tailwind') }}
-              </div>
+                    {{ $results->links('vendor.livewire.tailwind') }}
+                </div>
             </div>
 
 

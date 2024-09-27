@@ -66,7 +66,7 @@ class Rulebook extends Component
             }
             $results = $query->orderBy('rb')->paginate(10);
         }
-        $rulebooks = $this->rulebooksTable->rulebooks()->paginate(2, pageName: 'rulebooks-page');
+        $rulebooks = $this->rulebooksTable->rulebooks()->paginate(10, pageName: 'rulebooks-page');
         return view(
             'livewire.rulebook',
             [
