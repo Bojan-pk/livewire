@@ -92,6 +92,18 @@ class Catalog extends Component
         }
         return $query;
     }
+
+   
+ protected function highlightKeyword($text, $keyword)
+    {
+        if (!$keyword) return $text;
+    
+        // Користимо mb_ereg_replace за рад са ћирилицом и додајемо 'i' флаг за case-insensitive
+        return mb_ereg_replace('(' . preg_quote($keyword) . ')', '<mark>\1</mark>', $text, 'i');
+    }
+    
+
+
     public function render()
     {
 
@@ -101,10 +113,16 @@ class Catalog extends Component
 
             $fms = $this->searchByTerm($fms);
             }
-      
-        
             $fms = $fms->paginate(10);
         
+             // Примени маркирање на резултате
+        $fms->getCollection()->transform(function ($item) {
+            foreach (explode(' ', $this->searchTerm) as $keyword) {
+                $item->name = $this->highlightKeyword($item->name, $keyword);
+               
+            }
+            return $item;
+        });
 
         return view(
             'livewire.catalog',

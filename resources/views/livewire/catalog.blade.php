@@ -1,7 +1,7 @@
 <div class="w-10/12  justify-center">
 
     <div class="flex justify-between">
-        <h1 class="text-xl font-medium mb-2 text-center">Katalog radnih mesta</h1>
+        <h1 class="text-xl font-medium mb-2 text-center">Каталог радних места</h1>
         <div class="relative mr-2 w-1/4">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -234,7 +234,7 @@
                                 <tr :key="{{ $result->id }}" wire:click="fmSelected({{ $result->id }})"
                                     class="  {{ $activeFm == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }} border-b  cursor-pointer">
                                     <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
-                                        {{ $result->name }}
+                                        {!! $result->name !!}
                                     </td>
                                 </tr>
                             @endforeach
