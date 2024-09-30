@@ -6,6 +6,7 @@ use App\Models\Catalog as ModelsCatalog;
 use App\Models\Fm;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Katalog')]
 class Catalog extends Component
@@ -29,7 +30,7 @@ class Catalog extends Component
         'saveConditions',
         'saveExperiences'
     ];
-
+    use WithPagination;
     public function mount()
     {
         $this->catalog = ModelsCatalog::first();
@@ -81,31 +82,34 @@ class Catalog extends Component
         $this->saveItem($id, $this->experienceIds, 'experience');
     }
 
-
+    protected function searchByTerm($query)
+    {
+        $keywords = explode(' ', $this->searchTerm);
+        foreach ($keywords as $keyword) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', '%' . $keyword . '%');
+            });
+        }
+        return $query;
+    }
     public function render()
     {
 
-        $results = [];
+        $fms=Fm::query();
 
-        if (empty($this->searchTerm)) {
+        if (!empty($this->searchTerm)) {
 
-            $results = "";
-        } else {
-            //dd('radi');
-            $keywords = explode(' ', $this->searchTerm);
-            $query = Fm::query();
-            // Pretraži svaku ključnu reč u polju name
-            foreach ($keywords as $keyword) {
-                $query->where('name', 'LIKE', '%' . $keyword . '%');
+            $fms = $this->searchByTerm($fms);
             }
-
-            $results = $query->orderBy('name')->take(10)->get();
-        }
+      
+        
+            $fms = $fms->paginate(10);
+        
 
         return view(
             'livewire.catalog',
             [
-                'results' => $results,
+                'fms' => $fms,
 
             ]
         );

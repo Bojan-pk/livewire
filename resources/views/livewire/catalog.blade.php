@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="flex mt-4">
-        <div class="w-7/12 rounded border p-2">
+        <div class="w-8/12 rounded border p-2">
             <h1 class=" text-l font-medium mb-2 text-blue-600">Формацијско место: <span class=" text-gray-500">
                     {{ @$catalog->fm->name }}</span> </h1>
 
@@ -39,7 +39,7 @@
                     aria-labelledby="accordion-collapse-heading-1">
                     @if ($catalog)
                         @foreach ($catalog->jobs as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <div class="p-1 border border-b-0 text-sm border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
 
                                 @if (in_array($item->id, $jobsIds))
@@ -83,7 +83,7 @@
                     aria-labelledby="accordion-collapse-heading-3">
                     @if ($catalog)
                         @foreach ($catalog->educations as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <div class="p-1 border border-b-0 text-xs border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
                                 @if (in_array($item->id, $educationIds))
                                     <a href="#" wire:click="$dispatch('saveEducations', [{{ $item->id }}])">
@@ -124,7 +124,7 @@
                     aria-labelledby="accordion-collapse-heading-4">
                     @if ($catalog)
                         @foreach ($catalog->conditions as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <div class="p-1 border border-b-0 text-xs border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
                                 @if (in_array($item->id, $conditionIds))
                                     <a href="#" wire:click="$dispatch('saveConditions', [{{ $item->id }}])">
@@ -161,30 +161,32 @@
                         </svg>
                     </button>
                 </h2>
-                <div id="accordion-collapse-body-5" class="{{ $activeColapse == 'experience' ? 'block' : 'hidden' }}" aria-labelledby="accordion-collapse-heading-5">
+                <div id="accordion-collapse-body-5" class="{{ $activeColapse == 'experience' ? 'block' : 'hidden' }}"
+                    aria-labelledby="accordion-collapse-heading-5">
                     @if ($catalog)
                         @foreach ($catalog->experiences as $item)
-                        <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
-                            <p class="mb-1 text-gray-500">{{ $item->name }} </p>
-                            @if (in_array($item->id,$experienceIds))
-                                <a href="#" wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
-                                    <span
-                                        class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                        <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                                        Izabrano
-                                    </span>
-                                </a>
-                            @else
-                                <a href="#"
-                                    wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
-                                    <span
-                                        class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                        <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                                        Izaberi
-                                    </span>
-                                </a>
-                            @endif
-                        </div>
+                            <div class="p-1 border border-b-0 text-xs border-gray-200 flex  justify-between">
+                                <p class="mb-1 text-gray-500">{{ $item->name }} </p>
+                                @if (in_array($item->id, $experienceIds))
+                                    <a href="#"
+                                        wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
+                                        <span
+                                            class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                            Izabrano
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#"
+                                        wire:click="$dispatch('saveExperiences', [{{ $item->id }}])">
+                                        <span
+                                            class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                            Izaberi
+                                        </span>
+                                    </a>
+                                @endif
+                            </div>
                         @endforeach
                     @endif
                 </div>
@@ -207,31 +209,42 @@
                     aria-labelledby="accordion-collapse-heading-2">
                     @if ($catalog)
                         @foreach ($catalog->fms as $item)
-                            <div class="p-1 border border-b-0 border-gray-200 flex  justify-between">
+                            <div class="p-1 border border-b-0 text-xs border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
 
                             </div>
                         @endforeach
                     @endif
                 </div>
-
-
-
             </div>
         </div>
-        <div class="w-5/12 mx-2 rounded border p-2">
-            <h1 class=" text-xl font-medium mb-2">Formacijska mesta</h1>
-
-            @if ($results)
-                @foreach ($results as $result)
-                    <p wire:click="fmSelected({{ $result->id }})"
-                        class="mb-1 p-1.0 text-gray-700 border font-medium border-gray-300 rounded bg-gray-50 cursor-pointer {{ $activeFm == $result->id ? ' bg-green-200' : '' }}">
-                        {{ $result->name }}
-                    </p>
-                @endforeach
-            @endif
-
+        <div class="w-4/12 mx-2 rounded border p-2">
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead class="text-sm text-gray-700  bg-gray-50 ">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Формацијска места
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($fms)
+                            @foreach ($fms as $result)
+                                <tr :key="{{ $result->id }}" wire:click="fmSelected({{ $result->id }})"
+                                    class="  {{ $activeFm == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }} border-b  cursor-pointer">
+                                    <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                        {{ $result->name }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+                <div class="pt-4">
+                    {{ $fms->links('vendor.livewire.tailwind') }}
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
