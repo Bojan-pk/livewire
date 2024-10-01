@@ -17,7 +17,11 @@ class Catalog extends Component
     public $activeFm;
     public $catalog;
     public $jobsIds = [];
-    public $usualyFmIds = [];
+   // public $usualyFmIds = [];
+    public $usualyFm;
+
+
+
     public $educationIds = [];
     public $conditionIds = [];
     public $experienceIds = [];
@@ -28,7 +32,8 @@ class Catalog extends Component
         'saveJobs',
         'saveEducations',
         'saveConditions',
-        'saveExperiences'
+        'saveExperiences',
+        'saveUsualyFm'
     ];
     use WithPagination;
     public function mount()
@@ -60,12 +65,23 @@ class Catalog extends Component
             $array[] = $id;
         }
         $this->activeColapse = $collapse;
+        //dd($array);
     }
 
     public function saveJobs($id)
     {
         $this->saveItem($id, $this->jobsIds, 'jobs');
     }
+    public function saveUsualyFm($value)
+    {
+        $this->activeColapse = 'usualyFms';
+        if($this->usualyFm!=$value) $this->usualyFm=$value;
+        else $this->usualyFm='';
+        //$this->usualyFm=$value;
+        // dd($value);
+       // $this->saveItem($value, $this->usualyFm, 'usualyFms');
+    }
+
 
     public function saveEducations($id)
     {

@@ -173,7 +173,7 @@
                                         <span
                                             class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                                            Izabrano
+                                            Изабрано
                                         </span>
                                     </a>
                                 @else
@@ -182,7 +182,7 @@
                                         <span
                                             class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                                             <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                                            Izaberi
+                                           Изабери
                                         </span>
                                     </a>
                                 @endif
@@ -211,6 +211,27 @@
                         @foreach ($catalog->fms as $item)
                             <div class="p-1 border border-b-0 text-xs border-gray-200 flex  justify-between">
                                 <p class="mb-1 text-gray-500">{{ $item->name }}</p>
+
+                                @if ($item->name== $usualyFm)
+                                    <a href="#"
+                                        wire:click="$dispatch('saveUsualyFm', ['{{ $item->name }}'])">
+                                        <span
+                                            class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                            Изабрано
+                                        </span>
+                                    </a>
+                                @else
+                                    <a href="#"
+                                        wire:click="$dispatch('saveUsualyFm', ['{{ $item->name }}'])">
+                                        <span
+                                            class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                           Изабери
+                                        </span>
+                                    </a>
+                                @endif
+
 
                             </div>
                         @endforeach
