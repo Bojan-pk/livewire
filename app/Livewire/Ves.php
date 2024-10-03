@@ -41,7 +41,9 @@ class Ves extends Component
     {
         $this->ves_first_signs = VesFirstSign::orderBy('order')->get();
         $this->ves_second_signs = VesSecondSign::orderBy('order')->get();
-        //$this->ves_fifth_signs = VesFifthSign::orderBy('order')->get();
+        $this->ves_third_signs =  collect();
+        $this->ves_fourth_signs =  collect();
+        $this->ves_fifth_signs =  collect();
         
     }
 
@@ -73,7 +75,7 @@ class Ves extends Component
             $fifthSignsArray=array_map('trim', explode(',', $rule));
             $this->ves_fifth_signs = VesFifthSign::whereIn('sign',$fifthSignsArray)->orderBy('order')->get();  
         } else {
-            $this->ves_fifth_signs = null;
+            $this->ves_fifth_signs = collect();
         }
     }
 
@@ -83,7 +85,7 @@ class Ves extends Component
         @$ves_second_sign_id = VesSecondSign::whereIn('sign', [$sign, '0'])->pluck('id');
 
         $this->ves_third_signs = VesThirdSign::whereIn('ves_second_sign_id', $ves_second_sign_id)->orderBy('order')->get();
-        $this->ves_fourth_signs = null;
+        $this->ves_fourth_signs = collect();
         $this->reset('thirdSign', 'fourthSign');
     }
 

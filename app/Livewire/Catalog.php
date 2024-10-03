@@ -55,6 +55,8 @@ class Catalog extends Component
         $this->educationIds = isset($cart[$index]['educations']) ? $cart[$index]['educations'] : [];
         $this->conditionIds = isset($cart[$index]['conditions']) ? $cart[$index]['conditions'] : [];
         $this->experienceIds = isset($cart[$index]['experiences']) ? $cart[$index]['experiences'] : [];
+        $this->usualyFm = isset($cart[$index]['newJobName']) ? $cart[$index]['newJobName'] : [];
+       // dd($this->usualyFm);
     }
 
     public function saveItem($id, &$array, $collapse)

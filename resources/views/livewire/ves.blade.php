@@ -133,7 +133,7 @@
                             wire:change="$refresh" autocomplete="off" data-focus-input-next="code-5" id="code-4"
                             wire:model="fourthSign"
                             class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
-                             {{($fourthSign && !$ves_fourth_signs->where('sign',$fourthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
+                             {{($fourthSign  && !$ves_fourth_signs->where('sign',$fourthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
@@ -143,11 +143,14 @@
                             autocomplete="off" wire:keyup="$refresh" data-focus-input-next="code-6" id="code-5"
                             wire:model="fifthSign"
                             class="uppercase block w-10 h-10 py-3 text-xs font-extrabold text-center
-                             {{($fifthSign && !$ves_fifth_signs->where('sign',$fifthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
+                             {{($fifthSign  &&   !$ves_fifth_signs->where('sign',$fifthSign)->count())?'text-red-900  border-red-400':'text-gray-900 border-gray-400' }}
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
                 </div>
+                
+               
+                
                 <x-input-select name="firstSign" label="Изабери знак категорије кадра" :options="$ves_first_signs"
                     optionValue="sign" :optionText="['sign', 'description']" />
 
