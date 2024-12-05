@@ -1,6 +1,4 @@
-
-<div>
-    
+<div>  
     <form wire:submit.prevent="submitForm" class=" flex justify-center">
         <div class="w-8/12 rounded border p-2">
             <x-flash-message />

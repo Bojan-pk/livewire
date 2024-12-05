@@ -3,6 +3,9 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
+                    <th  scope="col" class="px-6 py-3">
+                        РБ
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         Формацијско место
                     </th>
@@ -34,13 +37,19 @@
                 @if($cart)
                 @foreach ($cart as $index=>$value)
                 <tr class="border-b {{$selectedFm==$index?' text-white bg-green-500':'bg-white '}}" wire:click="fmSelected('{{$index}}')" >
-                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
+                    <td class="px-6 py-4">
+                        @if ($rb=$value['rb']) 
+                            {{$rb}}
+                        
+                        @endif
+                    </td>
+                    <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white" >
                          <input type="text"  wire:model="cart.{{ $index }}.newJobName"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"  />
-                    </th>
+                    </td>
                     <td class="px-6 py-4">
                         @if ($ves=$value['ves']) 
                             {{$ves}}
-                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveVes', [{{$ves}}])">x</a>
+                        <a href="#" class=" text-red-700" wire:click="$dispatch('saveVes', ['{{$ves}}'])">x</a>
                        
                         @endif
                     </td>

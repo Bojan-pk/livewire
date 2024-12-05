@@ -62,7 +62,8 @@ class Ves extends Component
     public function fmCartSelected($index)
     {
         $cart = session()->get('cart', []);
-        $this->ves = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
+        //$this->ves = isset($cart[$index]['rulebooks']) ? $cart[$index]['rulebooks'] : '';
+        $this->ves = isset($cart[$index]['ves']) ? $cart[$index]['ves'] : '';
     }
 
     public function updatedFirstSign($sign)

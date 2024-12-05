@@ -64,6 +64,7 @@
                                         {{ $value->alternative }}
                                     </td>
                                     <td>
+                                        
                                         @if (strip_tags($value->ves) == $ves && $value->reading)
                                             <a href="#" wire:click="$dispatch('saveVes', ['{{ strip_tags($value->ves)}}'])">
                                                 <span

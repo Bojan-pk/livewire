@@ -10,15 +10,16 @@ class Cart extends Component
     public $educationIds = [];
     public $conditionIds = [];
     public $experienceIds = [];
-    public  $selectedFm;
+    public $selectedFm;
     public $newJobName = [];
     public $rulebooksId;
     public $ves;
+    //public $rb;
     public $usualyFm;
 
     //uputstvo o UOIR i elementi FM -- promeniti naziv u cart
     public $cart = [];
-    
+
     protected $listeners = [
         'saveJobs',
         'saveEducations',
@@ -31,7 +32,7 @@ class Cart extends Component
 
     public function mount()
     {
-        
+
         if (session()->has('cart') && !empty(session('cart'))) {
             $this->cart = session()->get('cart');
         } else {
@@ -42,11 +43,11 @@ class Cart extends Component
         } else {
             $this->selectedFm = 0;
         }
-       
     }
 
     public function updatedcart($value, $name)
     {
+        // dd('stiglo');
         [$index, $field] = explode('.', $name);
         $this->cart[$index][$field] = $value;
         session()->put('cart', $this->cart);
@@ -54,25 +55,40 @@ class Cart extends Component
 
     public function addFm()
     {
+        $nextNumber = count($this->cart) + 1;
         $this->cart[] = [
-            'newJobName' => 'Радно место ' . count($this->cart) + 1,
+            'newJobName' => 'Радно место ' .  $nextNumber,
             'jobs' => [],
             'educations' => [],
             'conditions' => [],
             'experiences' => [],
-            'rulebooks'=>'', 
-            'ves'=>'', 
+            'rulebooks' => '',
+            'ves' => '',
+            'rb' => $nextNumber
         ];
         // Čuvanje u sesiji
         session()->put('cart', $this->cart);
+
+        $cartItems = count($this->cart);
+        $this->dispatch('cart-items', $cartItems);
     }
 
     public function delFm($index)
     {
-        unset($this->cart[$index]); // briše posao u okviru FM  
+        unset($this->cart[$index]); // briše posao u okviru FM 
+        $this->cart = array_values($this->cart); // Поново индексирајте низ 
+
+        // Ажурирање `rb` вредности за сваки преостали елемент
+        foreach ($this->cart as $key => $item) {
+            $this->cart[$key]['rb'] = $key + 1;
+            // $this->cart[$key]['newJobName'] = 'Радно место ' . ($key + 1);
+        }
+
         session()->put('cart', $this->cart);
+        $cartItems = count($this->cart);
+        $this->dispatch('cart-items', $cartItems);
     }
-   
+
     public function saveItem($index, $type)
     {
         if (in_array($index, $this->cart[$this->selectedFm][$type])) {
@@ -85,34 +101,32 @@ class Cart extends Component
     }
 
     public function saveRulebooks($index)
-    
-    {
-        if ($this->cart[$this->selectedFm]['rulebooks']!=$index)
-        $this->cart[$this->selectedFm]['rulebooks']=$index;
-    else $this->cart[$this->selectedFm]['rulebooks']='';
-        
-        session()->put('cart', $this->cart);
 
+    {
+        if ($this->cart[$this->selectedFm]['rulebooks'] != $index)
+            $this->cart[$this->selectedFm]['rulebooks'] = $index;
+        else $this->cart[$this->selectedFm]['rulebooks'] = '';
+
+        session()->put('cart', $this->cart);
     }
 
-    public function saveVes($index) 
+    public function saveVes($index)
     {
-        if ($this->cart[$this->selectedFm]['ves']!=strip_tags($index))
-        $this->cart[$this->selectedFm]['ves']=strip_tags($index);
-    else $this->cart[$this->selectedFm]['ves']='';
-        
-        session()->put('cart', $this->cart);
+        //dd($index);
+        if ($this->cart[$this->selectedFm]['ves'] != strip_tags($index))
+            $this->cart[$this->selectedFm]['ves'] = strip_tags($index);
+        else $this->cart[$this->selectedFm]['ves'] = '';
 
+        session()->put('cart', $this->cart);
     }
 
-    public function saveUsualyFm($index) 
+    public function saveUsualyFm($index)
     {
-        if ($this->cart[$this->selectedFm]['newJobName']!=$index)
-        $this->cart[$this->selectedFm]['newJobName']=$index;
-    else $this->cart[$this->selectedFm]['newJobName']='';
-        
-        session()->put('cart', $this->cart);
+        if ($this->cart[$this->selectedFm]['newJobName'] != $index)
+            $this->cart[$this->selectedFm]['newJobName'] = $index;
+        else $this->cart[$this->selectedFm]['newJobName'] = '';
 
+        session()->put('cart', $this->cart);
     }
 
 
@@ -147,7 +161,7 @@ class Cart extends Component
     {
         //obezbeđuje da u cart uvek bude selektovano poslednje fm, ukoliko pre toga nije selektovano neko drugo
         if ($this->selectedFm === null || !array_key_exists($this->selectedFm, $this->cart)) {
-    
+
             $keys = array_keys($this->cart);
             $this->fmSelected(end($keys));
         }
