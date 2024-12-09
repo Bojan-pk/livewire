@@ -15,16 +15,17 @@ class SaveCart extends Component
     public $selectedId;
     public $user_id;
     #[Validate('required|string|max:255')]
-    public $name='';
+    public $name = '';
     public $cart = [];
     public $cartItems;
+    public $showLoadModal = false;
 
     public function mount()
     {
 
-        if (session()->has('cart') && !empty(session('cart'))) {
+       /*  if (session()->has('cart') && !empty(session('cart'))) {
             $this->cart = session()->get('cart');
-        } 
+        } */
         //$this->carts=Cart::orderBy('name')->paginate(15);
         //$this->carts=Cart::paginate(15);
         //$this->carts=Cart::all();
@@ -36,7 +37,7 @@ class SaveCart extends Component
             $this->selectedId = $id;
             $cart = Cart::find($id);
             if ($cart) {
-                $this->name = $cart->name;  
+                $this->name = $cart->name;
             }
         } else {
             $this->selectedId = '';
@@ -44,35 +45,55 @@ class SaveCart extends Component
         }
     }
 
-    public function loadData() {
+    public function closeModal()
+    {
+        $this->showLoadModal = false; // Sakriva modal bez brisanja
+    }
+
+    public function validateLoadData()
+    {
+        if (session()->has('cart') && !empty(session('cart'))) {
+            $this->cart = session()->get('cart');
+        }
+        $this->cartItems = $this->countValidCartItems();
+
+        if (!$this->selectedId) {
+            session()->flash('error', 'Нисте избрали податке');
+        } else {
+            if ($this->cartItems) {
+                $this->showLoadModal = true;
+            } else {
+                $this->loadData();
+                $this->showLoadModal = false;
+            }
+        }
+
         
-        if($this->selectedId){
-            $cart=Cart::find($this->selectedId)->content;
-            session()->forget('cart');
-            session()->put('cart',$cart);
+    }
+
+    public function loadData()
+    {
+            $cart = Cart::find($this->selectedId)->content;
+            //session()->forget('cart');
+            session()->put('cart', $cart);
             session()->flash('success', 'Подаци су успешно учитани');
             $this->reset();
             $this->dispatch('cart-items');
-
-        } else {
-            session()->flash('error', 'Нисте избрали податке');
-        }
-       
+        
     }
 
     private function isValidCartItem($item)
     {
         // Provera za svaki ključ osim generičkog "newJobName"
-        return 
-            (!empty($item['newJobName'])&& $item['newJobName']!="Радно место ".$item['rb']) ||
-            !empty($item['jobs']) || 
-            !empty($item['educations']) || 
-            !empty($item['conditions']) || 
-            !empty($item['experiences']) || 
-            !empty($item['rulebooks']) || 
+        return (!empty($item['newJobName']) && $item['newJobName'] != "Радно место " . $item['rb']) ||
+            !empty($item['jobs']) ||
+            !empty($item['educations']) ||
+            !empty($item['conditions']) ||
+            !empty($item['experiences']) ||
+            !empty($item['rulebooks']) ||
             !empty($item['ves']);
     }
-    
+
     public function countValidCartItems()
     {
         return count(array_filter($this->cart, fn($item) => $this->isValidCartItem($item)));
@@ -82,8 +103,8 @@ class SaveCart extends Component
     public function submitForm()
     {
         $validated = $this->validate();
-        
-        
+
+
         Cart::updateOrCreate(
             [
                 'name' => $this->name,
@@ -107,9 +128,9 @@ class SaveCart extends Component
 
     public function render()
     {
-        $this->cartItems=$this->countValidCartItems();
+       
 
-        return view('livewire.remembers.save-cart',[
+        return view('livewire.remembers.save-cart', [
             'carts' => Cart::where('user_id', auth()->id())->paginate(10)
         ]);
     }

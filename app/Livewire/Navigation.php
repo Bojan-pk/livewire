@@ -11,7 +11,7 @@ class Navigation extends Component
 {
     public $activeTab = ''; // Početni tab može biti 'home'
     public $cartItems; 
-    public $cart;
+    public $cart=[];
 
      public function mount()
     {
@@ -59,7 +59,7 @@ class Navigation extends Component
             $this->cart = session()->get('cart');
         }
         
-        $this->cartItems=$this->countValidCartItems();
+       $this->cartItems=$this->countValidCartItems();
        // $this->cartItems=$cartItems;
        // dd($this->$cartItems);
        
