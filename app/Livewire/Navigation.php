@@ -10,12 +10,15 @@ use Livewire\Component;
 class Navigation extends Component
 {
     public $activeTab = ''; // Početni tab može biti 'home'
-    public $cartItems = 1; 
+    public $cartItems; 
+    public $cart;
 
      public function mount()
     {
        //dd(request()->route()->getName());
         $this->setActiveTab(request()->route()->getName());
+        //$this->cartItems=0;
+        $this-> cartItems();
     } 
 
     public function setActiveTab($activeTab)
@@ -30,12 +33,36 @@ class Navigation extends Component
         $this->redirect('/', navigate: true);
     }
 
-    #[On('cart-items')]
-    public function cartItems($cartItems)
+    private function isValidCartItem($item)
     {
+        // Provera za svaki ključ osim generičkog "newJobName"
+        return 
+            (!empty($item['newJobName'])&& $item['newJobName']!="Радно место ".$item['rb']) ||
+            !empty($item['jobs']) || 
+            !empty($item['educations']) || 
+            !empty($item['conditions']) || 
+            !empty($item['experiences']) || 
+            !empty($item['rulebooks']) || 
+            !empty($item['ves']);
+    }
+    
+    public function countValidCartItems()
+    {
+        return count(array_filter($this->cart, fn($item) => $this->isValidCartItem($item)));
+    }
+
+
+    #[On('cart-items')]
+    public function cartItems()
+    {
+        if (session()->has('cart') && !empty(session('cart'))) {
+            $this->cart = session()->get('cart');
+        }
         
-        $this->cartItems=$cartItems;
+        $this->cartItems=$this->countValidCartItems();
+       // $this->cartItems=$cartItems;
        // dd($this->$cartItems);
+       
     }
 
 

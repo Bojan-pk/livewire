@@ -10,7 +10,14 @@ use Livewire\Attributes\Title;
 #[Layout('components.layouts.admin')]
 class RememberdAdministration extends Component
 {
-    public $currentTab = 'update'; 
+    public $currentTab = 'update';
+
+    
+
+    public function mount()
+    {
+        $this->currentTab = request('tab', 'update');
+    }
 
     public function switchTab($tab)
     {

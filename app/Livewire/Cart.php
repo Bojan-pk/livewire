@@ -37,6 +37,7 @@ class Cart extends Component
             $this->cart = session()->get('cart');
         } else {
             $this->addFm();
+            //$this->cart = []; // Prazan niz na početku
         }
         if (session()->has('selectedFm') && !empty(session('selectedFm'))) {
             $this->selectedFm = session()->get('selectedFm');
@@ -51,6 +52,16 @@ class Cart extends Component
         [$index, $field] = explode('.', $name);
         $this->cart[$index][$field] = $value;
         session()->put('cart', $this->cart);
+    }
+
+    public function removeInput(){
+      
+        //
+        //dd(session()->get('cart'));
+        //$this->mount();
+        $this->cart=[];
+        session()->flash('success', 'Подаци су успешно обрисани');
+        $this->addFm();
     }
 
     public function addFm()
@@ -69,8 +80,7 @@ class Cart extends Component
         // Čuvanje u sesiji
         session()->put('cart', $this->cart);
 
-        $cartItems = count($this->cart);
-        $this->dispatch('cart-items', $cartItems);
+        
     }
 
     public function delFm($index)
@@ -85,8 +95,8 @@ class Cart extends Component
         }
 
         session()->put('cart', $this->cart);
-        $cartItems = count($this->cart);
-        $this->dispatch('cart-items', $cartItems);
+        //$cartItems = count($this->cart);
+        // $this->dispatch('cart-items', $cartItems);
     }
 
     public function saveItem($index, $type)
@@ -157,14 +167,37 @@ class Cart extends Component
         $this->dispatch('fmCartSelected', $index);
     }
 
+  /*   private function isValidCartItem($item)
+{
+    // Provera za svaki ključ osim generičkog "newJobName"
+    return 
+        (!empty($item['newJobName'])&& $item['newJobName']!="Радно место ".$item['rb']) ||
+        !empty($item['jobs']) || 
+        !empty($item['educations']) || 
+        !empty($item['conditions']) || 
+        !empty($item['experiences']) || 
+        !empty($item['rulebooks']) || 
+        !empty($item['ves']);
+}
+
+public function countValidCartItems()
+{
+    return count(array_filter($this->cart, fn($item) => $this->isValidCartItem($item)));
+} */
+
     public function render()
     {
         //obezbeđuje da u cart uvek bude selektovano poslednje fm, ukoliko pre toga nije selektovano neko drugo
         if ($this->selectedFm === null || !array_key_exists($this->selectedFm, $this->cart)) {
-
             $keys = array_keys($this->cart);
             $this->fmSelected(end($keys));
         }
+
+        // Emitovanje broja validnih stavki
+        //$cartItems = $this->countValidCartItems();
+        //$this->dispatch('cart-items', $cartItems);
+        $this->dispatch('cart-items');
+
         return view('livewire.cart');
     }
 }

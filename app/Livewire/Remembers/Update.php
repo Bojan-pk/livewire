@@ -3,7 +3,11 @@
 namespace App\Livewire\Remembers;
 
 use App\Livewire\Cart;
+use App\Models\Condition;
+use App\Models\Job;
 use Livewire\Component;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
 
 class Update extends  Cart
 {
@@ -12,25 +16,7 @@ class Update extends  Cart
     public $rb;
     public $newJobName;
 
-   /*  public function mount()
-    {
-        
-      //
-       
-    }  */
-
-    protected $listeners = [
-        'fmCartSelected' => 'fmCartSelected'
-    ];
-
-
-    public function fmCartSelected($index)
-    {
-        $this->selectedFm = $index;
-       
-       $this->rb=$this->cart[$index]['rb'];
-       $this->newJobName=$this->cart[$index]['newJobName'];
-    }
+   
 
     public function editItem (){
 
@@ -52,11 +38,75 @@ class Update extends  Cart
 
     // Чување у сесији
     session()->put('cart', $this->cart);
+    
 
+    }
+
+    public function fmSelected($id)
+    {
+ //dd($id);
+        if ($this->selectedFm != $id) {
+            $this->selectedFm = $id;
+           /*  $cart = Cart::find($id);
+            if ($cart) {
+                $this->rb = $cart->rb;  
+            } */
+        } else {
+            $this->selectedFm = '';
+           // $this->reset();
+        }
+    }
+
+    public function exportToWord()
+    {
+        // Kreirajte novi PhpWord objekat
+        $phpWord = new PhpWord();
+        $section = $phpWord->addSection();
+    
+
+        $phpWord->addParagraphStyle('reducedSpacing', [
+            'spaceBefore' => 0, // Razmak pre paragrafa (u tačkama)
+            'spaceAfter' => 0,  // Razmak posle paragrafa (u tačkama)
+            'lineHeight' => 1.0, // Visina reda (1.0 je standardna visina, manja vrednost smanjuje razmak)
+        ]);
+
+        // Naslov
+        $section->addTitle("Подаци из Корпе", 1);
+    
+        // Iteracija kroz stavke korpe
+        foreach ($this->cart as $item) {
+            $section->addText("Радно место: " . ($item['newJobName'] ?? ''));
+           
+            $jobNames = Job::whereIn('id', $item['jobs'] ?? [])->pluck('name')->toArray();
+            $section->addText("Послови: " . implode('; ', $jobNames), null, 'reducedSpacing');
+
+            $conditions = Condition::whereIn('id', $item['conditions'] ?? [])->pluck('name')->toArray();
+            $section->addText("Услови: " . implode('; ', $conditions),[ 'italic' => true ]);
+            
+            $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
+            
+            $section->addText("Искуства: " . implode(', ', $item['experiences'] ?? []));
+            $section->addText("Правилници: " . ($item['rulebooks'] ?? ''));
+            $section->addText("ВЕС: " . ($item['ves'] ?? ''));
+            $section->addTextBreak(1); // Razmak između stavki
+        }
+    
+        // Kreiranje fajla
+        $fileName = 'korpa_podaci.docx';
+        $filePath = storage_path($fileName);
+    
+        $writer = IOFactory::createWriter($phpWord, 'Word2007');
+        $writer->save($filePath);
+    
+        // Download fajla
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
     public function render()
     {
+        /* $cartItems = $this->countValidCartItems();
+        $this->dispatch('cart-items', $cartItems); */
+        $this->dispatch('cart-items');
         return view('livewire.remembers.update');
     }
 }
