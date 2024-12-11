@@ -19,6 +19,7 @@ class SaveCart extends Component
     public $cart = [];
     public $cartItems;
     public $showLoadModal = false;
+    public $showCleanModal = false;
 
     public function mount()
     {
@@ -49,6 +50,10 @@ class SaveCart extends Component
     {
         $this->showLoadModal = false; // Sakriva modal bez brisanja
     }
+    public function closeCleanModal()
+    {
+        $this->showCleanModal = false; // Sakriva modal bez brisanja
+    }
 
     public function validateLoadData()
     {
@@ -66,9 +71,7 @@ class SaveCart extends Component
                 $this->loadData();
                 $this->showLoadModal = false;
             }
-        }
-
-        
+        }  
     }
 
     public function loadData()
@@ -79,7 +82,26 @@ class SaveCart extends Component
             session()->flash('success', 'Подаци су успешно учитани');
             $this->reset();
             $this->dispatch('cart-items');
+    }
+
+    public function validateCleanData()
+    {
         
+
+        if (!$this->selectedId) {
+            session()->flash('error', 'Нисте избрали податке');
+        } else {
+            $this->showCleanModal = true;
+        }  
+    }
+
+    public function cleanData()
+    {
+            $cart = Cart::find($this->selectedId);
+            $cart->delete();
+            session()->flash('success', 'Подаци су успешно обрисани');
+            $this->reset();
+            $this->showCleanModal = false;
     }
 
     private function isValidCartItem($item)
@@ -104,7 +126,6 @@ class SaveCart extends Component
     {
         $validated = $this->validate();
 
-
         Cart::updateOrCreate(
             [
                 'name' => $this->name,
@@ -125,11 +146,8 @@ class SaveCart extends Component
         session()->flash('success', 'Обрисана је форма за унос');
     }
 
-
     public function render()
     {
-       
-
         return view('livewire.remembers.save-cart', [
             'carts' => Cart::where('user_id', auth()->id())->paginate(10)
         ]);

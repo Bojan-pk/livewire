@@ -42,7 +42,7 @@
             <tbody>
               @if($cart)
               @foreach ($cart as $index=>$value)
-              <tr class="border-b {{$selectedFm==$index?' text-white bg-green-500':'bg-white '}}"
+              <tr class="border-b {{$selectedFm==$index?'bg-gray-300 hover:bg-gray-400' : 'bg-white '}}"
                 wire:click="fmSelected('{{$index}}')">
                 <td class="px-6 py-4">
                   @if ($rb=$value['rb'])

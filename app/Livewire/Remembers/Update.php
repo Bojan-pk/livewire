@@ -12,10 +12,15 @@ use PhpOffice\PhpWord\IOFactory;
 class Update extends  Cart
 {
    //public $cart = [];
-    public $selectedFm;
+    
     public $rb;
-    public $newJobName;
+    //public $newJobName;
 
+   /*  public function mount(){
+        /* dd($this->selectedFm);
+        $this->rb=$this->cart[$this->selectedFm]['rb'];
+           $this->newJobName=$this->cart[$this->selectedFm]['newJobName']; 
+    } */
    
 
     public function editItem (){
@@ -47,13 +52,11 @@ class Update extends  Cart
  //dd($id);
         if ($this->selectedFm != $id) {
             $this->selectedFm = $id;
-           /*  $cart = Cart::find($id);
-            if ($cart) {
-                $this->rb = $cart->rb;  
-            } */
+           $this->rb=$this->cart[$id]['rb'];
+           $this->newJobName=$this->cart[$id]['newJobName'];
         } else {
             $this->selectedFm = '';
-           // $this->reset();
+           // $this->reset('rb','newJobName');
         }
     }
 
