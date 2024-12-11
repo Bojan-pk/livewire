@@ -24,9 +24,9 @@ class SaveCart extends Component
     public function mount()
     {
 
-       /*  if (session()->has('cart') && !empty(session('cart'))) {
+        if (session()->has('cart') && !empty(session('cart'))) {
             $this->cart = session()->get('cart');
-        } */
+        }
         //$this->carts=Cart::orderBy('name')->paginate(15);
         //$this->carts=Cart::paginate(15);
         //$this->carts=Cart::all();
@@ -70,7 +70,7 @@ class SaveCart extends Component
             } else {
                 $this->loadData();
                 $this->showLoadModal = false;
-            }
+            } 
         }  
     }
 
@@ -126,18 +126,26 @@ class SaveCart extends Component
     {
         $validated = $this->validate();
 
-        Cart::updateOrCreate(
-            [
-                'name' => $this->name,
-            ],
-            [
-                'user_id' => Auth::id(), // ID trenutno prijavljenog korisnika
-                'content' => $this->cart, // Čuvanje sadržaja korpe
+        if (session()->has('cart') && !empty(session('cart'))) {
+            $this->cart = session()->get('cart');
+            Cart::updateOrCreate(
+                [
+                    'name' => $this->name,
+                ],
+                [
+                    'user_id' => Auth::id(), // ID trenutno prijavljenog korisnika
+                    'content' => $this->cart, // Čuvanje sadržaja korpe
+    
+                ]
+            );
+            $this->reset();
+            session()->flash('success', 'Успешно је снимљено у базу.');
 
-            ]
-        );
-        $this->reset();
-        session()->flash('success', 'Успешно је снимљено у базу.');
+        } else {
+            session()->flash('error', 'Недостају подаци за упис');
+        }
+
+        
     }
 
     public function cleanTable()

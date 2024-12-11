@@ -74,7 +74,7 @@ class Update extends  Cart
         ]);
 
         // Naslov
-        $section->addTitle("Подаци из Корпе", 1);
+        $section->addTitle("ОПИСИ ПОСЛОВА ФОРМАЦИЈСКИХ МЕСТА", 1);
     
         // Iteracija kroz stavke korpe
         foreach ($this->cart as $item) {
