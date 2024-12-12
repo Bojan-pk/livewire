@@ -64,43 +64,36 @@ class Update extends  Cart
     }
 
     public function exportToExcel()
-{
-    //prilagođava cart formaciji
-    $itemsFormacy=[];
-    
-    foreach ($this->cart as $key=>$item){
-        
-        $itemsFormacy[$key]['rb']=$item['rb'];
-        $itemsFormacy[$key]['newJobName']=$item['newJobName'];
-        $itemsFormacy[$key]['ves']=$item['ves'];
-        $rulebooks=Rulebook::find($item['rulebooks']);
-        //određuje kategoriju kadra na osnovu broja bodova
-        $itemsFormacy[$key]['bb']='';
-           $itemsFormacy[$key]['pg']=''; 
-           $itemsFormacy[$key]['fc']='';
-           
-        if (@strlen( $rulebooks->pg_bb)==3) {
+    {
+        //prilagođava cart formaciji
+        $itemsFormacy = [];
 
-            //$itemsFormacy[$key]['staf']="cl";
-            $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
-           // $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
+        foreach ($this->cart as $key => $item) {
 
-        } elseif (@strlen( $rulebooks->pg_bb)<3 && @strlen( $rulebooks->pg_bb)>0) {
-           // $itemsFormacy[$key]['staf']="pvl";
-            $itemsFormacy[$key]['pg']=$rulebooks->pg_bb;
-            $itemsFormacy[$key]['fc']=$rulebooks->fc_sso;
-        } else {
-           // $itemsFormacy[$key]['staf']="";
-           /* $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
-           $itemsFormacy[$key]['pg']=$rulebooks->pg_bb; 
-           $itemsFormacy[$key]['fc']=$rulebooks->fc; */  
+            $itemsFormacy[$key]['rb'] = $item['rb'];
+            $itemsFormacy[$key]['newJobName'] = $item['newJobName'];
+            $itemsFormacy[$key]['ves'] = $item['ves'];
+            $rulebooks = Rulebook::find($item['rulebooks']);
+            
+            //određuje kategoriju kadra na osnovu broja bodova
+            $itemsFormacy[$key]['bb'] = '';
+            $itemsFormacy[$key]['pg'] = '';
+            $itemsFormacy[$key]['fc'] = '';
+
+            if (strlen($rulebooks->pg_bb) === 3 && is_numeric($rulebooks->pg_bb)) {
+
+                $itemsFormacy[$key]['bb'] = $rulebooks->pg_bb;
+               // $itemsFormacy[$key]['grupaBodova'] = $this->grupaBodova($rulebooks->pg_bb);
+
+            } elseif (@strlen($rulebooks->pg_bb) < 3 && @strlen($rulebooks->pg_bb) > 0) {
+                
+                $itemsFormacy[$key]['pg'] = $rulebooks->pg_bb;
+                $itemsFormacy[$key]['fc'] = $rulebooks->fc_sso;
+            } 
         }
 
-
+        return Excel::download(new CartExport($itemsFormacy), 'cart.xlsx');
     }
-    
-    return Excel::download(new CartExport($itemsFormacy), 'cart.xlsx');
-}
 
     public function exportToWord()
     {
@@ -133,10 +126,10 @@ class Update extends  Cart
             $textRun->addText("Посебни услови за обављање послова формацијког места:", ['bold' => true, 'italic' => true]);
             $textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
 
-            $educations=Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
+            $educations = Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
             $textRun->addText('; ' . implode('; ', $educations), ['italic' => true]);
 
-           /*  $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
+            /*  $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
 
             $section->addText("Искуства: " . implode(', ', $item['experiences'] ?? []));
             $section->addText("Правилници: " . ($item['rulebooks'] ?? ''));
