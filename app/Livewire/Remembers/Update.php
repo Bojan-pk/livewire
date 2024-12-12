@@ -4,6 +4,7 @@ namespace App\Livewire\Remembers;
 
 use App\Livewire\Cart;
 use App\Models\Condition;
+use App\Models\Education;
 use App\Models\Job;
 use Livewire\Component;
 use PhpOffice\PhpWord\PhpWord;
@@ -11,52 +12,51 @@ use PhpOffice\PhpWord\IOFactory;
 
 class Update extends  Cart
 {
-   //public $cart = [];
-    
+    //public $cart = [];
+
     public $rb;
     //public $newJobName;
 
-   /*  public function mount(){
+    /*  public function mount(){
         /* dd($this->selectedFm);
         $this->rb=$this->cart[$this->selectedFm]['rb'];
            $this->newJobName=$this->cart[$this->selectedFm]['newJobName']; 
     } */
-   
 
-    public function editItem (){
 
-        $this->cart[$this->selectedFm]['rb']=$this->rb;
-       $this->cart[$this->selectedFm]['newJobName']=$this->newJobName;
-       
-      // Чување старог елемента
-       $movedItem = $this->cart[$this->selectedFm];
-       // Уклањање елемента из старе позиције
-    
-       unset($this->cart[$this->selectedFm]);
+    public function editItem()
+    {
 
-       array_splice($this->cart, $this->rb - 1, 0, [$movedItem]); // убацује елемент на нову позицију
+        $this->cart[$this->selectedFm]['rb'] = $this->rb;
+        $this->cart[$this->selectedFm]['newJobName'] = $this->newJobName;
 
-    // Ажурирање `rb` за сваки елемент
-    foreach ($this->cart as $key => $item) {
-        $this->cart[$key]['rb'] = $key + 1;
-    }
+        // Чување старог елемента
+        $movedItem = $this->cart[$this->selectedFm];
+        // Уклањање елемента из старе позиције
 
-    // Чување у сесији
-    session()->put('cart', $this->cart);
-    
+        unset($this->cart[$this->selectedFm]);
 
+        array_splice($this->cart, $this->rb - 1, 0, [$movedItem]); // убацује елемент на нову позицију
+
+        // Ажурирање `rb` за сваки елемент
+        foreach ($this->cart as $key => $item) {
+            $this->cart[$key]['rb'] = $key + 1;
+        }
+
+        // Чување у сесији
+        session()->put('cart', $this->cart);
     }
 
     public function fmSelected($id)
     {
- //dd($id);
+        //dd($id);
         if ($this->selectedFm != $id) {
             $this->selectedFm = $id;
-           $this->rb=$this->cart[$id]['rb'];
-           $this->newJobName=$this->cart[$id]['newJobName'];
+            $this->rb = $this->cart[$id]['rb'];
+            $this->newJobName = $this->cart[$id]['newJobName'];
         } else {
             $this->selectedFm = '';
-           // $this->reset('rb','newJobName');
+            // $this->reset('rb','newJobName');
         }
     }
 
@@ -65,7 +65,9 @@ class Update extends  Cart
         // Kreirajte novi PhpWord objekat
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
-    
+
+        $phpWord->setDefaultFontName('Times New Roman');
+        $phpWord->setDefaultFontSize(12);
 
         $phpWord->addParagraphStyle('reducedSpacing', [
             'spaceBefore' => 0, // Razmak pre paragrafa (u tačkama)
@@ -74,33 +76,39 @@ class Update extends  Cart
         ]);
 
         // Naslov
+        $phpWord->addTitleStyle(1, ['bold' => true, 'size' => 14]);
         $section->addTitle("ОПИСИ ПОСЛОВА ФОРМАЦИЈСКИХ МЕСТА", 1);
-    
+
         // Iteracija kroz stavke korpe
         foreach ($this->cart as $item) {
-            $section->addText("Радно место: " . ($item['newJobName'] ?? ''));
-           
+            $section->addText($item['rb'] . '. ' . $item['newJobName'] ?? '', ['bold' => true]);
+
             $jobNames = Job::whereIn('id', $item['jobs'] ?? [])->pluck('name')->toArray();
-            $section->addText("Послови: " . implode('; ', $jobNames), null, 'reducedSpacing');
+            $section->addText(implode('; ', $jobNames), null, 'reducedSpacing');
 
             $conditions = Condition::whereIn('id', $item['conditions'] ?? [])->pluck('name')->toArray();
-            $section->addText("Услови: " . implode('; ', $conditions),[ 'italic' => true ]);
-            
-            $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
-            
+            $textRun = $section->addTextRun();
+            $textRun->addText("Посебни услови за обављање формацијког места:", ['bold' => true, 'italic' => true]);
+            $textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
+
+            $educations=Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
+            $textRun->addText('; ' . implode('; ', $educations), ['italic' => true]);
+
+           /*  $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
+
             $section->addText("Искуства: " . implode(', ', $item['experiences'] ?? []));
             $section->addText("Правилници: " . ($item['rulebooks'] ?? ''));
-            $section->addText("ВЕС: " . ($item['ves'] ?? ''));
+            $section->addText("ВЕС: " . ($item['ves'] ?? '')); */
             $section->addTextBreak(1); // Razmak između stavki
         }
-    
+
         // Kreiranje fajla
         $fileName = 'korpa_podaci.docx';
         $filePath = storage_path($fileName);
-    
+
         $writer = IOFactory::createWriter($phpWord, 'Word2007');
         $writer->save($filePath);
-    
+
         // Download fajla
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
