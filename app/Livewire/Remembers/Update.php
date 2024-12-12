@@ -9,6 +9,9 @@ use App\Models\Job;
 use Livewire\Component;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
+use App\Exports\CartExport;
+use App\Models\Rulebook;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Update extends  Cart
 {
@@ -60,6 +63,45 @@ class Update extends  Cart
         }
     }
 
+    public function exportToExcel()
+{
+    //prilagođava cart formaciji
+    $itemsFormacy=[];
+    
+    foreach ($this->cart as $key=>$item){
+        
+        $itemsFormacy[$key]['rb']=$item['rb'];
+        $itemsFormacy[$key]['newJobName']=$item['newJobName'];
+        $itemsFormacy[$key]['ves']=$item['ves'];
+        $rulebooks=Rulebook::find($item['rulebooks']);
+        //određuje kategoriju kadra na osnovu broja bodova
+        $itemsFormacy[$key]['bb']='';
+           $itemsFormacy[$key]['pg']=''; 
+           $itemsFormacy[$key]['fc']='';
+           
+        if (@strlen( $rulebooks->pg_bb)==3) {
+
+            //$itemsFormacy[$key]['staf']="cl";
+            $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
+           // $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
+
+        } elseif (@strlen( $rulebooks->pg_bb)<3 && @strlen( $rulebooks->pg_bb)>0) {
+           // $itemsFormacy[$key]['staf']="pvl";
+            $itemsFormacy[$key]['pg']=$rulebooks->pg_bb;
+            $itemsFormacy[$key]['fc']=$rulebooks->fc_sso;
+        } else {
+           // $itemsFormacy[$key]['staf']="";
+           /* $itemsFormacy[$key]['bb']=$rulebooks->pg_bb;
+           $itemsFormacy[$key]['pg']=$rulebooks->pg_bb; 
+           $itemsFormacy[$key]['fc']=$rulebooks->fc; */  
+        }
+
+
+    }
+    
+    return Excel::download(new CartExport($itemsFormacy), 'cart.xlsx');
+}
+
     public function exportToWord()
     {
         // Kreirajte novi PhpWord objekat
@@ -88,7 +130,7 @@ class Update extends  Cart
 
             $conditions = Condition::whereIn('id', $item['conditions'] ?? [])->pluck('name')->toArray();
             $textRun = $section->addTextRun();
-            $textRun->addText("Посебни услови за обављање формацијког места:", ['bold' => true, 'italic' => true]);
+            $textRun->addText("Посебни услови за обављање послова формацијког места:", ['bold' => true, 'italic' => true]);
             $textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
 
             $educations=Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
