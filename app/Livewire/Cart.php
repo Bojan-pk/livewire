@@ -16,6 +16,8 @@ class Cart extends Component
     public $ves;
     //public $rb;
     public $usualyFm;
+    public $isMinimized = false;
+    public $showRemoveModal = false;
 
     //uputstvo o UOIR i elementi FM -- promeniti naziv u cart
     public $cart = [];
@@ -44,7 +46,21 @@ class Cart extends Component
         } else {
             $this->selectedFm = 0;
         }
+
+       // $this->dispatch('scrollToSelected');
+        $this->dispatch('scrollToSelected',$this->selectedFm);
     }
+
+    public function closeModal()
+    {
+        $this->showRemoveModal = false; // Sakriva modal bez brisanja
+    }
+
+    public function toggleCart()
+    {
+        $this->isMinimized = !$this->isMinimized;
+    }
+
 
     public function updatedcart($value, $name)
     {
@@ -56,12 +72,17 @@ class Cart extends Component
 
     public function removeInput(){
       
-        //
-        //dd(session()->get('cart'));
-        //$this->mount();
+        
         $this->cart=[];
         session()->flash('success', 'Подаци су успешно обрисани');
         $this->addFm();
+        $this->showRemoveModal = false; // Sakriva modal bez brisanja
+    }
+
+    public function validateRemoveData()
+    {
+
+        $this->showRemoveModal = true; 
     }
 
     public function addFm()
@@ -79,8 +100,10 @@ class Cart extends Component
         ];
         // Čuvanje u sesiji
         session()->put('cart', $this->cart);
+        //$this->selectedFm=$nextNumber-1;
+        $this->fmSelected($nextNumber-1);
 
-        
+        $this->dispatch('scrollToSelected',$nextNumber-1);  
     }
 
     public function delFm($index)
@@ -99,33 +122,43 @@ class Cart extends Component
         // $this->dispatch('cart-items', $cartItems);
     }
 
-    public function saveItem($index, $type)
+    public function saveItem($index, $type,$indexFm=null)
     {
-        if (in_array($index, $this->cart[$this->selectedFm][$type])) {
-            $this->cart[$this->selectedFm][$type] = array_diff($this->cart[$this->selectedFm][$type], [$index]);
+        if (!$indexFm) {
+            $indexFm=$this->selectedFm;
+        }
+        if (in_array($index, $this->cart[$indexFm][$type])) {
+            $this->cart[$indexFm][$type] = array_diff($this->cart[$indexFm][$type], [$index]);
         } else {
-            $this->cart[$this->selectedFm][$type][] = $index;
+            $this->cart[$indexFm][$type][] = $index;
         }
 
         session()->put('cart', $this->cart);
     }
 
-    public function saveRulebooks($index)
+    public function saveRulebooks($index,$indexFm=null)
 
     {
-        if ($this->cart[$this->selectedFm]['rulebooks'] != $index)
-            $this->cart[$this->selectedFm]['rulebooks'] = $index;
-        else $this->cart[$this->selectedFm]['rulebooks'] = '';
+        if (!$indexFm) {
+            $indexFm=$this->selectedFm;
+        }
+        if ($this->cart[$indexFm]['rulebooks'] != $index)
+            $this->cart[$indexFm]['rulebooks'] = $index;
+        else $this->cart[$indexFm]['rulebooks'] = '';
 
         session()->put('cart', $this->cart);
     }
 
-    public function saveVes($index)
+    
+
+    public function saveVes($index,$indexFm=null)
     {
-        //dd($index);
-        if ($this->cart[$this->selectedFm]['ves'] != strip_tags($index))
-            $this->cart[$this->selectedFm]['ves'] = strip_tags($index);
-        else $this->cart[$this->selectedFm]['ves'] = '';
+        if (!$indexFm) {
+            $indexFm=$this->selectedFm;
+        }
+        if ($this->cart[$indexFm]['ves'] != strip_tags($index))
+            $this->cart[$indexFm]['ves'] = strip_tags($index);
+        else $this->cart[$indexFm]['ves'] = '';
 
         session()->put('cart', $this->cart);
     }
@@ -140,24 +173,26 @@ class Cart extends Component
     }
 
 
-    public function saveJobs($index)
+    public function saveJobs($index,$indexFm=null)
     {
-        $this->saveItem($index, 'jobs');
+        $this->saveItem($index, 'jobs',$indexFm);
     }
 
-    public function saveEducations($index)
+    public function saveEducations($index,$indexFm=null)
     {
-        $this->saveItem($index, 'educations');
+        //dd();
+        $this->saveItem($index, 'educations',$indexFm);
     }
 
-    public function saveConditions($index)
+    public function saveConditions($index,$indexFm=null)
     {
-        $this->saveItem($index, 'conditions');
+       //dd($fm);
+        $this->saveItem($index, 'conditions',$indexFm);
     }
 
-    public function saveExperiences($index)
+    public function saveExperiences($index,$indexFm=null)
     {
-        $this->saveItem($index, 'experiences');
+        $this->saveItem($index, 'experiences',$indexFm);
     }
 
     public function fmSelected($index)
@@ -167,23 +202,7 @@ class Cart extends Component
         $this->dispatch('fmCartSelected', $index);
     }
 
-  /*   private function isValidCartItem($item)
-{
-    // Provera za svaki ključ osim generičkog "newJobName"
-    return 
-        (!empty($item['newJobName'])&& $item['newJobName']!="Радно место ".$item['rb']) ||
-        !empty($item['jobs']) || 
-        !empty($item['educations']) || 
-        !empty($item['conditions']) || 
-        !empty($item['experiences']) || 
-        !empty($item['rulebooks']) || 
-        !empty($item['ves']);
-}
-
-public function countValidCartItems()
-{
-    return count(array_filter($this->cart, fn($item) => $this->isValidCartItem($item)));
-} */
+  
 
     public function render()
     {

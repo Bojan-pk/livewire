@@ -79,11 +79,13 @@ class Update extends  Cart
             $itemsFormacy[$key]['bb'] = '';
             $itemsFormacy[$key]['pg'] = '';
             $itemsFormacy[$key]['fc'] = '';
+            $itemsFormacy[$key]['gb'] = '';
 
-            if (strlen($rulebooks->pg_bb) === 3 && is_numeric($rulebooks->pg_bb)) {
+            if (@strlen($rulebooks->pg_bb) === 3 && @is_numeric($rulebooks->pg_bb)) {
 
                 $itemsFormacy[$key]['bb'] = $rulebooks->pg_bb;
-               // $itemsFormacy[$key]['grupaBodova'] = $this->grupaBodova($rulebooks->pg_bb);
+                $itemsFormacy[$key]['gb'] = $this->grupaBodova($rulebooks->pg_bb);
+                /* dd($itemsFormacy[$key]['gb']); */
 
             } elseif (@strlen($rulebooks->pg_bb) < 3 && @strlen($rulebooks->pg_bb) > 0) {
                 
@@ -93,6 +95,33 @@ class Update extends  Cart
         }
 
         return Excel::download(new CartExport($itemsFormacy), 'cart.xlsx');
+    }
+
+    protected function grupaBodova($bb){
+        
+        $groups = [
+            1 => ['min' => 938, 'max' => 1000],
+            2 => ['min' => 879, 'max' => 937],
+            3 => ['min' => 820, 'max' => 878],
+            4 => ['min' => 761, 'max' => 819],
+            5 => ['min' => 702, 'max' => 760],
+            6 => ['min' => 643, 'max' => 701],
+            7 => ['min' => 584, 'max' => 642],
+            8 => ['min' => 525, 'max' => 583],
+            9 => ['min' => 466, 'max' => 524],
+            10 => ['min' => 407, 'max' => 465],
+            11 => ['min' => 348, 'max' => 406],
+            12 => ['min' => 289, 'max' => 347],
+            13 => ['min' => 230, 'max' => 288],
+            10 => ['min' => 171, 'max' => 229],
+            // Dodajte ostale grupe
+        ];
+    
+        foreach ($groups as $groupNumber => $range) {
+            if ($bb >= $range['min'] && $bb <= $range['max']) {
+                return $groupNumber;
+            }
+        } 
     }
 
     public function exportToWord()

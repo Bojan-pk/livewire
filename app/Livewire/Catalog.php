@@ -70,7 +70,7 @@ class Catalog extends Component
         //dd($array);
     }
 
-    public function saveJobs($id)
+    public function saveJobs($id,$indexFm=null)
     {
         $this->saveItem($id, $this->jobsIds, 'jobs');
     }
@@ -85,17 +85,17 @@ class Catalog extends Component
     }
 
 
-    public function saveEducations($id)
+    public function saveEducations($id,$indexFm=null)
     {
         $this->saveItem($id, $this->educationIds, 'education');
     }
 
-    public function saveConditions($id)
+    public function saveConditions($id,$indexFm=null)
     {
         $this->saveItem($id, $this->conditionIds, 'condition');
     }
 
-    public function saveExperiences($id)
+    public function saveExperiences($id,$indexFm=null)
     {
         $this->saveItem($id, $this->experienceIds, 'experience');
     }

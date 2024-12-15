@@ -38,7 +38,7 @@
             <td>{{ $item['ves'] }}</td>
             <td>{{ $item['fc'] }}</td>
             <td>{{ $item['pg'] }}</td>
-            <td></td>
+            <td>{{ $item['gb'] }}</td>
             <td>{{ $item['bb'] }}</td>
             {{-- <td>{{ implode(', ', $item['jobs'] ?? []) }}</td>
             <td>{{ implode(', ', $item['educations'] ?? []) }}</td>

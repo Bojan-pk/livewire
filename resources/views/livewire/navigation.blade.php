@@ -61,10 +61,21 @@
           <a href="/search" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" wire:navigate>Search</a>
         </li> --}}
         @if  (auth()->user())
-        <li>
-          <button id="administrationNavbarLink" data-dropdown-toggle="administration" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto "> {{ auth()->user()->name }} <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full align-text-top">
+        <li >
+          
+          <a href="{{route('rememberd-administration')}}" class=" block py-2 px-3 md:p-0" aria-current="page" wire:navigate> <svg class="w-6 h-6 inline-flex {{ $activeTab == 'rememberd-administration' ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700' }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+          </svg><span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full align-text-top">
             {{$cartItems}}
-            </span><svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+            </span> </a>
+          
+        </li>
+
+       
+
+
+        <li>
+          <button id="administrationNavbarLink" data-dropdown-toggle="administration" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto "> {{ auth()->user()->name }} <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
             </svg></button>
           <!-- Dropdown menu -->
@@ -72,9 +83,7 @@
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownLargeButton">
               <li>
                 
-                  <a href="{{route('rememberd-administration')}}" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Запамћено <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-red-800 bg-red-200 rounded-full align-text-top">
-                    {{$cartItems}}
-                    </span> </a>
+                  
                
                 <a href="{{route('profile')}}" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Профил</a>
               </li>
@@ -86,7 +95,7 @@
         </li>
         @else 
         <li>
-          <a href="/login" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" wire:navigate>Prijava</a>
+          <a href="/login" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0" wire:navigate>Пријава</a>
         </li>
         @endif
        
