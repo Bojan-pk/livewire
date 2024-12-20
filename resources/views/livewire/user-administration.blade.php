@@ -7,17 +7,17 @@
                 Ажурирање
             </a>
         </li>
-        {{-- <li class="me-2">
-            <a href="#" wire:click.prevent="switchTab('guide')" class="inline-block p-4 border-b-2 {{ $currentTab == 'guide' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 ' }}">
-                Упутство
+        <li class="me-2">
+            <a href="#" wire:click.prevent="switchTab('logins')" class="inline-block p-4 border-b-2 {{ $currentTab == 'logins' ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 ' }}">
+                Логовања
             </a>
-        </li> --}}
+        </li>
     </ul>
     <div class="tab-content">
         @if($currentTab == 'update')
         @livewire('user-update')
-        {{-- @elseif($currentTab == 'manual')
-        @livewire('rulebook-update') --}}
+         @elseif($currentTab == 'logins')
+        @livewire('user-logins') 
         @endif
     </div>
    

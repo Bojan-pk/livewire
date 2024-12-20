@@ -117,10 +117,10 @@
             </div>
             <div>
                 <x-input-text name="form.order" label="Редни број" />
-                <x-input-text name="form.sign" label="Ознака" />
+                <x-input-text name="form.sign" label="Ознака"  maxlength="1" class="uppercase" />
                 <x-input-text name="form.description" label="Опис" />
 
-                <label for="regulations"class="block mt-2 mb-2 text-sm font-medium text-start">Документ
+               {{--  <label for="regulations"class="block mt-2 mb-2 text-sm font-medium text-start">Документ
                     који је
                     основ уноса</label>
                 <select wire:model="form.regulation_id" id="regulations"
@@ -129,7 +129,10 @@
                     @foreach ($regulations as $regulation)
                         <option value="{{ $regulation->id }}">{{ $regulation->name }}</option>
                     @endforeach
-                </select>
+                </select> --}}
+                <x-input-select name="form.regulation_id" label="Документ који је основ уноса" :options="$regulations"
+                    optionValue="id" :optionText="['short_name','svl']" />
+
                 <div>
                     @error('form.regulation_id')
                         <span class=" text-red-500 text-xs">{{ $message }}</span>
@@ -143,7 +146,7 @@
                             ознаку </button>
                         <button wire:click="cleanTable()" type="button"
                             class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                            унос</button>
+                            форму</button>
                         <button type="submit"
                             class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
                     </div>

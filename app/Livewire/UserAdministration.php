@@ -11,6 +11,12 @@ class UserAdministration extends Component
 
 {
     public $currentTab = 'update'; // 'create' or 'update'
+
+    public function switchTab($tab)
+    {
+        $this->currentTab = $tab;
+    }
+    
     public function render()
     {
         return view('livewire.user-administration');

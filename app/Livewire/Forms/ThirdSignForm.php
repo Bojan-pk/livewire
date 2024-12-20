@@ -33,6 +33,9 @@ class ThirdSignForm extends Form
 
     public function store()
     {
+        // Pretvaranje `sign` u veliko slovo
+        $this->sign = strtoupper($this->sign);
+        
          VesThirdSign::updateOrCreate(
             [
                 'sign' => $this->sign,

@@ -92,7 +92,7 @@
                                     <td class="px-6 py-2">
                                         {{ $value->sign }} - {{ $value->description }}
                                     </td>
-                                    
+
                                     <td class="px-6 py-2">
                                         {{ $value->regulation->svl }}
                                     </td>
@@ -126,88 +126,34 @@
             </div>
             <div>
                 <x-input-text name="form.order" label="Редни број" />
-                {{-- <div>
-                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Редни број</label>
-                    <input wire:model="form.order" type="text" id=""
-                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-                </div> --}}
-                {{-- <label for="" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери знак рода/службе
-                    назив</label>
-                <select id="" wire:model="form.ves_second_sign_id" wire:change="$refresh"
-                    class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
-                    <option selected>Изабери ...</option>
-                    @foreach ($secondSigns as $key => $value)
-                        <option value="{{ $value->id }}">{{ $value->sign }} - {{ $value->description }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('form.ves_second_sign_id')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror --}}
-                <x-input-select name="form.ves_second_sign_id" label="Изабери знак рода/службе"
-                    :options="$secondSigns" optionValue="id" :optionText="['sign','description']" />
 
-                {{-- <div>
-                    @error('form.order')
-                        <span class=" text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div> --}}
-                <x-input-text name="form.sign" label="Ознака" />
-                {{-- <div>
-                    <label for="" class="block mt-2 mb-2  font-medium text-start">Ознака</label>
-                    <input wire:model="form.sign" type="text" id=""
-                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-                </div>
-                <div>
-                    @error('form.sign')
-                        <span class=" text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div> --}}
+                <x-input-select name="form.ves_second_sign_id" label="Изабери знак рода/службе" :options="$secondSigns"
+                    optionValue="id" :optionText="['sign', 'description']" />
+
+                <x-input-text name="form.sign" label="Ознака" maxlength="1" class="uppercase" />
+
                 <x-input-text name="form.description" label="Опис" />
-                {{--  <div>
-                    <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Опис</label>
-                    <input wire:model="form.description" type="text" id=""
-                        class="block w-full p-2.5 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ">
-                </div>
-                <div>
-                    @error('form.description')
-                        <span class=" text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                </div> --}}
-                {{--<label for="regulations"class="block mt-2 mb-2 text-sm font-medium text-start">Документ
-                    који је
-                    основ уноса</label>
-                 <select wire:model="form.regulation_id" id="regulations"
-                    class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 ">
-                    <option>Изабери документ</option>
-                    @foreach ($regulations as $regulation)
-                        <option value="{{ $regulation->id }}">{{ $regulation->name }}</option>
-                    @endforeach
-                </select>
-                <div>
-                    @error('form.regulation_id')
-                        <span class=" text-red-500 text-xs">{{ $message }}</span>
-                    @enderror --}}
-                    <x-input-select name="form.regulation_id" label="Документ који је основ уноса"
-                    :options="$regulations" optionValue="id" :optionText="['name']" />
-                    <x-input-text name="form.note" label="Напомена" />
-                    
-                    <div class="flex justify-between">
-                       
-                        <button wire:click.prevent="confirmDelete" type="button"
-                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                            ознаку </button>
 
-                        <button wire:click.prevent="cleanTable()" type="button"
-                            class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                            унос</button>
-                        <button type="submit"
-                            class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
-                    </div>
+                <x-input-select name="form.regulation_id" label="Документ који је основ уноса" :options="$regulations"
+                    optionValue="id" :optionText="['short_name', 'svl']" />
+                <x-input-text name="form.note" label="Напомена" />
 
+                <div class="flex justify-between">
+
+                    <button wire:click.prevent="confirmDelete" type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
+                        ознаку </button>
+
+                    <button wire:click.prevent="cleanTable()" type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
+                        форму</button>
+                    <button type="submit"
+                        class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
                 </div>
+
+            </div>
     </form>
-   
+
     <!-- Modal -->
     @if ($showDeleteModal)
         <!-- Modal Background Overlay -->

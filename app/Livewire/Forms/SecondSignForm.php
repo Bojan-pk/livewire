@@ -12,7 +12,7 @@ class SecondSignForm extends Form
 
     #[Validate('required', message: "Обавезно поље")]
     #[Validate('integer', message: "Морате унети број")]
-    public $order=10;
+    public $order = 10;
 
     #[Validate('required', message: "Обавезно поље")]
     #[Validate('max:1', message: "Морате унети највише 1 карактер")]
@@ -31,7 +31,10 @@ class SecondSignForm extends Form
 
     public function store()
     {
-         VesSecondSign::updateOrCreate(
+
+        // Pretvaranje `sign` u veliko slovo
+        $this->sign = strtoupper($this->sign);
+        VesSecondSign::updateOrCreate(
             [
                 'sign' => $this->sign,
             ],
@@ -50,7 +53,7 @@ class SecondSignForm extends Form
         $maxOrder = VesSecondSign::max('order');
 
         // Izračunaj novi redni broj
-        $newSerialNumber = ceil(($maxOrder+1) / 10) * 10;
+        $newSerialNumber = ceil(($maxOrder + 1) / 10) * 10;
 
         // Dodijeli novi redni broj modelu
         $this->order = $newSerialNumber;/*  */

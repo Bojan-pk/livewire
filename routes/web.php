@@ -37,7 +37,9 @@ Route::get('/ves-administration',\App\Livewire\VesAdministration::class)->name('
 
 Route::get('/rememberd-administration',\App\Livewire\RememberdAdministration::class)->name('rememberd-administration')->middleware(['auth', 'verified']);
 
-Route::get('/user-administration',\App\Livewire\UserAdministration::class)->name('user-administration')->middleware(['role:super-admin']);
+Route::get('/user-administration',\App\Livewire\UserAdministration::class)
+->name('user-administration')->middleware(['role:super-admin'])
+;
 
 
 

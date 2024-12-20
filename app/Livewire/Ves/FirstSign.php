@@ -86,9 +86,7 @@ class FirstSign extends Component
         $this->form->reset();
         $this->form->defaultOrder();
     }
-
     }
-
     public function render()
     {
         if (empty($this->searchTerm)) {

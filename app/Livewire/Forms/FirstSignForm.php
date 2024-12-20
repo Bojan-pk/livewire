@@ -34,6 +34,8 @@ class FirstSignForm extends Form
     public function store()
     {
         //dd($this->svl);
+        // Pretvaranje `sign` u veliko slovo
+        $this->sign = strtoupper($this->sign);
         VesFirstSign::updateOrCreate(
             [
                 'sign' => $this->sign,

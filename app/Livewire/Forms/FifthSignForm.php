@@ -26,11 +26,10 @@ class FifthSignForm extends Form
 
     public $note;
 
-
-
     public function store()
     {
-        //dd($this->svl);
+        
+        $this->sign = strtoupper($this->sign);
         $regulation = VesFifthSign::updateOrCreate(
             [
                 'sign' => $this->sign,

@@ -141,7 +141,7 @@
                     ознаку </button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    ред</button>
+                    форму</button>
                 <button type="submit" wire:loading.attr="disabled"
                     class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4"><svg
                         wire:loading aria-hidden="true" role="status"

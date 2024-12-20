@@ -93,6 +93,8 @@ class VesCondition extends Component
                 $this->form->reading = $vesCondition->reading;
                 $this->form->regulation_id = $vesCondition->regulation_id;
                 $this->form->note = $vesCondition->note;
+                $this->form->old_kind = $vesCondition->old_kind;
+                //dd($vesCondition);
             }
         } else {
             $this->selectedId = '';
