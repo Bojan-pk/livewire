@@ -27,6 +27,8 @@ class SearchFm extends Component
             //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
             $query = Fm::query();
+
+            
             // Pretraži svaku ključnu reč u polju name
             foreach ($keywords as $keyword) {
                 $query->where('name', 'LIKE', '%' . $keyword . '%');

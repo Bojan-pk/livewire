@@ -16,31 +16,39 @@ use Livewire\Attributes\Rule;
 
 class CatalogUpdateForm extends Form
 {
-    #[Validate('required|max:255')]
+   
+    #[Rule('required', message: "Поље мора бити попуњено")]
     public $fm;
 
-    /* #[Validate('array|min:1', message: "Барем једно ФМ морате унети.")] */
+    #[Rule('required|max:255')]
     public $usualy_fms = [''];
 
-    /* #[Validate('array|min:1', message: "Барем једно образовање/усавршавање морате унети.")] */
+    
     public $educations = [''];
 
-    /*  #[Validate('required')] */
+
     public $conditions = [''];
 
-    /*  #[Validate('required')] */
+
     public $experiences = [''];
 
-    #[Validate('required')]
+    #[Rule('required|max:255')]
     public $jobs = [''];
 
     public $catalogId = null;
-                   
-    #[Validate('required_without:new_regulation', message: "Изаберите или унесите нови документ")]
-    public $regulation = null;
 
-    #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
-    public $new_regulation;
+    #[Rule('required')]
+    public $regulation;
+
+    /*  #[Validate('required_without:regulation', message: "Изаберите или унесите нови документ")]
+    public $new_regulation; */
+
+    protected $rules = [
+        //'educations' => 'required|array|min:1', // Niz mora postojati i imati najmanje jednu stavku
+        'educations.*' => 'required|string',   // Svaka stavka mora biti ne-prazan string
+        'usualy_fms.*' => 'required|string',   // Svaka stavka mora biti ne-prazan string
+        'jobs.*' => 'required|string|max:255',   // Svaka stavka mora biti ne-prazan string
+    ];
 
     public function customValidate()
     {
@@ -113,19 +121,20 @@ class CatalogUpdateForm extends Form
         }
 
         //regulation
-        if ($this->new_regulation) {
+        /* if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
-        }
-       
+        } */
 
-        $regulation = Regulation::firstOrCreate([
+
+        /* $regulation = Regulation::firstOrCreate([
             'name' => $this->regulation,
-            'short_name' => 'Katalog FM']);
+            'short_name' => 'Katalog FM'
+        ]); */
 
         //dd($fmId);
         $catalog = Catalog::firstOrCreate(
             ['fm_id' => $fmId],
-            ['regulation_id' => $regulation->id]
+            ['regulation_id' => $this->regulation]
 
         );
         // Povezivanje  sa katalogom
@@ -136,6 +145,19 @@ class CatalogUpdateForm extends Form
         $catalog->experiences()->sync($experienceIds);
     }
 
+
+    public function messages()
+    {
+        return [
+            /* 'educations.required' => 'Морате додати најмање једно образовање.',
+            'educations.min' => 'Морате додати најмање једно образовање.', */
+            'educations.*.required' => 'Поље мора бити попуњено.',
+            'usualy_fms.*.required' => 'Поље мора бити попуњено.',
+            'jobs.*.required' => 'Поље мора бити попуњено.',
+           // usualy_fms
+        ];
+    }
+    
 
 
     public function hasNonEmptyValue($array)

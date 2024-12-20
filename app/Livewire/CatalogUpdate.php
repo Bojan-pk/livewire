@@ -18,6 +18,11 @@ class CatalogUpdate extends Component
         'fmSelected'=>'fmSelected'
     ];
 
+    public function mount()
+    {
+        $this->regulations = Regulation::where('short_name', 'Каталог ФМ')->get();
+    }
+
     public function fmSelected($fmId){
        
         if($catalog=Catalog::where('fm_id',$fmId)->first())
@@ -29,7 +34,9 @@ class CatalogUpdate extends Component
         $this->form->conditions=$catalog->conditions->pluck('name')->toArray();  
         $this->form->experiences=$catalog->experiences->pluck('name')->toArray();  
         $this->form->jobs=$catalog->jobs->pluck('name')->toArray();  
-        $this->form->regulation=$catalog->regulation->name;  
+        $this->form->regulation=$catalog->regulation_id;  
+
+        
 
     } else return session()->flash('error','Нема података о ФМ');
        
@@ -96,16 +103,13 @@ class CatalogUpdate extends Component
     }
 
 
-    public function mount()
-    {
-        $this->regulations = Regulation::where('short_name','Katalog FM')->pluck('name')->toArray(); 
-    }
+    
 
     public function submitForm() {
         
       
       // dd($this->form->educations);
-        $this->validate();
+      $this->validate();
 
        /*  $this->validate([
             //'form.fm' => 'array|string|max:255',

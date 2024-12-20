@@ -17,7 +17,8 @@ class CatalogCreate extends Component
 
     public function mount()
     {
-        $this->regulations = Regulation::pluck('name')->toArray(); 
+        
+        $this->regulations = Regulation::where('short_name', 'Каталог ФМ')->get();
     }
 
     public function submitForm() {
@@ -28,7 +29,7 @@ class CatalogCreate extends Component
 
         $this->form->store();
         session()->flash('success','Подаци су успешно унети');
-        $this->form->reset('fm','usualy_fm');
+        $this->form->reset('fm','usualy_fms','educations','conditions','experiences','jobs');
         
     }
 

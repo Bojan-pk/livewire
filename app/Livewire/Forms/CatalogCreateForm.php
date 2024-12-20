@@ -26,17 +26,18 @@ class CatalogCreateForm extends Form
     #[Rule('required')]
     public $educations;
 
-    #[Rule('required')]
+    //#[Rule('required')]
     public $conditions;
 
-    #[Rule('required')]
+    //#[Rule('required')]
     public $experiences;
 
     #[Rule('required')]
     public $jobs;
 
+    #[Validate('required')]
     public $regulation;
-    public $new_regulation;
+    /* public $new_regulation; */
 
     public function store()
     {
@@ -51,7 +52,7 @@ class CatalogCreateForm extends Form
         }
         //education
         $educations=$this->makeCleanArray($this->educations);
-        $educatinIds = [];
+        $educationIds = [];
         foreach ($educations as $educationName) {
             $education = Education::firstOrCreate(['name' => $educationName]);
             $educationIds[] = $education ->id;
@@ -82,15 +83,15 @@ class CatalogCreateForm extends Form
          }
 
          //regulation
-         if ($this->new_regulation) {
+         /* if ($this->new_regulation) {
             $this->regulation = $this->new_regulation;
-        }
+        } */
         $regulation = Regulation::firstOrCreate(['name' => $this->regulation]);
 
 
         $catalog = Catalog::create([
             'fm_id' => $fm->id,
-            'regulation_id' => $regulation->id,
+            'regulation_id' => $this->regulation,
             
         ]);
          // Povezivanje  sa katalogom
