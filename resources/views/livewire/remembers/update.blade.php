@@ -43,7 +43,7 @@
               @if($cart)
               @foreach ($cart as $index=>$value)
               <tr class="border-b {{$selectedFm==$index?'bg-gray-300 hover:bg-gray-400' : 'bg-white '}}"
-                wire:click="fmSelected('{{$index}}')">
+                wire:click="fmSelectedEdit('{{$index}}')">
                 <td class="px-6 py-4">
                   @if ($rb=$value['rb'])
                   {{$rb}}

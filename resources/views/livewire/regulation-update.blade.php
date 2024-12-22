@@ -1,7 +1,7 @@
 <form wire:submit="submitForm" class=" flex justify-center">
     <div class="w-8/12 rounded border p-2">
 
-        <x-flash-message  />
+        <x-flash-message />
 
         <div class="relative overflow-x-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -23,7 +23,7 @@
                             Активан
                         </th>
                         <th>
-                            Линк   
+                            Линк
                         </th>
                     </tr>
                 </thead>
@@ -31,7 +31,7 @@
                     @if ($regulations)
                         @foreach ($regulations as $key => $value)
                             <tr wire:click="regulationSelected({{ $value->id }})"
-                                class=" border-b cursor-pointer {{$selectedId==$value->id? 'bg-gray-300 hover:bg-gray-400':'bg-white '}} ">
+                                class=" border-b cursor-pointer {{ $selectedId == $value->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white ' }} ">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                     {{ $key + 1 }}.
                                 </th>
@@ -53,10 +53,10 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     @if ($value->file)
-                                    <a href="{{ asset('storage/file/'.$value->file)}}">Види...</a>
+                                        <a href="{{ asset('storage/file/' . $value->file) }}">Види...</a>
                                     @endif
                                 </td>
-                                
+
 
                             </tr>
                         @endforeach
@@ -87,7 +87,7 @@
                 placeholder="Пронађи пропис ...." />
         </div>
         <div>
-            <div>
+            {{-- <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Назив прописа</label>
                 <input wire:model="form.name" type="text" id=""
                     class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
@@ -96,8 +96,9 @@
                 @error('form.name')
                     <span class=" text-red-500 text-xs">{{ $message }}</span>
                 @enderror
-            </div>
-            <div>
+            </div> --}}
+            <x-input-text name="form.name" label="Назив прописа" />
+            {{-- <div>
                 <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Службени војни лист</label>
                 <input wire:model="form.svl" type="text" id=""
                     class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
@@ -106,14 +107,16 @@
                 @error('form.svl')
                     <span class=" text-red-500 text-xs">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
+            <x-input-text name="form.svl" label="Службени војни лист" />
 
             <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери скраћени
                 назив</label>
             <select id="countries" wire:model="form.short_name"
                 class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                 <option selected>Изабери ...</option>
-                <option value="Каталог ФМ">Каталог ФМ</option>
+                <option value="Каталог ПВЛ">Каталог ПВЛ</option>
+                <option value="Каталог ЦЛ">Каталог ЦЛ</option>
                 <option value="Елементи ФМ">Елементи ФМ</option>
                 <option value="Правилник ВЕС">Правилник ВЕС</option>
             </select>
@@ -132,10 +135,10 @@
             @enderror
             <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Учитај документ</label>
             <input wire:model="form.uploadedFile" type="file" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-                    @if ($form->file)
-                    <p class="text-blue-500">Документ је изабран</p>
-                    @endif
+                class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
+            @if ($form->file)
+                <p class="text-blue-500">Документ је изабран</p>
+            @endif
             @error('form.uploadedFile')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
@@ -147,7 +150,7 @@
                     пропис </button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    унос</button>
+                    форму</button>
                 <button type="submit"
                     class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none mt-4">Унеси</button>
             </div>

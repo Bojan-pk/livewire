@@ -87,7 +87,6 @@ class SaveCart extends Component
     public function validateCleanData()
     {
         
-
         if (!$this->selectedId) {
             session()->flash('error', 'Нисте избрали податке');
         } else {

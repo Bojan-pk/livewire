@@ -50,13 +50,14 @@ class Update extends  Cart
         session()->put('cart', $this->cart);
     }
 
-    public function fmSelected($id)
+    public function fmSelectedEdit($index)
     {
-        //dd($id);
-        if ($this->selectedFm != $id) {
-            $this->selectedFm = $id;
-            $this->rb = $this->cart[$id]['rb'];
-            $this->newJobName = $this->cart[$id]['newJobName'];
+        //dd($index);
+        if ($this->selectedFm != $index) {
+            $this->selectedFm = $index;
+           // dd($this->cart);
+            @$this->rb = $this->cart[$index]['rb'];
+            @$this->newJobName = $this->cart[$index]['newJobName'];
         } else {
             $this->selectedFm = '';
             // $this->reset('rb','newJobName');

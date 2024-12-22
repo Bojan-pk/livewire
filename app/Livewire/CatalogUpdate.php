@@ -20,7 +20,7 @@ class CatalogUpdate extends Component
 
     public function mount()
     {
-        $this->regulations = Regulation::where('short_name', 'Каталог ФМ')->get();
+        $this->regulations = Regulation::where('short_name', 'LIKE', '%' . 'Каталог' . '%')->get();
     }
 
     public function fmSelected($fmId){
@@ -30,9 +30,17 @@ class CatalogUpdate extends Component
         $this->form->catalogId=$catalog->id;
         $this->form->fm=$catalog->fm->name;
         $this->form->usualy_fms=$catalog->fms->pluck('name')->toArray();
-        $this->form->educations=$catalog->educations->pluck('name')->toArray();  
-        $this->form->conditions=$catalog->conditions->pluck('name')->toArray();  
-        $this->form->experiences=$catalog->experiences->pluck('name')->toArray();  
+        
+        $this->form->educations=$catalog->educations->pluck('name')->toArray(); 
+
+        //$this->form->conditions=$catalog->conditions->pluck('name')->toArray();
+        $this->form->conditions = count($catalog->conditions) ? $catalog->conditions->pluck('name')->toArray() : [''];
+        //dd(count($catalog->conditions));
+        
+        $this->form->experiences = count($catalog->experiences) ? $catalog->experiences->pluck('name')->toArray() : [''];
+
+
+        //$this->form->experiences=$catalog->experiences->pluck('name')->toArray();  
         $this->form->jobs=$catalog->jobs->pluck('name')->toArray();  
         $this->form->regulation=$catalog->regulation_id;  
 
@@ -136,7 +144,9 @@ class CatalogUpdate extends Component
         if ($id) {
             $catalog=Catalog::find($id);
             session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+            //$fm
             $catalog->delete();
+
             $this->form->reset();
         } 
         else $this->cleanCatalog();

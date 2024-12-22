@@ -217,7 +217,7 @@
         <x-input-select name="form.regulation" label="Документ који је основ уноса" :options="$regulations"
             optionValue="id" :optionText="['short_name','svl']" /> --}}
 
-        <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Документ
+        {{-- <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Документ
             који је
             основ уноса {{$form->regulation}}</label>
         <select wire:model="form.regulation" id="regulations"
@@ -232,7 +232,9 @@
             @error('form.regulation')
             <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
-        </div>
+        </div> --}}
+        <x-input-select name="form.regulation" label="Документ који је основ уноса" :options="$regulations"
+            optionValue="id" :optionText="['short_name','svl']" />
         {{-- <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Или унеси
             нови</label>
         <input wire:model="form.new_regulation" type="text" id="helper-text" aria-describedby="helper-text-explanation"

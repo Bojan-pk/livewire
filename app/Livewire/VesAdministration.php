@@ -8,6 +8,7 @@ use Livewire\Component;
 
 #[Title('VES/ES administracija')]
 #[Layout('components.layouts.admin')]
+
 class VesAdministration extends Component
 {
     public $currentTab = 'firstSign'; // 'create' or 'update'

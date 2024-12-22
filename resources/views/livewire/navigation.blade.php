@@ -85,7 +85,7 @@
                 
                   
                
-                <a href="{{route('profile')}}" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Профил</a>
+                <a href="{{route('profile-administration')}}" class="block px-4 py-2 hover:bg-gray-100  " wire:navigate>Профил</a>
               </li>
             </ul>
             <div class="py-1">

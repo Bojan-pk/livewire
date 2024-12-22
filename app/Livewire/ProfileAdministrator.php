@@ -6,18 +6,16 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 #[Title('Korisnici')]
 #[Layout('components.layouts.admin')]
-class UserAdministration extends Component
 
+class ProfileAdministrator extends Component
 {
-    public $currentTab = 'update'; // 'create' or 'update'
-
     public function switchTab($tab)
     {
-        $this->currentTab = $tab;
+       // $this->currentTab = $tab;
     }
     
     public function render()
     {
-        return view('livewire.user-administration');
+        return view('livewire.profile-administrator');
     }
 }

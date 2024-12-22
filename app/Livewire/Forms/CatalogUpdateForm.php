@@ -82,14 +82,14 @@ class CatalogUpdateForm extends Form
         $usualy_fms = $this->makeCleanArray($this->usualy_fms);
         //dd($usualy_fms);
 
-        //$fmIds = [];
+        $fmIds = [];
         foreach ($usualy_fms as $fmName) {
             $fm = Fm::firstOrCreate(['name' => $fmName]);
             $fmIds[] = $fm->id;
         }
         //education
         $educations = $this->makeCleanArray($this->educations);
-        // $educationIds = [];
+         $educationIds = [];
         foreach ($educations as $educationName) {
             $education = Education::firstOrCreate(['name' => $educationName]);
             $educationIds[] = $education->id;
@@ -98,7 +98,7 @@ class CatalogUpdateForm extends Form
 
         //condition
         $conditions = $this->makeCleanArray($this->conditions);
-        // $conditionIds = [];
+         $conditionIds = [];
         foreach ($conditions as $conditionName) {
             $condition = Condition::firstOrCreate(['name' => $conditionName]);
             $conditionIds[] = $condition->id;
@@ -106,7 +106,7 @@ class CatalogUpdateForm extends Form
 
         //experiences
         $experiences = $this->makeCleanArray($this->experiences);
-        //$experienceIds = [];
+        $experienceIds = [];
         foreach ($experiences as $experienceName) {
             $experience = Experience::firstOrCreate(['name' => $experienceName]);
             $experienceIds[] = $experience->id;
@@ -114,7 +114,7 @@ class CatalogUpdateForm extends Form
 
         //jobs
         $jobs = $this->makeCleanArray($this->jobs);
-        // $jobIds = [];
+         $jobIds = [];
         foreach ($jobs as $jobName) {
             $job = Job::firstOrCreate(['name' => $jobName]);
             $jobIds[] = $job->id;
@@ -137,6 +137,9 @@ class CatalogUpdateForm extends Form
             ['regulation_id' => $this->regulation]
 
         );
+
+        /*  $experienceIds = $experienceIds ?? []; // Ako je $experienceIds null, postavlja se na prazan niz
+       $conditionIds = $conditionIds ?? [];  */
         // Povezivanje  sa katalogom
         $catalog->fms()->sync($fmIds);
         $catalog->educations()->sync($educationIds);

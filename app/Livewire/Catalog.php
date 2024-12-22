@@ -14,6 +14,7 @@ class Catalog extends Component
 {
 
     public $searchTerm = '';
+    public $selectedCategory = '';
     public $activeFm;
     public $catalog;
     public $jobsIds = [];
@@ -33,7 +34,9 @@ class Catalog extends Component
         'saveEducations',
         'saveConditions',
         'saveExperiences',
-        'saveUsualyFm'
+        'saveUsualyFm',
+        'fmSelected'
+
     ];
     use WithPagination;
     public function mount()
@@ -100,7 +103,7 @@ class Catalog extends Component
         $this->saveItem($id, $this->experienceIds, 'experience');
     }
 
-    protected function searchByTerm($query)
+    /* protected function searchByTerm($query)
     {
         $keywords = explode(' ', $this->searchTerm);
         foreach ($keywords as $keyword) {
@@ -109,7 +112,7 @@ class Catalog extends Component
             });
         }
         return $query;
-    }
+    } */
 
    
  protected function highlightKeyword($text, $keyword)
@@ -122,16 +125,48 @@ class Catalog extends Component
     
 
 
-    public function render()
+    /* public function render()
     {
 
         $fms=Fm::query();
 
+        $keywords = explode(' ', $this->searchTerm);
+           $selectedCategory = $this->selectedCategory;
         if (!empty($this->searchTerm)) {
 
-            $fms = $this->searchByTerm($fms);
+           // $fms = $this->searchByTerm($fms);
+          // $keywords = explode(' ', $this->searchTerm);
+           //$selectedCategory = $this->selectedCategory;
+           $fms = Fm::whereIn('id', function ($query) use ($selectedCategory) {
+               $query->select('fm_id')
+                   ->from('catalogs')
+                   ->join('regulations', 'catalogs.regulation_id', '=', 'regulations.id')  // Join sa regulations tabelom
+                   ->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');  // Filtriranje po short_name
+           })
+               ->where(function ($query) use ($keywords) {
+                   foreach ($keywords as $keyword) {
+                       $query->orWhere('name', 'LIKE', '%' . $keyword . '%');  // Pretraga po imenu
+                   }
+               })
+               ->orderBy('name')  // Sortiranje po imenu
+               ->paginate(10)  // Ograničenje broja rezultata
+              // ->get()
+               ;
+
+            } else {
+                $fms = Fm::whereIn('id', function ($query) use ($selectedCategory) {
+                    $query->select('fm_id')
+                        ->from('catalogs')
+                        ->join('regulations', 'catalogs.regulation_id', '=', 'regulations.id')  // Join sa regulations tabelom
+                        ->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');  // Filtriranje po short_name
+                })
+                    
+                    ->orderBy('name')  // Sortiranje po imenu
+                    ->paginate(10)  // Ograničenje broja rezultata
+                   // ->get()
+                    ;
             }
-            $fms = $fms->paginate(10);
+            //$fms = $fms->paginate(10);
         
              // Примени маркирање на резултате
         $fms->getCollection()->transform(function ($item) {
@@ -149,5 +184,46 @@ class Catalog extends Component
 
             ]
         );
+    } */
+
+    public function render()
+    {
+        $keywords = explode(' ', $this->searchTerm);
+        $selectedCategory = $this->selectedCategory;
+    
+        // Osnovni query za filtriranje i sortiranje
+        $fmsQuery = Fm::whereIn('id', function ($query) use ($selectedCategory) {
+            $query->select('fm_id')
+                ->from('catalogs')
+                ->join('regulations', 'catalogs.regulation_id', '=', 'regulations.id')
+                ->when($selectedCategory, function ($query, $selectedCategory) {
+                    $query->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');
+                });
+        });
+    
+        // Dodaj pretragu po ključnim rečima ako postoji
+        if (!empty($this->searchTerm)) {
+            $fmsQuery->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('name', 'LIKE', '%' . $keyword . '%');
+                }
+            });
+        }
+    
+        // Paginacija i sortiranje
+        $fms = $fmsQuery->orderBy('name')->paginate(10);
+    
+        // Markiranje rezultata
+        $fms->getCollection()->transform(function ($item) {
+            foreach (explode(' ', $this->searchTerm) as $keyword) {
+                $item->name = $this->highlightKeyword($item->name, $keyword);
+            }
+            return $item;
+        });
+    
+        return view('livewire.catalog', [
+            'fms' => $fms,
+        ]);
     }
+
 }
