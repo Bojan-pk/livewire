@@ -29,6 +29,9 @@ class CatalogUpdate extends Component
     {
         $this->form->catalogId=$catalog->id;
         $this->form->fm=$catalog->fm->name;
+
+        $this->form->fm_id=$fmId;
+
         $this->form->usualy_fms=$catalog->fms->pluck('name')->toArray();
         
         $this->form->educations=$catalog->educations->pluck('name')->toArray(); 

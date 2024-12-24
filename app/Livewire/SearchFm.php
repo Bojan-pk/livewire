@@ -52,7 +52,7 @@ class SearchFm extends Component
             })
                 ->where(function ($query) use ($keywords) {
                     foreach ($keywords as $keyword) {
-                        $query->orWhere('name', 'LIKE', '%' . $keyword . '%');  // Pretraga po imenu
+                        $query->where('name', 'LIKE', '%' . $keyword . '%');  // Pretraga po imenu
                     }
                 })
                 ->orderBy('name')  // Sortiranje po imenu

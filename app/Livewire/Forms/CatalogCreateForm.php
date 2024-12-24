@@ -78,14 +78,15 @@ class CatalogCreateForm extends Form
         }
 
         foreach ($jobs as $jobName) {
-            if (mb_strlen($jobName) > 255) {
-                $this->addError('jobs', "Назив посла '{$jobName}' не сме прећи 255 карактера.");
+            if (mb_strlen($jobName) > 600) {
+                $this->addError('jobs', "Назив посла '{$jobName}' не сме прећи 600 карактера.");
                 return true;
             }
         }
 
 
-        $fm = Fm::firstOrCreate(['name' => $this->fm]);
+        //$fm = Fm::firstOrCreate(['name' => $this->fm]);
+        $fm = Fm::create(['name' => $this->fm]);
 
         //  usualy_fms 
         //$usualy_fms=$this->makeCleanArray($this->usualy_fms);
@@ -136,8 +137,8 @@ class CatalogCreateForm extends Form
 
         ]);
         // Povezivanje  sa katalogom
-       /*  $experienceIds = $experienceIds ?? []; // Ako je $experienceIds null, postavlja se na prazan niz
-       $conditionIds = $conditionIds ?? []; */ 
+        /*  $experienceIds = $experienceIds ?? []; // Ako je $experienceIds null, postavlja se na prazan niz
+       $conditionIds = $conditionIds ?? []; */
 
 
         $catalog->fms()->attach($fmIds);
@@ -150,8 +151,13 @@ class CatalogCreateForm extends Form
     public function fmValidate()
     {
         if ($this->fm && Fm::where('name', $this->fm)->exists()) {
-            $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
-            return true;
+            $fm_id = Fm::where('name', $this->fm)->first()->id;
+            if (Catalog::where('fm_id', $fm_id)->exists() &&
+             Catalog::where('fm_id', $fm_id)->first()->regulation->short_name == Regulation::find($this->regulation)->short_name)
+              {
+                $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
+                return true;
+            } else return false;
         } else false;
     }
 

@@ -2,7 +2,8 @@
     <div class="w-7/12 rounded border p-2">
 
         <div>
-            @if (session()->has('success'))
+            <x-flash-message />
+            {{-- @if (session()->has('success'))
             <div id="alert-border-3"
                 class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50" role="alert">
                 <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -48,10 +49,10 @@
                     </svg>
                 </button>
             </div>
-            @endif
+            @endif --}}
         </div>
         <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900">Формацијско
-            место </label>
+            место {{$form->fm_id}}</label>
         <input wire:model="form.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Унеси назив ФМ">

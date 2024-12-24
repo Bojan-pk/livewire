@@ -16,14 +16,16 @@ use Livewire\Attributes\Rule;
 
 class CatalogUpdateForm extends Form
 {
-   
+
     #[Rule('required', message: "Поље мора бити попуњено")]
     public $fm;
+
+    public $fm_id;
 
     #[Rule('required|max:255')]
     public $usualy_fms = [''];
 
-    
+
     public $educations = [''];
 
 
@@ -74,7 +76,11 @@ class CatalogUpdateForm extends Form
 
     public function store()
     {
-        $fm = Fm::firstOrCreate(['name' => $this->fm]);
+
+        $fm = Fm::firstOrNew(['id' => $this->fm_id]);
+        $fm->name = $this->fm;
+        $fm->save();
+        
         $fmId = $fm->id;
         //  usualy_fms 
         //dd($this->usualy_fms);
@@ -89,7 +95,7 @@ class CatalogUpdateForm extends Form
         }
         //education
         $educations = $this->makeCleanArray($this->educations);
-         $educationIds = [];
+        $educationIds = [];
         foreach ($educations as $educationName) {
             $education = Education::firstOrCreate(['name' => $educationName]);
             $educationIds[] = $education->id;
@@ -98,7 +104,7 @@ class CatalogUpdateForm extends Form
 
         //condition
         $conditions = $this->makeCleanArray($this->conditions);
-         $conditionIds = [];
+        $conditionIds = [];
         foreach ($conditions as $conditionName) {
             $condition = Condition::firstOrCreate(['name' => $conditionName]);
             $conditionIds[] = $condition->id;
@@ -114,7 +120,7 @@ class CatalogUpdateForm extends Form
 
         //jobs
         $jobs = $this->makeCleanArray($this->jobs);
-         $jobIds = [];
+        $jobIds = [];
         foreach ($jobs as $jobName) {
             $job = Job::firstOrCreate(['name' => $jobName]);
             $jobIds[] = $job->id;
@@ -157,10 +163,10 @@ class CatalogUpdateForm extends Form
             'educations.*.required' => 'Поље мора бити попуњено.',
             'usualy_fms.*.required' => 'Поље мора бити попуњено.',
             'jobs.*.required' => 'Поље мора бити попуњено.',
-           // usualy_fms
+            // usualy_fms
         ];
     }
-    
+
 
 
     public function hasNonEmptyValue($array)

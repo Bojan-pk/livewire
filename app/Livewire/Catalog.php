@@ -205,7 +205,7 @@ class Catalog extends Component
         if (!empty($this->searchTerm)) {
             $fmsQuery->where(function ($query) use ($keywords) {
                 foreach ($keywords as $keyword) {
-                    $query->orWhere('name', 'LIKE', '%' . $keyword . '%');
+                    $query->where('name', 'LIKE', '%' . $keyword . '%');
                 }
             });
         }
