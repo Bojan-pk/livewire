@@ -56,8 +56,6 @@
                                         <a href="{{ asset('storage/file/' . $value->file) }}">Види...</a>
                                     @endif
                                 </td>
-
-
                             </tr>
                         @endforeach
                         <div>
@@ -69,8 +67,6 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 
     <div class="w-4/12 mx-2 rounded border p-2">
@@ -87,27 +83,9 @@
                 placeholder="Пронађи пропис ...." />
         </div>
         <div>
-            {{-- <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Назив прописа</label>
-                <input wire:model="form.name" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.name')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div> --}}
+            
             <x-input-text name="form.name" label="Назив прописа" />
-            {{-- <div>
-                <label for="" class="block mt-2 mb-2 text-sm font-medium text-start">Службени војни лист</label>
-                <input wire:model="form.svl" type="text" id=""
-                    class="block w-full p-2 text-gray-500 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 ">
-            </div>
-            <div>
-                @error('form.svl')
-                    <span class=" text-red-500 text-xs">{{ $message }}</span>
-                @enderror
-            </div> --}}
+            
             <x-input-text name="form.svl" label="Службени војни лист" />
 
             <label for="countries" class="block mb-2 mt-2  text-sm font-medium text-left">Изабери скраћени
@@ -117,7 +95,8 @@
                 <option selected>Изабери ...</option>
                 <option value="Каталог ПВЛ">Каталог ПВЛ</option>
                 <option value="Каталог ЦЛ">Каталог ЦЛ</option>
-                <option value="Елементи ФМ">Елементи ФМ</option>
+                <option value="Елементи ФМ ПВЛ">Елементи ФМ ПВЛ</option>
+                <option value="Елементи ФМ ЦЛ">Елементи ФМ ЦЛ</option>
                 <option value="Правилник ВЕС">Правилник ВЕС</option>
             </select>
             @error('form.short_name')
@@ -142,8 +121,6 @@
             @error('form.uploadedFile')
                 <span class=" text-red-500 text-xs">{{ $message }}</span>
             @enderror
-
-
             <div class="flex justify-between">
                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши

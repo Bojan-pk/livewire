@@ -1,4 +1,4 @@
-Панел <div>
+ <div>
     <label class="block">
         <span class="block text-sm font-medium text-slate-700">Username</span>
         <!-- Using div state modifiers, the classes can be identical for every input -->

@@ -52,7 +52,8 @@ class RulebookUpdate extends Component
 
     public function mount()
     {
-        $this->regulations = Regulation::where('short_name', 'Елементи ФМ')->get();
+        //$this->regulations = Regulation::where('short_name', 'Елементи ФМ')->get();
+        $this->regulations = Regulation::where('short_name', 'LIKE', '%' . 'Елементи ФМ' . '%')->get();
     }
 
     public function tableSelected($tableId)
@@ -64,6 +65,8 @@ class RulebookUpdate extends Component
             $this->form->table_rb = $rulebooksTable->rb;
             $this->form->table_name = $rulebooksTable->name;
             $this->form->table_id = $rulebooksTable->id;
+            $this->form->regulation_id= $rulebooksTable->rulebooks->first()->regulation_id;
+
             $this->form->table_items = $rulebooksTable->rulebooks->sortBy('rb')->toArray();
         } else return session()->flash('error', 'Нема података о табелама');
     }

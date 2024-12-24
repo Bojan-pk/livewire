@@ -173,11 +173,12 @@
                Пронађи формацијко место које желиш да измениш.
             </div>
          </div>
-
+         <x-input-select name="form.regulation_id" label="Документ који је основ уноса" :options="$regulations"
+            optionValue="id" :optionText="['short_name','svl']" />
          <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Документ
             који је
             основ уноса</label>
-         <select wire:model="form.regulation_id" id="regulations"
+         {{-- <select wire:model="form.regulation_id" id="regulations"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 ">
             <option>Изабери документ</option>
             @foreach ($regulations as $regulation)
@@ -187,7 +188,7 @@
          <div>
             @error('form.regulation_id')
             <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
+            @enderror --}}
 
             <div class="flex justify-between">
                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"

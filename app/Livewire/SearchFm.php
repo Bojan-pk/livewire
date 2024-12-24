@@ -30,19 +30,7 @@ class SearchFm extends Component
             //dd('radi');
             $keywords = explode(' ', $this->searchTerm);
 
-            /* $results = Fm::whereIn('id', function ($query) {
-                $query->select('fm_id')
-                      ->from('catalogs');
-            })
-            ->where(function ($query) use ($keywords) {
-                foreach ($keywords as $keyword) {
-                    $query->orWhere('name', 'LIKE', '%' . $keyword . '%');
-                }
-            })
-            ->orderBy('name')
-            ->take(10)
-            ->get();
- */
+           
             $selectedCategory = $this->selectedCategory;
             $results = Fm::whereIn('id', function ($query) use ($selectedCategory) {
                 $query->select('fm_id')

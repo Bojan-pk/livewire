@@ -78,18 +78,12 @@
         <span class="text-red-500 text-xs">{{ $message }}</span>
         @enderror
         @endforeach
-        {{-- <div>
-            @error('form.usualy_fms')
-            <span class=" text-red-500 text-xs">{{ $message }} </span>
-            @enderror
-        </div> --}}
+       
         <div class="flex items-start mb-2">
             <button wire:click="addFm()" type="button"
                 class="px-2 py-1 items-start  text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg  mx-1 my-1">+</button>
         </div>
         @endif
-
-
 
         <label for="helper-text"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Образовање/усавршавање</label>
@@ -187,18 +181,11 @@
                 class="px-2 py-1 items-start  text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg  mx-1 my-1">+</button>
         </div>
         @endif
-        {{-- <div>
-            @error('form.jobs')
-            <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
-        </div> --}}
-
-
+      
     </div>
 
     <div class="w-5/12 mx-2 rounded border p-2">
-        <!-- <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Пронађи
-            формацијско место</label> -->
+        
         @livewire('search-fm')
         <div class="flex items-center p-4 mb-4 mt-8 text-blue-800 rounded-lg bg-blue-50 " role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -214,38 +201,9 @@
             </div>
         </div>
 
-        {{--
-        <x-input-select name="form.regulation" label="Документ који је основ уноса" :options="$regulations"
-            optionValue="id" :optionText="['short_name','svl']" /> --}}
-
-        {{-- <label for="regulations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Документ
-            који је
-            основ уноса {{$form->regulation}}</label>
-        <select wire:model="form.regulation" id="regulations"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 ">
-            <option>Изабери документ</option>
-            @foreach ($regulations as $regulation)
-            <option value="{{ $regulation->id }}">{{ $regulation->id }}-{{ $regulation->name }} - {{ $regulation->svl }}
-            </option>
-            @endforeach
-        </select>
-        <div>
-            @error('form.regulation')
-            <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
-        </div> --}}
         <x-input-select name="form.regulation" label="Документ који је основ уноса" :options="$regulations"
             optionValue="id" :optionText="['short_name','svl']" />
-        {{-- <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Или унеси
-            нови</label>
-        <input wire:model="form.new_regulation" type="text" id="helper-text" aria-describedby="helper-text-explanation"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 __dark:focus:border-blue-500"
-            placeholder="Унеси документ ако није на листи">
-        <div>
-            @error('form.new_regulation')
-            <span class=" text-red-500 text-xs">{{ $message }}</span>
-            @enderror
-        </div> --}}
+        
         <div class="flex justify-between">
             <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button"
                 class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
@@ -256,9 +214,6 @@
             <button type="submit"
                 class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4">Унеси</button>
         </div>
-
-
-
 
 </form>
 <div id="popup-modal" tabindex="-1"

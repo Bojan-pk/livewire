@@ -134,7 +134,6 @@ class CatalogUpdate extends Component
         ]); */
         
         if($this->form->customValidate()) return;
-
         $this->form->store();
         session()->flash('success','Подаци су успешно унети');
         $this->form->reset();
@@ -142,8 +141,7 @@ class CatalogUpdate extends Component
     }
 
     public function removeCatalog($id=null)
-    {
-        
+    { 
         if ($id) {
             $catalog=Catalog::find($id);
             session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
@@ -152,9 +150,7 @@ class CatalogUpdate extends Component
 
             $this->form->reset();
         } 
-        else $this->cleanCatalog();
-
-        
+        else $this->cleanCatalog();  
     }
 
     public function cleanCatalog()
