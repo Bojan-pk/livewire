@@ -18,7 +18,7 @@ class Rulebook extends Component
     public $rulebooksTable;
     public $activeTable;
     public $rulebooksId;
-    //public $rulebooks;
+    public $selectedCategory = '';
 
     protected $listeners = [
         'saveRulebooks',
@@ -71,16 +71,28 @@ class Rulebook extends Component
         return $query;
     }
 
-    protected function searchByTerm($query)
+    protected function searchByTerm()
     {
-        $keywords = explode(' ', $this->searchTerm);
+         $keywords = explode(' ', $this->searchTerm);
+         $selectedCategory = $this->selectedCategory;
+        $results = RulebooksTable::whereIn('id', function ($query) use ($selectedCategory) {
+            $query->select('rulebooks_table_id')
+            ->from('rulebooks')
+            ->join('regulations', 'rulebooks.regulation_id', '=', 'regulations.id')  // Join sa regulations tabelom
+            ->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');  // Filtriranje po short_name
+    })
+        ->where(function ($query) use ($keywords) {
         foreach ($keywords as $keyword) {
-            $query->where(function ($q) use ($keyword) {
-                $q->where('rb', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('name', 'LIKE', '%' . $keyword . '%');
+            $query->where(function ($subQuery) use ($keyword) {
+                $subQuery->where('name', 'LIKE', '%' . $keyword . '%')
+                         ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
             });
         }
-        return $query;
+
+    })
+    ->paginate(10); 
+    
+    return $results;
     }
 
     protected function highlightKeyword($text, $keyword)
@@ -93,32 +105,22 @@ class Rulebook extends Component
 
     public function render()
     {
-        //$resultsTable = [];
-        $resultsTable = RulebooksTable::query();
 
-        if (!empty($this->searchTerm)) {
-
-            $resultsTable = $this->searchByTerm($resultsTable);
-        }
-        $resultsTable = $resultsTable->paginate(10);
-
-       
+        $resultsTable = $this->searchByTerm();
 
         // Sortiranje po 'rb' koristeći strnatcmp
         $sortedResults = $resultsTable->getCollection()->sort(function ($a, $b) {
             return strnatcmp($a->rb, $b->rb);
         });
 
-        // Zameni originalnu kolekciju sortiranom
 
         $resultsTable->setCollection($sortedResults);
 
-         // Примени маркирање на резултате
-         $resultsTable->getCollection()->transform(function ($item) {
+        // Примени маркирање на резултате
+        $resultsTable->getCollection()->transform(function ($item) {
             foreach (explode(' ', $this->searchTerm) as $keyword) {
                 $item->rb = $this->highlightKeyword($item->rb, $keyword);
                 $item->name = $this->highlightKeyword($item->name, $keyword);
-               
             }
             return $item;
         });

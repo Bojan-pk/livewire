@@ -65,8 +65,10 @@ class SearchTable extends Component
         })
             ->where(function ($query) use ($keywords) {
             foreach ($keywords as $keyword) {
-                $query->where('name', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                $query->where(function ($subQuery) use ($keyword) {
+                    $subQuery->where('name', 'LIKE', '%' . $keyword . '%')
+                             ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                });
             }
 
         })
