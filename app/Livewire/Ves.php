@@ -176,25 +176,32 @@ class Ves extends Component
 {
     // Čita VES 
     $readVes = "";
-
     // 1. znak
     $sign1 = VesFirstSign::where('sign', $this->firstSign)->first();
     if (!$sign1) return false;
     $readVes .= $sign1->description;
+   
 
     // 2. znak
     $sign2 = VesSecondSign::where('sign', $this->secondSign)->first();
     if (!$sign2) return false;
     $readVes .= " - " . $sign2->description;
-
+    
     // 3. znak
     $ves_second_sign_id = $sign2->id;
-    $sign3 = VesThirdSign::where('sign', $this->thirdSign)
+    
+    if($this->thirdSign==0) {
+        $sign3 = VesThirdSign::where('sign', $this->thirdSign)->first();
+    } else {
+        $sign3 = VesThirdSign::where('sign', $this->thirdSign)
                           ->where('ves_second_sign_id', $ves_second_sign_id)
                           ->first();
+    } 
+
+   // dd($sign3);
     if (!$sign3) return false;
     $readVes .= " - " . $sign3->description;
-
+    //dd($readVes);
     // 4. znak
     $ves_third_sign_id = $sign3->id;
     $sign4 = VesFourthSign::where('sign', $this->fourthSign)
@@ -235,13 +242,14 @@ class Ves extends Component
     if ($ves_conditions->isEmpty()&&  mb_strlen($this->combineVes(), 'UTF-8')==5) {
         // Ukoliko nema zapisa, dodaj novi sa željenom vrednošću za polje 'ves'
         // Pretpostavljamo da 'ves' i ostala polja treba da imaju određene vrednosti
+        //dd('doslo');
         $newVesCondition = new VesCondition([
             'ves' => $this->combineVes(), // Postavi odgovarajuću vrednost za ves
             'reading'=> $this->readVes(),
             'rb' => 1, // Primer dodatnog polja
             // Dodaj vrednosti za ostala potrebna polja
         ]);
-    
+   // dd($newVesCondition);
         // Ručno dodaj novi objekat u kolekciju ili ga sačuvaj u bazi
         $ves_conditions->push($newVesCondition);
     }

@@ -65,7 +65,8 @@ class Rulebook extends Component
             $query->where(function ($q) use ($keyword) {
                 $q->where('fm', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('fc_sso', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('pg_bb', 'LIKE', '%' . $keyword . '%');
+                    ->orWhere('pg_bb', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('note', 'LIKE', '%' . $keyword . '%');
             });
         }
         return $query;
@@ -86,6 +87,7 @@ class Rulebook extends Component
             $query->where(function ($subQuery) use ($keyword) {
                 $subQuery->where('name', 'LIKE', '%' . $keyword . '%')
                          ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                        // ->orWhere('note', 'LIKE', '%' . $keyword . '%');
             });
         }
 
@@ -143,6 +145,7 @@ class Rulebook extends Component
                 $item->fm = $this->highlightKeyword($item->fm, $keyword);
                 $item->fc_sso = $this->highlightKeyword($item->fc_sso, $keyword);
                 $item->pg_bb = $this->highlightKeyword($item->pg_bb, $keyword);
+                $item->note = $this->highlightKeyword($item->note, $keyword);
             }
             return $item;
         });

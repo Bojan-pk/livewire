@@ -82,7 +82,7 @@
                                         {!! $value->pg_bb !!}
                                     </td>
                                     <td class="px-2 py-1">
-                                        {{ $value->note }}
+                                        {!!  $value->note !!}
                                     </td>
                                     <td class="px-2 py-1 cursor-pointer text-blue-400">
                                         <a data-popover-target="popover-default{{ $value->id }}">Види ...</a>

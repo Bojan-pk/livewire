@@ -75,7 +75,7 @@
                             </td>
                             <td scope="row"
                                 class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <input type="text" wire:model="cart.{{ $index }}.newJobName"
+                                <input type="text" wire:model.defer="cart.{{ $index }}.newJobName"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5" />
                             </td>
                             <td class="px-6 py-1">
