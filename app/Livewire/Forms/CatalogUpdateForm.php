@@ -56,10 +56,24 @@ class CatalogUpdateForm extends Form
     {
         $error = false;
 
-        /* if ($this->fm && Fm::where('name', $this->fm)->exists()) {
+        /* if ($this->fm && $this->fm_id && Fm::where('name', $this->fm)->exists()) {
             $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
             $error =true;
         }  */
+
+
+        if ($this->fm && !$this->fm_id  &&Fm::where('name', $this->fm)->exists()) {
+            $fm_id = Fm::where('name', $this->fm)->first()->id;
+          // dd(Regulation::find($this->regulation)->short_name );
+            if (Catalog::where('fm_id', $fm_id)->exists() &&
+             Catalog::where('fm_id', $fm_id)->first()->regulation->short_name == Regulation::find($this->regulation)->short_name)
+              {
+                //dd('stiglo');
+                $this->addError('fm', 'Не можете унети формацијско место које већ постоји.');
+                $error =true;
+              }
+            }
+    
 
         if (!$this->hasNonEmptyValue($this->usualy_fms)) {
             $this->addError('usualy_fms', 'Барем једно ФМ морате унети.');
@@ -138,7 +152,7 @@ class CatalogUpdateForm extends Form
         ]); */
 
         //dd($fmId);
-        $catalog = Catalog::firstOrCreate(
+        $catalog = Catalog::updateOrCreate(
             ['fm_id' => $fmId],
             ['regulation_id' => $this->regulation]
 

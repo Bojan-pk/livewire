@@ -42,7 +42,7 @@ class RulebookUpdate extends Component
 
         $this->showDeleteModal = false; // Sakriva modal nakon brisanja
         $this->selectedRow = null;
-        session()->flash('success', 'Успешно обрисан ред');  
+        $this->dispatch('flashMessage','success', 'Успешно обрисан ред');  
     }
 
     public function closeModal()
@@ -68,14 +68,14 @@ class RulebookUpdate extends Component
             $this->form->regulation_id= $rulebooksTable->rulebooks->first()->regulation_id;
 
             $this->form->table_items = $rulebooksTable->rulebooks->sortBy('rb')->toArray();
-        } else return session()->flash('error', 'Нема података о табелама');
+        } else return $this->dispatch('flashMessage','error', 'Нема података о табелама');
     }
 
     public function submitForm()
     {
         $this->validate();
         $this->form->store();
-        session()->flash('success', 'Подаци су успешно унети');
+        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         $this->form->reset();
     }
 
@@ -105,17 +105,17 @@ class RulebookUpdate extends Component
     {
         if ($id) {
             $rulebooksTable = RulebooksTable::find($id);
-            session()->flash('success', "Табела бр. " . $rulebooksTable->rb . " је успешно обрисан!!!");
+            $this->dispatch('flashMessage','success', "Табела бр. " . $rulebooksTable->rb . " је успешно обрисан!!!");
             $rulebooksTable->delete();
             $this->form->reset();
-        } else $this->cleanTable();
+        } else  $this->dispatch('flashMessage','error', 'Нисте селектовали табелу');
     }
 
     public function cleanTable()
     {
         $this->form->reset();
 
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
    
     public function render()

@@ -26,7 +26,7 @@ class RegulationUpdate extends Component
     {
         $this->validate();
         $this->form->store();
-        session()->flash('success', 'Подаци су успешно унети');
+       $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         $this->form->reset();
     }
 
@@ -56,7 +56,7 @@ class RegulationUpdate extends Component
     {
         if ($id) {
             $regulation = Regulation::find($id);
-            session()->flash('success', "Propis " . $regulation->name . " је успешно обрисан!!!");
+           $this->dispatch('flashMessage','success', "Пропис " . $regulation->name . " је успешно обрисан!!!");
             $regulation->delete();
             $this->form->reset();
         } else $this->cleanTable();
@@ -65,7 +65,7 @@ class RegulationUpdate extends Component
     {
         $this->form->reset();
 
-        session()->flash('success', 'Обрисана је форма за унос');
+       $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     public function render()

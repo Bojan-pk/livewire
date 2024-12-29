@@ -28,7 +28,7 @@ class UserUpdate extends Component
     public function submitForm()
     {
         $this->form->register();
-        session()->flash('success', 'Подаци су успешно унети');
+        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         $this->form->reset();
     }
 
@@ -56,15 +56,15 @@ class UserUpdate extends Component
     {
         if ($id) {
             $user = User::find($id);
-            session()->flash('success', "Корисник " . $user->name . " је успешно обрисан!!!");
+            $this->dispatch('flashMessage','success', "Корисник " . $user->name . " је успешно обрисан!!!");
             $user->delete();
             $this->form->reset();
-        } else $this->cleanTable();
+        } else $this->dispatch('flashMessage', 'error', "Нисте селектовали корисника!");
     }
     public function cleanTable()
     {
         $this->form->reset();
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     protected function searchByTerm($query)

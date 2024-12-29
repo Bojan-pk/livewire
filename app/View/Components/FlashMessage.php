@@ -13,7 +13,7 @@ class FlashMessage extends Component
      */
     public function __construct()
     {
-        //
+        //dd('aaa');
     }
 
     /**

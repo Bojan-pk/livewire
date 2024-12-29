@@ -29,7 +29,21 @@ class FirstSignForm extends Form
      
     public $note;
 
-
+    protected function rules() 
+    {
+        return [
+            'rule' => 'nullable|regex:/^([\p{Cyrillic}0-9],)*[\p{Cyrillic}0-9]$/u',
+            
+        ];
+    }
+ 
+    protected function messages() 
+    {
+        return [
+            'rule.regex' => 'Погрешан унос',
+           // 'content.min' => 'The :attribute is too short.',
+        ];
+    }
 
     public function store()
     {
@@ -50,6 +64,10 @@ class FirstSignForm extends Form
             ]
         );
     }
+   
+    
+
+
     public function defaultOrder()
     {
         // Dohvati maksimalni redni broj

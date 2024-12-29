@@ -38,7 +38,7 @@ class ThirdSign extends Component
     {
 
         if ($this->form->id) $this->showDeleteModal = true;
-        else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
+        else $this->dispatch('flashMessage','error', "Нисте селектовали ред!!!"); // Prikazuje modal
     }
 
     public function closeModal()
@@ -52,7 +52,7 @@ class ThirdSign extends Component
         // dd('stiglo');
         if ($id) {
             $thirdSign = VesThirdSign::find($id);
-            session()->flash('success', "Ознака за " . $thirdSign->description . " је успешно обрисанa!!!");
+            $this->dispatch('flashMessage','success', "Ознака за " . $thirdSign->description . " је успешно обрисанa!!!");
             $thirdSign->delete();
             $this->form->reset();
         } else $this->cleanTable();
@@ -64,14 +64,14 @@ class ThirdSign extends Component
         $this->form->reset();
         $this->selectSecondSign = '';
 
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     public function submitForm()
     {
         $this->validate();
         $this->form->store();
-        session()->flash('success', 'Подаци су успешно унети');
+        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         //cuva $this->ves_second_sign_id
         $ves_second_sign_id = $this->form->ves_second_sign_id;
         $regulation_id=$this->form->regulation_id;

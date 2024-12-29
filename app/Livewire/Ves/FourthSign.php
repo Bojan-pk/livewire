@@ -42,7 +42,7 @@ class FourthSign extends Component
     public function confirmDelete()
     {
         if ($this->form->id) $this->showDeleteModal = true;
-        else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
+        else $this->dispatch('flashMessage','error', "Нисте селектовали ред!!!"); // Prikazuje modal
     }
 
     public function closeModal()
@@ -54,7 +54,7 @@ class FourthSign extends Component
     {
         if ($id) {
             $fourthSign = VesFourthSign::find($id);
-            session()->flash('success', "Ознака за " . $fourthSign->description . " је успешно обрисанa!!!");
+            $this->dispatch('flashMessage','success', "Ознака за " . $fourthSign->description . " је успешно обрисанa!!!");
             $fourthSign->delete();
             $this->form->reset();
         } else $this->cleanTable();
@@ -67,7 +67,7 @@ class FourthSign extends Component
         $this->form->reset();
         $this->selectThirdSign = '';
     
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     public function selectedThirdSign()
@@ -81,7 +81,7 @@ class FourthSign extends Component
         //dump('submit');
         $this->validate();
         $this->form->store();
-        session()->flash('success', 'Подаци су успешно унети');
+        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         //cuva $this->ves_second_sign_id
         $ves_third_sign_id = $this->form->ves_third_sign_id;
         $selectSecondSign = $this->form->selectSecondSign;

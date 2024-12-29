@@ -28,7 +28,7 @@ class SecondSign extends Component
    {
         
      if ($this->form->id) $this->showDeleteModal = true;
-     else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
+     else $this->dispatch('flashMessage','error', "Нисте селектовали ред!!!"); // Prikazuje modal
    }
    public function closeModal()
    {
@@ -38,7 +38,7 @@ class SecondSign extends Component
     {
         if ($id) {
             $secondSign = VesSecondSign::find($id);
-            session()->flash('success', "Ознака за " . $secondSign->description . " је успешно обрисанa!!!");
+            $this->dispatch('flashMessage','success', "Ознака за " . $secondSign->description . " је успешно обрисанa!!!");
             $secondSign->delete();
             $this->form->reset();
         } else $this->cleanTable();
@@ -49,14 +49,14 @@ class SecondSign extends Component
     {
         $this->form->reset();
 
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     public function submitForm()
     {
         $this->validate();
         $this->form->store();
-        session()->flash('success', 'Подаци су успешно унети');
+        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         $regulation_id=$this->form->regulation_id;
         $this->form->reset();
         $this->form->regulation_id=$regulation_id;

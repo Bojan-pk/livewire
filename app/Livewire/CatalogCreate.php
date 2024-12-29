@@ -29,7 +29,9 @@ class CatalogCreate extends Component
 
         if($this->form->store()) return;
 
-        session()->flash('success','Подаци су успешно унети');
+       // session()->flash('success','Подаци су успешно унети');
+        $this->dispatch('flashMessage', 'success', "Подаци су успешно унети!");
+
         $this->form->reset('fm','usualy_fms','educations','conditions','experiences','jobs');
         
     }

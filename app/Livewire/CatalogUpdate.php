@@ -49,7 +49,7 @@ class CatalogUpdate extends Component
 
         
 
-    } else return session()->flash('error','Нема података о ФМ');
+    } else return /* session()->flash('error','Нема података о ФМ') */ $this->dispatch('flashMessage', 'error', "Нема података о ФМ!");;
        
        //dd($this->form->regulation);
     }
@@ -135,7 +135,8 @@ class CatalogUpdate extends Component
         
         if($this->form->customValidate()) return;
         $this->form->store();
-        session()->flash('success','Подаци су успешно унети');
+        //session()->flash('success','Подаци су успешно унети');
+        $this->dispatch('flashMessage', 'success', "Подаци су успешно унети!");
         $this->form->reset();
         
     }
@@ -144,20 +145,27 @@ class CatalogUpdate extends Component
     { 
         if ($id) {
             $catalog=Catalog::find($id);
-            session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+            //session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+           // dd('stiglo');
+            //$this->dispatch('flashMessage','success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+            $this->dispatch('flashMessage', "success", "Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
+
+           
             //$fm
             $catalog->delete();
 
             $this->form->reset();
         } 
-        else $this->cleanCatalog();  
+        else $this->dispatch('flashMessage', 'error', "Нисте изабрали ФМ!");
     }
 
     public function cleanCatalog()
     {
         $this->form->reset();
 
-        session()->flash('success','Обрисана је форма за унос');
+       // session()->flash('success','Обрисана је форма за унос');
+        $this->dispatch('flashMessage', 'success', "Обрисана је форма за унос!");
+        
     }
 
 

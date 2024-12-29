@@ -37,7 +37,7 @@ class VesCondition extends Component
     {
 
         if ($this->form->id) $this->showDeleteModal = true;
-        else session()->flash('error', "Нисте селектовали ред!!!"); // Prikazuje modal
+        else $this->dispatch('flashMessage','error', "Нисте селектовали ред!!!"); // Prikazuje modal
     }
 
     public function closeModal()
@@ -48,7 +48,7 @@ class VesCondition extends Component
     {
         if ($id) {
             $vesCondition = ModelsVesCondition::find($id);
-            session()->flash('success', "Услов за " . $vesCondition->ves . " је успешно обрисанa!!!");
+            $this->dispatch('flashMessage','success', "Услов за " . $vesCondition->ves . " је успешно обрисанa!!!");
             $vesCondition->delete();
             $this->form->reset();
         } else $this->cleanTable();
@@ -58,7 +58,7 @@ class VesCondition extends Component
     public function cleanTable()
     {
         $this->form->reset();
-        session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage','success', 'Обрисана је форма за унос');
     }
 
     public function submitForm()
@@ -69,10 +69,10 @@ class VesCondition extends Component
             $regulation_id=$this->form->regulation_id;
             $this->form->store();
             $this->form->regulation_id=$regulation_id;
-            session()->flash('success', 'Подаци су успешно унети');
+            $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         }
 
-        //session()->flash('success', 'Подаци су успешно унети');
+        //$this->dispatch('flashMessage','success', 'Подаци су успешно унети');
         $this->form->reset();
     }
     public function rowSelected($id)

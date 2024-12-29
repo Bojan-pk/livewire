@@ -36,7 +36,7 @@
                                 {{ $value->sign }} - {{ $value->description }}
                             </td>
                             <td class="px-6 py-2">
-                                {{ $value->regulation->svl }}
+                                {{ @$value->regulation->svl }}
                             </td>
                             <td class="px-6 py-2">
                                 {{ $value->rule }}
@@ -125,6 +125,5 @@
             </div>
         </div>
     </div>
-    @endif
-   
+    @endif 
 </div>

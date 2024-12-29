@@ -1,12 +1,9 @@
 <div class="w-10/12  justify-center">
-
     <h1 class="text-xl font-medium mb-2 text-start">Елементи формацијских места</h1>
-
     <div class="flex mt-4">
-
         <div class="w-8/12 rounded border p-2 ">
             <div class="flex justify-between">
-                <h1 class=" text-l font-medium mb-2 text-blue-600">Табела:
+                <h1 class=" text-l w-3/4 font-medium mb-2 text-blue-600">Табела:
                     @if ($activeTable)
                         <span class=" text-gray-500">
                             {{ @App\Models\RulebooksTable::find($activeTable)->rb }} -
@@ -14,22 +11,22 @@
                         </span>
                     @else
                         <span class=" text-gray-500">
+                            @if ($selectedCategory)
+                            {{ $selectedCategory }}
+                            @else
                             Све табеле
+                            @endif
+                            
+                            
                         </span>
                     @endif
 
                 </h1>
-                <div class="relative mr-2 w-1/3">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
-                        <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
+                <div class=" w-1/4">
+                   
                     <input wire:model.live="searchFm"
-                        class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Пронађи ФМ и елементе ФМ ...." />
+                        class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Пронађи елементе ФМ ...." />
                 </div>
             </div>
             <hr class="h-px my-4 bg-gray-200 border-2">

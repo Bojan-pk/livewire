@@ -3,7 +3,8 @@
         <div class="w-8/12 rounded border p-2">
 
             <div>
-                @if (session()->has('success'))
+                <x-flash-message />
+                {{-- @if (session()->has('success'))
                     <div id="alert-border-3"
                         class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50"
                         role="alert">
@@ -52,7 +53,7 @@
                             </svg>
                         </button>
                     </div>
-                @endif
+                @endif --}}
             </div>
 
             <div class="relative overflow-x-auto">
@@ -87,7 +88,7 @@
                                         {{ $value->sign }} - {{ $value->description }}
                                     </td>
                                     <td class="px-6 py-2">
-                                        {{ $value->regulation->svl }}
+                                        {{ @$value->regulation->svl }}
                                     </td>
                                     <td class="px-6 py-2">
                                         {{ $value->note }}
