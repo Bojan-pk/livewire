@@ -11,4 +11,8 @@ class Regulation extends Model
     protected $fillable = [
         'name','short_name', 'svl','valid', 'file'
     ];
+
+    public function rulebook()  {
+        return $this->belongsTo(Rulebook::class);
+       }
 }
