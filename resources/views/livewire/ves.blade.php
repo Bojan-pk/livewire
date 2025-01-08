@@ -16,7 +16,7 @@
                 placeholder="Пронађи ...." />
         </div>
     </div>
-    <div class="flex mt-4">
+    <div class="flex mt-4">{{--  --}}
         <div class="w-9/12 rounded border p-2">
             <div class="relative overflow-x-auto">
                 <table class="w-full text-l text-left rtl:text-right text-gray-500 ">

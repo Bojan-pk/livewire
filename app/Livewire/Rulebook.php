@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 //use App\Models\Rulebook as ModelsRulebook;
 
+use App\Models\Regulation;
 use App\Models\Rulebook as ModelsRulebook;
 use App\Models\RulebooksTable;
 use Livewire\Attributes\Title;
@@ -132,6 +133,10 @@ class Rulebook extends Component
         if ($this->activeTable) {
 
             $rulebooks->where('rulebooks_table_id', $this->activeTable);
+        } elseif ($this->selectedCategory) {
+            $selectedCategory=$this->selectedCategory;
+           // dd(Regulation::where('short_name','LIKE', '%' . $selectedCategory . '%')->pluck('id'));
+            $rulebooks->whereIn('regulation_id', Regulation::where('short_name','LIKE', '%' . $selectedCategory . '%')->pluck('id')); 
         }
         if (!empty($this->searchFm)) {
             // dd($this->searchFm);
