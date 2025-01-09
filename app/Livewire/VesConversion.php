@@ -6,7 +6,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('VES/ES')]
+#[Title('Konverzija')]
 #[Layout('components.layouts.admin')]
 class VesConversion extends Component
 {

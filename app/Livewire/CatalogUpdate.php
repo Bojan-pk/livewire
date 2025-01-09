@@ -3,11 +3,13 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\Title;
 
 use App\Livewire\Forms\CatalogUpdateForm;
-use App\Models\Catalog;
+//use App\Models\Catalog;
 use App\Models\Regulation;
 
+//#[Title('Konverzija')]
 class CatalogUpdate extends Component
 {
     public CatalogUpdateForm $form;
