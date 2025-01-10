@@ -75,8 +75,10 @@ class RulebookUpdate extends Component
     {
         $this->validate();
         $this->form->store();
-        $this->dispatch('flashMessage','success', 'Подаци су успешно унети');
+        $regulationId = $this->form->regulation_id; // Store the regulation_id value
+        $this->dispatch('flashMessage', 'success', 'Подаци су успешно унети');
         $this->form->reset();
+        $this->form->regulation_id = $regulationId;
     }
 
     public function addTableRow()

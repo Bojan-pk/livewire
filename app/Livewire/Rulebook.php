@@ -93,7 +93,7 @@ class Rulebook extends Component
         }
 
     })
-    ->paginate(10); 
+    ->paginate(20); 
     
     return $results;
     }
