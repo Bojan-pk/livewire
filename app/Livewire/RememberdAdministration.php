@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 
-#[Title('Zapamćeno administracija')]
+#[Title('Korpa')]
 #[Layout('components.layouts.admin')]
 class RememberdAdministration extends Component
 {
