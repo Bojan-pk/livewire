@@ -13,7 +13,7 @@
                   РБ
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Формацијско место
+                  Назив ФМ
                 </th>
                 <th scope="col" class="px-6 py-3">
                   ВЕС/ЕС
@@ -138,7 +138,7 @@
     <div class="w-2/12 mx-2 rounded border p-2">
       
       <x-input-text name="rb" label="Редни број" />
-      <x-input-text name="newJobName" label="формацијско место" />
+      <x-input-text name="newJobName" label="Назив ФМ" />
       <button wire:click.prevent="editItem" type="button"
       class="inline-flex items-center justify-center w-40 focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Промени</button>
       <button wire:click.prevent="validateRemoveData"  type="button"
