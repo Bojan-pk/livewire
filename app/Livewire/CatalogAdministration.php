@@ -11,7 +11,7 @@ use Livewire\Attributes\Title;
 class CatalogAdministration extends Component
 {
 
-    public $currentTab = 'update'; // 'create' or 'update'
+    public $currentTab = 'create'; // 'create' or 'update'
 
     public function switchTab($tab)
     {

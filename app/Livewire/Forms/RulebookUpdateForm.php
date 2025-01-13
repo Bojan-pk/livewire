@@ -42,10 +42,10 @@ class RulebookUpdateForm extends Form
     protected function messages()
     {
         return [
-            'table_items.*.rb.required' => 'Obavezno polje',
-            'table_items.*.fm.required' => 'Obavezno polje',
-            'table_items.*.fc_sso.required' => 'Obavezno polje',
-            'table_items.*.pg_bb.required' => 'Obavezno polje',
+            'table_items.*.rb.required' => 'Обавезно поље',
+            'table_items.*.fm.required' => 'Обавезно поље',
+            'table_items.*.fc_sso.required' => 'Обавезно поље',
+            'table_items.*.pg_bb.required' => 'Обавезно поље',
         ];
     }
 

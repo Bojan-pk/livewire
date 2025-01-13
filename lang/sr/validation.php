@@ -198,6 +198,8 @@ return [
         'educations' => 'едукације',
         'regulation' => 'документ',
         'jobs' => 'послови',
+        'table_rb' => 'број табеле',
+        'table_name' => 'име табеле',
     ],
 
 ];
