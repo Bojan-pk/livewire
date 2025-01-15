@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Title;
 
 use App\Livewire\Forms\CatalogUpdateForm;
-//use App\Models\Catalog;
+use App\Models\Catalog;
 use App\Models\Regulation;
 
 //#[Title('Konverzija')]
@@ -51,7 +51,7 @@ class CatalogUpdate extends Component
 
         
 
-    } else return /* session()->flash('error','Нема података о ФМ') */ $this->dispatch('flashMessage', 'error', "Нема података о ФМ!");;
+    } else return /* session()->flash('error','Нема података о ФМ') */ $this->dispatch('flashMessage', 'error', "Нема података о ФМ!");
        
        //dd($this->form->regulation);
     }

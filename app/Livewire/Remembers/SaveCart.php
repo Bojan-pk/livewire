@@ -79,7 +79,8 @@ class SaveCart extends Component
             $cart = Cart::find($this->selectedId)->content;
             //session()->forget('cart');
             session()->put('cart', $cart);
-            session()->flash('success', 'Подаци су успешно учитани');
+           // session()->flash('success', 'Подаци су успешно учитани');
+            $this->dispatch('flashMessage', 'success', "Подаци су успешно учитани!");
             $this->reset();
             $this->dispatch('cart-items');
     }
@@ -88,7 +89,8 @@ class SaveCart extends Component
     {
         
         if (!$this->selectedId) {
-            session()->flash('error', 'Нисте избрали податке');
+           // session()->flash('error', 'Нисте избрали податке');
+            $this->dispatch('flashMessage', 'error', "Нисте избрали податке!");
         } else {
             $this->showCleanModal = true;
         }  
@@ -98,7 +100,9 @@ class SaveCart extends Component
     {
             $cart = Cart::find($this->selectedId);
             $cart->delete();
-            session()->flash('success', 'Подаци су успешно обрисани');
+            //session()->flash('success', 'Подаци су успешно обрисани');
+            $this->dispatch('flashMessage', 'success', "Подаци су успешно обрисани!");
+
             $this->reset();
             $this->showCleanModal = false;
     }
@@ -138,10 +142,16 @@ class SaveCart extends Component
                 ]
             );
             $this->reset();
-            session()->flash('success', 'Успешно је снимљено у базу.');
+            //session()->flash('success', 'Успешно је снимљено у базу.');
+            $this->dispatch('flashMessage', 'success', "Успешно је снимљено у базу.!");
+           
 
         } else {
-            session()->flash('error', 'Недостају подаци за упис');
+            //session()->flash('error', 'Недостају подаци за упис');
+            $this->dispatch('flashMessage', 'error', "Недостају подаци за упис!");
+            
+
+
         }
 
         
@@ -150,7 +160,9 @@ class SaveCart extends Component
     public function cleanTable()
     {
         $this->reset();
-        session()->flash('success', 'Обрисана је форма за унос');
+        //session()->flash('success', 'Обрисана је форма за унос');
+        $this->dispatch('flashMessage', 'success', 'Обрисана је форма за унос');
+
     }
 
     public function render()

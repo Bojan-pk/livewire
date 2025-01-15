@@ -4,9 +4,9 @@
         <div>
             <x-flash-message />
            
-        </div>{{ $form->catalogId }}
+        </div>
         <label for="helper-text" class="block mb-2 text-sm font-medium text-gray-900">Формацијско
-            место {{$form->fm_id}}</label>
+            место </label>
         <input wire:model="form.fm" type="text" id="helper-text" aria-describedby="helper-text-explanation"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Унеси назив ФМ">
