@@ -156,7 +156,7 @@
                 </div>
                 
                
-                {{ $ves_first_signs}}
+                
                 
                 <x-input-select name="firstSign" label="Изабери знак категорије кадра" :options="$ves_first_signs"
                     optionValue="sign" :optionText="['sign', 'description']" />
