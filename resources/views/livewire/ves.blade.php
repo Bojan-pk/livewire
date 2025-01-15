@@ -148,9 +148,15 @@
                               bg-white border  rounded-lg focus:ring-primary-500 focus:border-primary-500"
                             required />
                     </div>
+                    <button type="button"
+                        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2"
+                        wire:click="cleanCode">X</button>
+
+                </div>
                 </div>
                 
                
+                {{ $ves_first_signs}}
                 
                 <x-input-select name="firstSign" label="Изабери знак категорије кадра" :options="$ves_first_signs"
                     optionValue="sign" :optionText="['sign', 'description']" />
@@ -195,6 +201,13 @@
                 const prevId = this.getAttribute('data-focus-input-prev');
                 const nextId = this.getAttribute('data-focus-input-next');
                 focusNextInput(this, prevId, nextId);
+            });
+        });
+
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('setFocus', (event) => {
+                // Hvatamo emitovani događaj 'setFocus'
+                document.getElementById('code-1').focus();
             });
         });
     </script>
