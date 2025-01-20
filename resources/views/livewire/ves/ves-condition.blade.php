@@ -138,7 +138,7 @@
                 </div>
                 <button wire:click.prevent="confirmDelete" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
-                    ознаку </button>
+                    услов </button>
                 <button wire:click="cleanTable()" type="button"
                     class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-4">Обриши
                     форму</button>
