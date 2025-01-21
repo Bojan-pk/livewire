@@ -30,11 +30,11 @@ Route::get('/catalog',\App\Livewire\Catalog::class)->name('catalog')->middleware
 Route::get('/rulebook',\App\Livewire\Rulebook::class)->name('rulebook')->middleware(['auth', 'verified']);
 Route::get('/ves',\App\Livewire\Ves::class)->name('ves')->middleware(['auth', 'verified']);
 Route::get('/ves-conversion',\App\Livewire\VesConversion::class)->name('ves-conversion')->middleware(['auth', 'verified']);
-Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)->name('catalog-administration')->middleware(['auth', 'verified']);
-Route::get('/rulebook-administration',\App\Livewire\RulebookAdministration::class)->name('rulebook-administration')->middleware(['auth', 'verified']);
-Route::get('/regulation-administration',\App\Livewire\RegulationAdministration::class)->name('regulation-administration')->middleware(['auth', 'verified']);
-Route::get('/ves-administration',\App\Livewire\VesAdministration::class)->name('ves-administration')->middleware(['auth', 'verified']);
-Route::get('/profile-administration',\App\Livewire\ProfileAdministrator::class)->name('profile-administration')->middleware(['auth', 'verified']);
+Route::get('/catalog-administration',\App\Livewire\CatalogAdministration::class)->name('catalog-administration')->middleware(['role:super-admin,admin']);
+Route::get('/rulebook-administration',\App\Livewire\RulebookAdministration::class)->name('rulebook-administration')->middleware(['role:super-admin,admin']);
+Route::get('/regulation-administration',\App\Livewire\RegulationAdministration::class)->name('regulation-administration')->middleware(['role:super-admin,admin']);
+Route::get('/ves-administration',\App\Livewire\VesAdministration::class)->name('ves-administration')->middleware(['role:super-admin,admin']);
+Route::get('/profile-administration',\App\Livewire\ProfileAdministrator::class)->name('profile-administration')->middleware(['role:super-admin,admin']);
 
 Route::get('/rememberd-administration',\App\Livewire\RememberdAdministration::class)->name('rememberd-administration')->middleware(['auth', 'verified']);
 

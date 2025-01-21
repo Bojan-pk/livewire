@@ -180,6 +180,47 @@ class Ves extends Component
     }
 
     protected function readVes()
+    /* {
+        // Čita VES 
+        $readVes = "";
+
+        // 1. znak
+        $sign1 = $this->ves_first_signs->where('sign', $this->firstSign)->first();
+        if (!$sign1) return false;
+        $readVes .= $sign1->description;
+        //dd($readVes);
+        // 2. znak
+        $sign2 = $this->ves_second_signs->where('sign', $this->secondSign)->first();
+        if (!$sign2) return false;
+        $readVes .= " - " . $sign2->description;
+
+        // 3. znak
+        $ves_second_sign_id = $sign2->id;
+        $sign3 = $this->ves_third_signs->where('sign', $this->thirdSign)
+            ->where('ves_second_sign_id', $ves_second_sign_id)
+            ->first();
+        if (!$sign3) return false;
+        $readVes .= " - " . $sign3->description;
+
+        // 4. znak
+        $ves_third_sign_id = $sign3->id;
+        $sign4 = $this->ves_fourth_signs->where('sign', $this->fourthSign)
+            ->where('ves_third_sign_id', $ves_third_sign_id)
+            ->first();
+        if (!$sign4) return false;
+        $readVes .= " - " . $sign4->description;
+
+        // 5. znak
+        $rule = $sign1->rule;
+        $fifthSignsArray = array_map('trim', explode(',', $rule));
+        $sign5 = $this->ves_fifth_signs->where('sign', $this->fifthSign)
+            ->whereIn('sign', $fifthSignsArray)
+            ->first();
+        if (!$sign5) return false;
+        $readVes .= " - " . $sign5->description;
+
+        return $readVes;
+    } */
     {
         // Čita VES 
         $readVes = "";

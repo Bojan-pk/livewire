@@ -1,4 +1,13 @@
 <div class="w-10/12  justify-center">
+    @if (session()->has('error'))
+        <div id="alert-border-2" x-data="{ shown: true, timeout: null }" x-init="timeout = setTimeout(() => { shown = false }, 3000)" x-show.transition.out.opacity.duration.500ms="shown"
+            style="display: none;"  >
+
+            <div class="p-4 mb-4 text-sm font-semibold text-red-800 text-center rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                {{ session('error') }}
+              </div>
+        </div>
+    @endif
     <div class=" min-h-screen">
         <!-- Hero Section -->
         <section class="bg-blue-600 text-white py-4">
