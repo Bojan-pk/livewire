@@ -24,4 +24,8 @@ class Rulebook extends Model
     public function rulebooksTable()  {
         return $this->belongsTo(RulebooksTable::class);
        }
+
+       public function regulation()  {
+        return $this->belongsTo(Regulation::class);
+       }
 }

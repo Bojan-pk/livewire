@@ -191,6 +191,9 @@
                             <th scope="col" class="px-6 py-3">
                                 РБ -  Назив табеле
                             </th>
+                            <th>
+                                Категорија
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -201,6 +204,18 @@
                                       border-b  cursor-pointer">
                                     <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
                                        <b>{!! $result->rb !!}</b>  - {!! $result->name !!}
+                                    </td>
+                                    <td class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                        @php
+                                             $regulation=@app\Models\Rulebook::where('rulebooks_table_id', $result->id)->first()->regulation->short_name;
+                                             
+
+                                        @endphp
+                                        @if (str_contains($regulation, 'ПВЛ'))
+                                            ПВЛ
+                                        @elseif (str_contains($regulation, 'ЦЛ'))
+                                            ЦЛ
+                                        @endif
                                     </td>
                                     
                                 </tr>

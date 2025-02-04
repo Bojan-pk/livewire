@@ -57,9 +57,6 @@
                 @endif
             </div>
 
-
-
-
             <div id="accordion-collapse" data-accordion="collapse">
                 <h2 id="tipicni_poslovi">
                     <button type="button"
@@ -280,6 +277,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Формацијска места
                             </th>
+                            <th>
+                                Категорија
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -289,6 +289,16 @@
                             class="  {{ $activeFm == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }} border-b  cursor-pointer">
                             <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
                                 {!! $result->name !!}
+                            </td>
+                            <td class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                @php
+                                     $regulation=@app\Models\Catalog::where('fm_id', $result->id)->first()->regulation->short_name
+                                @endphp
+                                @if (str_contains($regulation, 'ПВЛ'))
+                                    ПВЛ
+                                @elseif (str_contains($regulation, 'ЦЛ'))
+                                    ЦЛ
+                                @endif
                             </td>
                         </tr>
                         @endforeach

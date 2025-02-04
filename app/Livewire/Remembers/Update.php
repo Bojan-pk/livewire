@@ -156,8 +156,8 @@ class Update extends  Cart
             $textRun->addText("Посебни услови за обављање послова формацијког места:", ['bold' => true, 'italic' => true]);
             $textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
 
-            $educations = Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
-            $textRun->addText('; ' . implode('; ', $educations), ['italic' => true]);
+           /*  $educations = Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
+            $textRun->addText('; ' . implode('; ', $educations), ['italic' => true]); */
 
             /*  $section->addText("Образовање: " . implode(', ', $item['educations'] ?? []));
 

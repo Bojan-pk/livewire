@@ -17,4 +17,9 @@ class Fm extends Model
     {
         return $this->belongsToMany(Catalog::class, 'catalog_fm');
     }
+
+
+    public function regulation()  {
+        return $this->belongsTo(Regulation::class);
+       }
 }
