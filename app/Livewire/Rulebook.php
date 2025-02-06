@@ -67,7 +67,10 @@ class Rulebook extends Component
                 $q->where('fm', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('fc_sso', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('pg_bb', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('note', 'LIKE', '%' . $keyword . '%');
+                    ->orWhere('note', 'LIKE', '%' . $keyword . '%')
+                    ->orWhereHas('rulebooksTable', function ($q) use ($keyword) {
+                        $q->where('name', 'LIKE', '%' . $keyword . '%');
+                    });
             });
         }
         return $query;
@@ -75,36 +78,47 @@ class Rulebook extends Component
 
     protected function searchByTerm()
     {
-         $keywords = explode(' ', $this->searchTerm);
-         $selectedCategory = $this->selectedCategory;
+        $keywords = explode(' ', $this->searchTerm);
+        $selectedCategory = $this->selectedCategory;
         $results = RulebooksTable::whereIn('id', function ($query) use ($selectedCategory) {
             $query->select('rulebooks_table_id')
-            ->from('rulebooks')
-            ->join('regulations', 'rulebooks.regulation_id', '=', 'regulations.id')  // Join sa regulations tabelom
-            ->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');  // Filtriranje po short_name
-    })
-        ->where(function ($query) use ($keywords) {
-        foreach ($keywords as $keyword) {
-            $query->where(function ($subQuery) use ($keyword) {
-                $subQuery->where('name', 'LIKE', '%' . $keyword . '%')
-                         ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
+                ->from('rulebooks')
+                ->join('regulations', 'rulebooks.regulation_id', '=', 'regulations.id')  // Join sa regulations tabelom
+                ->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');  // Filtriranje po short_name
+        })
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->where(function ($subQuery) use ($keyword) {
+                        $subQuery->where('name', 'LIKE', '%' . $keyword . '%')
+                            ->orWhere('rb', 'LIKE', '%' . $keyword . '%');
                         // ->orWhere('note', 'LIKE', '%' . $keyword . '%');
-            });
-        }
+                    });
+                }
+            })
+            ->paginate(20);
 
-    })
-    ->paginate(20); 
-    
-    return $results;
+        return $results;
     }
 
-    protected function highlightKeyword($text, $keyword)
+    /* protected function highlightKeyword($text, $keyword)
     {
         if (!$keyword) return $text;
 
         // Користимо mb_ereg_replace за рад са ћирилицом и додајемо 'i' флаг за case-insensitive
-        return mb_ereg_replace('(' . preg_quote($keyword) . ')', '<mark>\1</mark>', $text, 'i');
+        //Dodavanje \b osigurava da će se označiti samo cela reč i sprečava delimična poklapanja unutar drugih reči.
+        //return mb_ereg_replace('(' . preg_quote($keyword) . ')', '<mark>\1</mark>', $text, 'i');
+        return mb_ereg_replace('\b(' . preg_quote($keyword) . ')\b', '<mark>\1</mark>', $text, 'i');
+    } */
+
+    protected function highlightKeyword($text, $keywords)
+    {
+        if (!$keywords) return $text;
+
+        $pattern = implode('|', array_map('preg_quote', explode(' ', $keywords)));
+        return mb_ereg_replace('(' . $pattern . ')', '<mark>\1</mark>', $text, 'i');
     }
+
+
 
     public function render()
     {
@@ -134,9 +148,9 @@ class Rulebook extends Component
 
             $rulebooks->where('rulebooks_table_id', $this->activeTable);
         } elseif ($this->selectedCategory) {
-            $selectedCategory=$this->selectedCategory;
-           // dd(Regulation::where('short_name','LIKE', '%' . $selectedCategory . '%')->pluck('id'));
-            $rulebooks->whereIn('regulation_id', Regulation::where('short_name','LIKE', '%' . $selectedCategory . '%')->pluck('id')); 
+            $selectedCategory = $this->selectedCategory;
+            // dd(Regulation::where('short_name','LIKE', '%' . $selectedCategory . '%')->pluck('id'));
+            $rulebooks->whereIn('regulation_id', Regulation::where('short_name', 'LIKE', '%' . $selectedCategory . '%')->pluck('id'));
         }
         if (!empty($this->searchFm)) {
             // dd($this->searchFm);
@@ -145,15 +159,31 @@ class Rulebook extends Component
         $rulebooks =  $rulebooks->paginate(10, pageName: 'rulebooks-page');
 
         // Примени маркирање на резултате
-        $rulebooks->getCollection()->transform(function ($item) {
+        /*  $rulebooks->getCollection()->transform(function ($item) {
             foreach (explode(' ', $this->searchFm) as $keyword) {
-                $item->fm = $this->highlightKeyword($item->fm, $keyword);
-                $item->fc_sso = $this->highlightKeyword($item->fc_sso, $keyword);
-                $item->pg_bb = $this->highlightKeyword($item->pg_bb, $keyword);
-                $item->note = $this->highlightKeyword($item->note, $keyword);
+            $item->fm = $this->highlightKeyword($item->fm, $keyword);
+            $item->fc_sso = $this->highlightKeyword($item->fc_sso, $keyword);
+            $item->pg_bb = $this->highlightKeyword($item->pg_bb, $keyword);
+            $item->note = $this->highlightKeyword($item->note, $keyword);
+            if ($item->rulebooksTable) {
+                $item->rulebooksTable->name = $this->highlightKeyword($item->rulebooksTable->name, $keyword);
+            }
+            }
+            return $item;
+        }); */
+
+        $keywords = trim($this->searchFm);
+        $rulebooks->getCollection()->transform(function ($item) use ($keywords) {
+            $item->fm = $this->highlightKeyword($item->fm, $keywords);
+            $item->fc_sso = $this->highlightKeyword($item->fc_sso, $keywords);
+            $item->pg_bb = $this->highlightKeyword($item->pg_bb, $keywords);
+            $item->note = $this->highlightKeyword($item->note, $keywords);
+            if ($item->rulebooksTable) {
+                $item->rulebooksTable->name = $this->highlightKeyword($item->rulebooksTable->name, $keywords);
             }
             return $item;
         });
+
 
         return view(
             'livewire.rulebook',

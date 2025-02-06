@@ -96,7 +96,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-1">
-                                        {{ $value->rulebooksTable->rb }} - {{ $value->rulebooksTable->name }}
+                                        {{ $value->rulebooksTable->rb }} - {!! $value->rulebooksTable->name !!}
                                     </td>
 
                                     <td class="px-2 py-1">
