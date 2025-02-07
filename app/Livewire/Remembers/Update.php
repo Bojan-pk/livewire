@@ -148,13 +148,39 @@ class Update extends  Cart
         foreach ($this->cart as $item) {
             $section->addText($item['rb'] . '. ' . $item['newJobName'] ?? '', ['bold' => true]);
 
-            $jobNames = Job::whereIn('id', $item['jobs'] ?? [])->pluck('name')->toArray();
-            $section->addText(implode('; ', $jobNames), null, 'reducedSpacing');
+            //$jobNames = Job::whereIn('id', $item['jobs'] ?? [])->pluck('name')->toArray();
+            //$section->addText(implode('; ', $jobNames), null, 'reducedSpacing');
+            $textRun = $section->addTextRun();
+            foreach ($item['jobs'] as $key => $item_id) {
+                $jobNames = Job::where('id', $item_id)->first()->name;
+                if ($key==0){
+                    $jobNames=mb_ucfirst($jobNames);
+                }
+                $textRun->addText(($jobNames));
+                if ($item_id===end($item['jobs'])) {
+                    $textRun->addText('.');
+                } else {
+                    $textRun->addText('; ');
+                }
+            }
 
-            $conditions = Condition::whereIn('id', $item['conditions'] ?? [])->pluck('name')->toArray();
+
+
+
+           //$conditions = Condition::whereIn('id', $item['conditions'] ?? [])->pluck('name')->toArray();
             $textRun = $section->addTextRun();
             $textRun->addText("Посебни услови за обављање послова формацијког места:", ['bold' => true, 'italic' => true]);
-            $textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
+            //$textRun->addText(' ' . implode('; ', $conditions), ['italic' => true]);
+
+            foreach ($item['conditions'] as $key => $item_id) {
+                $conditions = Condition::where('id', $item_id)->first()->name;
+                $textRun->addText((' ' . $conditions), ['italic' => true]);
+                if ($item_id===end($item['conditions'])) {
+                    $textRun->addText(('.'), ['italic' => true]);
+                } else {
+                    $textRun->addText((';'), ['italic' => true]);
+                }
+            }
 
            /*  $educations = Education::whereIn('id', $item['educations'] ?? [])->pluck('name')->toArray();
             $textRun->addText('; ' . implode('; ', $educations), ['italic' => true]); */

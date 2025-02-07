@@ -202,10 +202,10 @@
                                 <tr :key="{{ $result->id }}" wire:click="tableSelected({{ $result->id }})"
                                     class="{{ $activeTable == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }}
                                       border-b  cursor-pointer">
-                                    <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                    <td scope="row" class="px-2 py-1  text-gray-900   ">
                                        <b>{!! $result->rb !!}</b>  - {!! $result->name !!}
                                     </td>
-                                    <td class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                    <td class="px-2 py-1  text-gray-900   ">
                                         @php
                                              $regulation=@app\Models\Rulebook::where('rulebooks_table_id', $result->id)->first()->regulation->short_name;
                                              
