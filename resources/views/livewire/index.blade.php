@@ -12,7 +12,7 @@
         <!-- Hero Section -->
         <section class="bg-blue-600 text-white py-4">
             <div class="container mx-auto text-center">
-                <h1 class="text-3xl font-bold mb-2">Информациони систем "ДокОрг"</h1>
+                <h1 class="text-3xl font-bold mb-2">Апликативни софтвер "ДокОрг"</h1>
                 <p class="text-lg">за помоћ израде предлога организацијско-мобилизацијских промена (ОМП)</p>
             </div>
         </section>
@@ -41,12 +41,12 @@
                     <div class="p-6 bg-white rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold text-gray-700 mb-4">Документа</h3>
                         <p class="text-gray-600 ">
-                            ИС ДокОрг користи искључиво податке прописа који су из надлежности Управе за организацију
+                            ДокОрг користи искључиво податке прописа који су из надлежности Управе за организацију
                         </p>
                     </div>
                     <!-- Card 2 -->
                     <div class="p-6 bg-white rounded-lg shadow-md">
-                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Израда ИС</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Израда</h3>
                         <p class="text-gray-600 ">
                             Израђен у Управи за организацију, сопственим ресурсима
                         </p>

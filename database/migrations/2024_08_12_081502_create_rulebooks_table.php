@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('fm');
             $table->string('fc_sso');
             $table->string('pg_bb');
-            $table->string('note'); 
+            $table->text('note'); 
             $table->timestamps();
         });
     }
