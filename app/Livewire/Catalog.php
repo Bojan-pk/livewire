@@ -212,17 +212,48 @@ class Catalog extends Component
     
         // Paginacija i sortiranje
         $fms = $fmsQuery->orderBy('name')->paginate(10);
+
+
+        $catalogsFms = ModelsCatalog::with('fm', 'fms')
+        /* ->join('regulations', 'catalogs.regulation_id', '=', 'regulations.id')
+        ->when($selectedCategory, function ($query, $selectedCategory) {
+            $query->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');
+        }) */
+        ->where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                // Pretraga po FM imenu i FMS imenu
+                $query->where(function($query) use ($keyword) {
+                    $query->whereHas('fm', function ($query) use ($keyword) {
+                        $query->where('name', 'like', '%' . $keyword . '%');
+                    })
+                    ->orWhereHas('fms', function ($query) use ($keyword) {
+                        $query->where('name', 'like', '%' . $keyword . '%');
+                    });
+                });
+            }
+        })
+        //->orderBy('fms.name')
+        ->paginate(10);
+
+
     
         // Markiranje rezultata
-        $fms->getCollection()->transform(function ($item) {
+        $catalogsFms->getCollection()->transform(function ($item) {
             foreach (explode(' ', $this->searchTerm) as $keyword) {
-                $item->name = $this->highlightKeyword($item->name, $keyword);
+                $item->fm->name = $this->highlightKeyword($item->fm->name, $keyword);
+                if ($item->fms) {
+                    foreach ($item->fms as $fm) {
+                        $fm->name = $this->highlightKeyword($fm->name, $keyword);
+                    }
+                    //$item->rulebooksTable->name = $this->highlightKeyword($item->rulebooksTable->name, $keywords);
+                }
             }
             return $item;
         });
     
         return view('livewire.catalog', [
             'fms' => $fms,
+            'catalogsFms'=>$catalogsFms
         ]);
     }
 

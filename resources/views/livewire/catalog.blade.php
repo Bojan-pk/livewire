@@ -278,12 +278,15 @@
                                 Формацијска места
                             </th>
                             <th>
+                                ostalo   
+                            </th>
+                            <th>
                                 Категорија
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($fms)
+                        {{-- @if ($fms)
                         @foreach ($fms as $result)
                         <tr :key="{{ $result->id }}" wire:click="fmSelected({{ $result->id }})"
                             class="  {{ $activeFm == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }} border-b  cursor-pointer">
@@ -302,11 +305,36 @@
                             </td>
                         </tr>
                         @endforeach
+                        @endif --}}
+                        @if ($catalogsFms)
+                        @foreach ($catalogsFms as $result)
+                        <tr :key="{{ $result->id }}" wire:click="fmSelected({{ $result->id }})"
+                            class="  {{ $activeFm == $result->id ? 'bg-gray-300 hover:bg-gray-400' : 'bg-white hover:bg-gray-50' }} border-b  cursor-pointer">
+                            <td scope="row" class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                {!! $result->fm->name !!}
+                            </td>
+                            <td>
+                                @foreach ($result->fms as $item)
+                                {!! @$item->name !!};
+                                @endforeach
+                            </td>
+                            <td class="px-2 py-1  text-gray-900 whitespace-nowrap  ">
+                                @php
+                                     @$regulation=$result->regulation->short_name
+                                @endphp
+                                @if (str_contains($regulation, 'ПВЛ'))
+                                    ПВЛ
+                                @elseif (str_contains($regulation, 'ЦЛ'))
+                                    ЦЛ
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
                         @endif
                     </tbody>
                 </table>
                 <div class="pt-4">
-                    {{ $fms->links('vendor.livewire.tailwind') }}
+                   {{--  {{ $catalogsFms->links('vendor.livewire.tailwind') }} --}}
                 </div>
             </div>
         </div>
