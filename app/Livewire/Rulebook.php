@@ -53,6 +53,12 @@ class Rulebook extends Component
         $this->activeTable = "";
     }
 
+    public function updatedSelectedCategory()
+    {
+       // dd($this->selectedCategory);
+        $this->activeTable = '';
+    }
+
     public function saveRulebooks($id)
     {
         if ($this->rulebooksId != $id) $this->rulebooksId = $id;

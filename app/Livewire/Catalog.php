@@ -15,7 +15,7 @@ class Catalog extends Component
 
     public $searchTerm = '';
     public $selectedCategory = '';
-    public $activeFm;
+    public $activeCatalog;
     public $catalog;
     public $jobsIds = [];
    // public $usualyFmIds = [];
@@ -44,10 +44,12 @@ class Catalog extends Component
         $this->catalog = ModelsCatalog::first();
     }
 
-    public function fmSelected($fmId)
+    public function fmSelected($id)
     {
-        $this->activeFm = $fmId;
-        $this->catalog = ModelsCatalog::where('fm_id', $fmId)->first();
+        $this->activeCatalog = $id;
+       // $this->catalog = ModelsCatalog::where('fm_id', $fmId)->first(); */
+        $this->catalog = ModelsCatalog::find($id);
+
     }
 
     public function fmCartSelected($index)
@@ -214,26 +216,29 @@ class Catalog extends Component
         $fms = $fmsQuery->orderBy('name')->paginate(10);
 
 
-        $catalogsFms = ModelsCatalog::with('fm', 'fms')
-        /* ->join('regulations', 'catalogs.regulation_id', '=', 'regulations.id')
-        ->when($selectedCategory, function ($query, $selectedCategory) {
-            $query->where('regulations.short_name', 'LIKE', '%' . $selectedCategory . '%');
-        }) */
-        ->where(function ($query) use ($keywords) {
-            foreach ($keywords as $keyword) {
-                // Pretraga po FM imenu i FMS imenu
-                $query->where(function($query) use ($keyword) {
-                    $query->whereHas('fm', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . $keyword . '%');
-                    })
-                    ->orWhereHas('fms', function ($query) use ($keyword) {
-                        $query->where('name', 'like', '%' . $keyword . '%');
-                    });
+        $catalogsFms = ModelsCatalog::select('catalogs.*')
+    ->leftJoin('fms', 'catalogs.fm_id', '=', 'fms.id') // Povezujemo fm tabelu
+    ->when($selectedCategory, function ($query) use ($selectedCategory) {
+        $query->whereHas('regulation', function ($query) use ($selectedCategory) {
+            $query->where('short_name', 'LIKE', '%' . $selectedCategory . '%');
+        });
+    })
+    ->where(function ($query) use ($keywords) {
+        foreach ($keywords as $keyword) {
+            $query->where(function ($query) use ($keyword) {
+                $query->whereHas('fm', function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
+                ->orWhereHas('fms', function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
                 });
-            }
-        })
-        //->orderBy('fms.name')
-        ->paginate(10);
+            });
+        }
+    })
+    ->with('fm', 'fms')
+    ->orderBy('fms.name', 'asc') // Sortiranje po name iz fm
+    ->paginate(15);
+
 
 
     
