@@ -29,7 +29,7 @@ class Ves extends Component
     public $ves_fifth_signs;
 
     public $ves;
-
+    
     public $searchTerm = '';
     use WithPagination;
     protected $listeners = [
@@ -224,17 +224,18 @@ class Ves extends Component
     {
         // Čita VES 
         $readVes = "";
+        
         // 1. znak
         $sign1 = VesFirstSign::where('sign', $this->firstSign)->first();
         if (!$sign1) return false;
         $readVes .= $sign1->description;
-
-
+       
         // 2. znak
         $sign2 = VesSecondSign::where('sign', $this->secondSign)->first();
         if (!$sign2) return false;
         $readVes .= " - " . $sign2->description;
 
+        
         // 3. znak
         $ves_second_sign_id = $sign2->id;
 
@@ -250,11 +251,20 @@ class Ves extends Component
         if (!$sign3) return false;
         $readVes .= " - " . $sign3->description;
         //dd($readVes);
+       
         // 4. znak
         $ves_third_sign_id = $sign3->id;
-        $sign4 = VesFourthSign::where('sign', $this->fourthSign)
-            ->where('ves_third_sign_id', $ves_third_sign_id)
-            ->first();
+        if ($this->fourthSign == 0) {
+         
+            $sign4 = VesFourthSign::where('sign', $this->fourthSign)
+                ->first();
+        }
+            else {
+                $sign4 = VesFourthSign::where('sign', $this->fourthSign)
+                ->where('ves_third_sign_id', $ves_third_sign_id)
+                ->first();
+            }
+        
         if (!$sign4) return false;
         $readVes .= " - " . $sign4->description;
 
@@ -314,7 +324,8 @@ class Ves extends Component
         });
 
         return view('livewire.ves', [
-            'ves_conditions' => $ves_conditions
+            'ves_conditions' => $ves_conditions,
+            
         ]);
     }
 }

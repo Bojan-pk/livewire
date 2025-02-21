@@ -99,7 +99,7 @@
             <input wire:model="form.experiences.{{ $key }}" type="text" id="helper-text"
                 aria-describedby="helper-text-explanation"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 "
-                placeholder="Унеси потребно радно искуство">
+                placeholder="Унесите потребно радно искуство">
             <button wire:click="removeExperience({{ $key }})" type="button"
                 class="px-2 py-1   text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg  text-center mx-1 my-1">x</button>
         </div>
@@ -122,7 +122,7 @@
             <input wire:model="form.jobs.{{ $key }}" type="text" id="helper-text"
                 aria-describedby="helper-text-explanation"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5"
-                placeholder="Унеси типичне послове">
+                placeholder="Унесите типичне послове">
             <button wire:click="removeJob({{ $key }})" type="button"
                 class="px-2 py-1   text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg  text-center mx-1 my-1">x</button>
         </div>

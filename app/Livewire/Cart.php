@@ -109,6 +109,10 @@ class Cart extends Component
     public function delFm($index)
     {
         unset($this->cart[$index]); // briše posao u okviru FM 
+
+        if(count($this->cart)==0){
+            $this->addFm();
+        }   
         $this->cart = array_values($this->cart); // Поново индексирајте низ 
 
         // Ажурирање `rb` вредности за сваки преостали елемент

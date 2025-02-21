@@ -53,7 +53,7 @@
             (опционо)</label>
         <input wire:model="form.experiences" type="text" id="helper-text" aria-describedby="helper-text-explanation"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Унеси потребно радно искуство">
+            placeholder="Унесите потребно радно искуство">
         <div>
             @error('form.experiences')
             <span class=" text-red-500 text-xs">{{ $message }}</span>
@@ -64,7 +64,7 @@
             послови</label>
         <textarea id="message" wire:model="form.jobs" rows="4"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Унестите посебне услове и одвојити их са ;"></textarea>
+            placeholder="Унестите типичне послове и одвојити их са ;"></textarea>
         <div>
             @error('form.jobs')
             <span class=" text-red-500 text-xs">{{ $message }}</span>
