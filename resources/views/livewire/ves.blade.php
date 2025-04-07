@@ -3,6 +3,7 @@
     <div class="flex justify-between">
         <h1 class="text-xl font-medium mb-2 text-center"> Преглед услова
             за одређивање ВЕС и ЕС</h1>
+           
         <div class="relative mr-2 w-1/4">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none ">
                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -37,6 +38,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Може се попуњавати
                             </th>
+                            <th>
+                                Назив по старом ВЕС
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -62,6 +66,9 @@
                                     </td>
                                     <td class="px-2 py-1 text-xs">
                                         {{ $value->alternative }}
+                                    </td>
+                                    <td class="px-2 py-1 text-xs">
+                                        {!!  $value->old_kind !!}
                                     </td>
                                     <td>
                                         

@@ -168,7 +168,8 @@ class Ves extends Component
             $query->where(function ($q) use ($keyword) {
                 $q->where('reading', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('condition', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('ves', 'LIKE', '%' . $keyword . '%');
+                    ->orWhere('ves', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('old_kind', 'LIKE', '%' . $keyword . '%');
             });
         }
         return $query;
@@ -319,6 +320,7 @@ class Ves extends Component
                 $item->condition = $this->highlightKeyword($item->condition, $keyword);
                 $item->ves = $this->highlightKeyword($item->ves, $keyword);
                 $item->ves = $this->highlightVes($item->ves);
+                $item->old_kind = $this->highlightKeyword($item->old_kind, $keyword);
             }
             return $item;
         });

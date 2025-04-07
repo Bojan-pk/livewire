@@ -111,7 +111,7 @@
                 <hr class="my-4 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a
-                            href="bojan.djordjevic@uo.sljr.mo" class="hover:underline">Uprava za organizaciju</a>.
+                            href="bojan.djordjevic@uo.sljr.mo" class="hover:underline">Управа за организацију</a>.
                     </span>
 
                 </div>

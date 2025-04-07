@@ -82,7 +82,7 @@
                                         {!!  $value->note !!}
                                     </td>
                                     <td class="px-2 py-1 cursor-pointer text-blue-400">
-                                        <a data-popover-target="popover-default{{ $value->id }}">Види ...</a>
+                                        {{-- <a data-popover-target="popover-default{{ $value->id }}">Види ...</a>
                                         <div data-popover id="popover-default{{ $value->id }}" role="tooltip"
                                             class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 ">
                                             <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg ">
@@ -93,7 +93,8 @@
                                                 </p>
                                             </div>
                                             <div data-popper-arrow></div>
-                                        </div>
+                                        </div> --}}
+                                    <span title="СВЛ {{ @App\Models\Regulation::find($value['regulation_id'])->svl }}">Види...</span>  
                                     </td>
                                     <td class="px-2 py-1">
                                         {{ $value->rulebooksTable->rb }} - {!! $value->rulebooksTable->name !!}
