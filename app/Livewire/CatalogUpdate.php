@@ -14,7 +14,7 @@ class CatalogUpdate extends Component
 {
     public CatalogUpdateForm $form;
     public $regulations=[];
-    //public $catalog;
+    public $showDeleteModal = false;
 
     protected $listeners=[
         'fmSelected'=>'fmSelected'
@@ -31,29 +31,15 @@ class CatalogUpdate extends Component
     {
         $this->form->catalogId=$catalog->id;
         $this->form->fm=$catalog->fm->name;
-
         $this->form->fm_id=$fmId;
-
         $this->form->usualy_fms=$catalog->fms->pluck('name')->toArray();
-        
         $this->form->educations=$catalog->educations->pluck('name')->toArray(); 
-
-        //$this->form->conditions=$catalog->conditions->pluck('name')->toArray();
         $this->form->conditions = count($catalog->conditions) ? $catalog->conditions->pluck('name')->toArray() : [''];
-        //dd(count($catalog->conditions));
-        
         $this->form->experiences = count($catalog->experiences) ? $catalog->experiences->pluck('name')->toArray() : [''];
-
-
-        //$this->form->experiences=$catalog->experiences->pluck('name')->toArray();  
         $this->form->jobs=$catalog->jobs->pluck('name')->toArray();  
         $this->form->regulation=$catalog->regulation_id;  
-
-        
-
-    } else return /* session()->flash('error','Нема података о ФМ') */ $this->dispatch('flashMessage', 'error', "Нема података о ФМ!");
+    } else return  $this->dispatch('flashMessage', 'error', "Нема података о ФМ!");
        
-       //dd($this->form->regulation);
     }
 
     public function removeFm($key) {
@@ -73,7 +59,6 @@ class CatalogUpdate extends Component
         $this->form->educations = array_values( $this->form->educations); // reindex array;
         //dodaje prazno polje
         if($this->form->educations==null) $this->addEducation();
-
     }
     public function addEducation()
     {
@@ -97,7 +82,6 @@ class CatalogUpdate extends Component
         $this->form->experiences = array_values( $this->form->experiences); // reindex array;
         //dodaje prazno polje
         if($this->form->experiences==null) $this->addExperience();
-
     }
     public function addExperience()
     {
@@ -115,62 +99,38 @@ class CatalogUpdate extends Component
        $this->form->jobs[] = '';
     }
 
-
-    
-
     public function submitForm() {
         
-      
-      // dd($this->form->educations);
-      $this->validate();
-
-       /*  $this->validate([
-            //'form.fm' => 'array|string|max:255',
-            'form.usualy_fms' => 'array|min:1',
-            'form.usualy_fms.*' => 'required|string|max:255',
-        ], [
-            'form.usualy_fms.min' => 'Potrebno je uneti nazive fm',
-            'form.usualy_fms.*.required' => 'Naziv FM je obavezan',
-            'form.usualy_fms.*.string' => 'Naziv FM mora biti tekstualni',
-            'form.usualy_fms.*.max' => 'Naziv FM ne sme biti duži od 255 karaktera',
-        ]); */
-        
+      $this->validate();   
         if($this->form->customValidate()) return;
         $this->form->store();
-        //session()->flash('success','Подаци су успешно унети');
         $this->dispatch('flashMessage', 'success', "Подаци су успешно унети!");
-        $this->form->reset();
-        
+        $this->form->reset();   
     }
 
     public function removeCatalog($id=null)
     { 
         if ($id) {
             $catalog=Catalog::find($id);
-            //session()->flash('success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
-           // dd('stiglo');
-            //$this->dispatch('flashMessage','success',"Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
             $this->dispatch('flashMessage', "success", "Каталог за ФМ ". $catalog->fm->name. " је успешно обрисан!!!");
-
-           
-            //$fm
             $catalog->delete();
-
             $this->form->reset();
         } 
         else $this->dispatch('flashMessage', 'error', "Нисте изабрали ФМ!");
+        
+        $this->showDeleteModal = false; // Sakriva modal nakon brisanja
+    }
+
+    public function confirmDelete()
+    {  
+        $this->showDeleteModal = true; // Prikazuje modal
     }
 
     public function cleanCatalog()
     {
         $this->form->reset();
-
-       // session()->flash('success','Обрисана је форма за унос');
-        $this->dispatch('flashMessage', 'success', "Обрисана је форма за унос!");
-        
+        $this->dispatch('flashMessage', 'success', "Обрисана је форма за унос!");  
     }
-
-
 
     public function render()
     {

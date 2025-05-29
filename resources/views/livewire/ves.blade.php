@@ -65,7 +65,7 @@
                                         {!! $value->condition !!}
                                     </td>
                                     <td class="px-2 py-1 text-xs">
-                                        {{ $value->alternative }}
+                                        {{ $value->alternative }} - {{ $value->old_kind }}
                                     </td>
                                     <td class="px-2 py-1 text-xs">
                                         {!!  $value->old_kind !!}
